@@ -92,7 +92,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="informasibarang.php"><i class="fa fa-circle-o"></i> Informasi Barang</a></li>
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Informasi Barang</a></li>
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
@@ -112,7 +112,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-table"></i> <span>Gudang</span>
+            <i class="fa fa-table"></i> <span>Produksi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

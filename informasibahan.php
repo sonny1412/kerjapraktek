@@ -106,20 +106,20 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="informasibahan.php"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
             <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-table"></i> <span>Gudang</span>
+            <i class="fa fa-table"></i> <span>Produksi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
