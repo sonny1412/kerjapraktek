@@ -196,7 +196,12 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+              <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                  </div>
+                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>

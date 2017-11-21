@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bahan | Tambah Bahan</title>
+  <title>Karyawan | Tambah Akun</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -96,8 +96,9 @@
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-
-        <li class="active treeview">
+        
+        
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
             <span class="pull-right-container">
@@ -106,7 +107,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasibahan.php"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
+            <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -117,12 +118,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
@@ -131,8 +132,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
+            <li class="active"><a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
           </ul>
         </li>
 
@@ -178,64 +179,66 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Bahan
+        Tambah Akun Karyawan
       </h1>
     </section>
-    <?php
+    <?php 
         require 'db.php';
-        $sql = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Bahan Produksi')";
-        $result = mysqli_query($link,$sql);
-        $sqlKategori = "select * from Kategori where jenis='Bahan Produksi';";
-        $resultKategori = mysqli_query($link,$sqlKategori);
-        if(!$result){
-          die("SQL Error :".$sql);
-        }
-    ?>
-    
+        $sql = "select * from user";
+        
+        $result = mysqli_query($link, $sql);
+        if(!$result) {
+            die("SQL Error: ".$sql);
+        }   
+        $sqlUser = "select * from karyawan where jabatan = 'Penjualan' or jabatan = 'Pembelian' or jabatan ='Gudang' having id not in(select Karyawan_id from user)";  
+        $resultUser = mysqli_query($link,$sqlUser);
+    ?>  
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
+          <div class="box" style="width: 70%; margin: auto; margin-top: 5%">
             
             <!-- /.box-header -->
             <fieldset>
-              <legend style="text-align: center;">Masukan data Bahan</legend>
-              <form class="form-horizontal" action="manage.php?act=insertbahan" method="POST">
+              <legend style="text-align: center;">Masukan data Karyawan</legend>
+              <form class="form-horizontal" action="manage.php?act=insertuser" method="POST">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama</label>
+                  <label for="inputUserKaryawan" class="col-sm-2 control-label">Username</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control">
+                    <input type="email" name="user" required autofocus class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputJumlahBahan" class="col-sm-2 control-label">Kuantitas</label>
+                  <label for="inputPasswordKaryawan" class="col-sm-2 control-label">Password</label>
 
                   <div class="col-sm-10">
-                    <input type="number" name="kuantitas" class="form-control">
+                    <input type="password" name="password" required class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputKeteranganBahan" class="col-sm-2 control-label">Satuan</label>
+                  <label for="inputKonfirmasiPassword" class="col-sm-2 control-label">Ulang Password</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="keterangan" class="form-control">
+                    <input type="password" name="konfirmasi" required class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
+                  <label for="inputNamaKaryawan" class="col-sm-2 control-label">Nama</label>
 
                   <div class="col-sm-10">
-                    <select name="idKategori" class="form-control">
-                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
-                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
-                        }?>
+                    <select name="idKaryawan" class="form-control">
+                        <?php while($rowUser = mysqli_fetch_object($resultUser))
+                              {
+                                  echo "<option value='".$rowUser->id."'>".$rowUser->nama."</option>";
+                                  
+                              }
+                              ?>
                     </select>
                   </div>
                 </div>
-                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

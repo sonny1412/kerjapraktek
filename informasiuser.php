@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bahan | Tambah Bahan</title>
+  <title>Karyawan | Informasi User</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -96,8 +96,9 @@
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-
-        <li class="active treeview">
+        
+        
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
             <span class="pull-right-container">
@@ -106,7 +107,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasibahan.php"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
+            <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -117,12 +118,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiprduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
@@ -130,7 +131,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
+            <li class="active"><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
             <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
             <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
           </ul>
@@ -178,74 +179,76 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Bahan
+        Informasi Karyawan
       </h1>
     </section>
-    <?php
+    <?php 
         require 'db.php';
-        $sql = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Bahan Produksi')";
-        $result = mysqli_query($link,$sql);
-        $sqlKategori = "select * from Kategori where jenis='Bahan Produksi';";
-        $resultKategori = mysqli_query($link,$sqlKategori);
-        if(!$result){
-          die("SQL Error :".$sql);
-        }
+        $sql = "select * from user";
+        
+        $result = mysqli_query($link, $sql);
+        if(!$result) {
+            die("SQL Error: ".$sql);
+        }   
+        $sqlUser = "select * from karyawan where jabatan = 'Penjualan' or jabatan = 'Pembelian' or jabatan ='Gudang' having id not in(select Karyawan_id from user)";  
+        $resultUser = mysqli_query($link,$sqlUser);
     ?>
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
+          <div class="box">
             
             <!-- /.box-header -->
-            <fieldset>
-              <legend style="text-align: center;">Masukan data Bahan</legend>
-              <form class="form-horizontal" action="manage.php?act=insertbahan" method="POST">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control">
+            <div class="box-body">
+              <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
                   </div>
+                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
                 </div>
-                <div class="form-group">
-                  <label for="inputJumlahBahan" class="col-sm-2 control-label">Kuantitas</label>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Nama Karyawan</th>
+                  <th>Username</th>
+                  <th>HAPUS/EDIT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                  while($row = mysqli_fetch_object($result)) {
+                      $sqlKaryawan = "select * from karyawan where id =".$row->Karyawan_id;
+                      $resultKaryawan = mysqli_query($link,$sqlKaryawan);
+                      $rowKaryawan = mysqli_fetch_object($resultKaryawan);
+                      echo "<tr>";
+                      echo "<td>".$rowKaryawan->nama."</td><td>".$row->username."</td><td>"
+                              ."<a href=editkaryawan.php?var=".$row->id.">edit</a>";
 
-                  <div class="col-sm-10">
-                    <input type="number" name="kuantitas" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputKeteranganBahan" class="col-sm-2 control-label">Satuan</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" name="keterangan" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
-
-                  <div class="col-sm-10">
-                    <select name="idKategori" class="form-control">
-                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
-                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
-                        }?>
-                    </select>
-                  </div>
-                </div>
+                      echo "</tr>";
+                       } 
+                ?>
+                </tbody>
                 
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Insert</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
-
-            </fieldset>
-            
+              </table>
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Detail Karyawan</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fetched-data"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </div>
             <!-- /.box-body -->
           </div>
       </div>
@@ -280,6 +283,9 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- edit table modal -->
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- page script -->
 <script>
   $(function () {
@@ -314,7 +320,6 @@ function myFunction() {
   }
 }
 </script>
-<!-- script untuk edit -->
 <script type="text/javascript">
     $(document).ready(function(){
         $('#myModal').on('show.bs.modal', function (e) {
@@ -322,7 +327,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalbarang.php',
+                url : 'detail.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

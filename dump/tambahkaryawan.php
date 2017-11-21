@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Tambah Karyawan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -17,6 +17,21 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/css_regis/styledaftar.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,58 +43,35 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
-<!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
-<!-- Site wrapper -->
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>P</span>
+      
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>Panel</span>
+      <span class="logo-lg"><b>Admin</b> Sonny </span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </a>
 
       <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              
-              <span class="hidden-xs">Sonny</span>
-            </a>
-            <ul class="dropdown-menu">    
-              <!-- Menu Sign Out-->
-              <li class="user-footer">
-                <div class="pull-right">
-                  <a href="login.php" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <button class="sidebar-toggle"> LOGOUT </button>
+
       </div>
     </nav>
   </header>
-
-  <!-- =============================================== -->
-
-  <!-- Left side column. contains the sidebar -->
+  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+      
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -112,54 +104,41 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-table"></i> <span>Produksi</span>
+            <i class="fa fa-table"></i> <span>Gudang</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-user"></i> <span>Karyawan</span>
+            <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
+            <li class="active"> <a href="#"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
           </ul>
         </li>
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Pembelian</span>
+            <i class="fa fa-dashboard"></i> <span>Laporan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="laporanpembelian.php"><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
-            <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
-            <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Penjualan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li> <a href="laporanpenjualan.php"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
-            <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
+            <li> <a href="#"><i class="fa fa-circle-o"></i> Laporan Arus Kas</a></li>
+            <li><a href="informasibarang.html"><i class="fa fa-circle-o"></i> Laporan Laba Rugi</a></li>
+            <li><a href="editbarang.html"><i class="fa fa-circle-o"></i> Laporan C</a></li>
           </ul>
         </li>
       
@@ -172,22 +151,42 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- =============================================== -->
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dasboard
+        Tambahkan Karyawan
         <small>Control panel</small>
       </h1>
     </section>
     <!-- Main content -->
+    <div id="wrapper-daftar">
+        <form id="apapun"action="manage.php?act=insertkaryawan" method="POST">
+        <fieldset>
+          <label for="nama">Nama:</label>
+          <input type="text" name="nama" required autofocus>
+          
+          <label for="alamat">Alamat:</label>
+          <input type="text" name="alamat" required>
+          
+          <label for="telepon">Telepon:</label>
+          <input type="text" name="telepon" required>
+
+          <label for="jabatan">Jabatan:</label>
+          <select name="jabatan">
+            <option value="Penjualan">Penjualan</option>
+            <option value="Pembelian">Pembelian</option>
+            <option value="Gudang">Gudang</option>
+        </select>
+
+        </fieldset>
+        <button type="submit">Daftar</button>
+      </form>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
@@ -195,74 +194,47 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
+
+  
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
+<!-- Morris.js charts -->
+<script src="bower_components/raphael/raphael.min.js"></script>
+<script src="bower_components/morris.js/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
 <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
-<!-- script untuk search -->
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("example2");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>
-<!-- script untuk edit -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#myModal').on('show.bs.modal', function (e) {
-            var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-                type : 'post',
-                url : 'modalbarang.php',
-                data :  'rowid='+ rowid,
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-                }
-            });
-         });
-    });
-  </script>
 </body>
 </html>
