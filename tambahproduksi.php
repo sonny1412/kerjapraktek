@@ -184,39 +184,36 @@
     </section>
     <?php
   require "db.php";
-  $arrayIdBahan = array();
-  $arrayNamaBahan = array();
-  $arrayJumlahBahan = array();
-  $arrayQTYBahan = array();
-  $arrayIdBarang = array();
-  $arrayNamaBarang = array();
-  $arrayJumlahBarang = array();
-  $arrayQTYBarang = array();
-  if(isset($_POST['idBahan']) &&isset($_POST['namaBahan'])&&isset($_POST['jumlahBahan'])&&isset($_POST['qtyBahan'])){
-    $arrayIdBahan=unserialize($_POST['idBahan']);
-    $arrayNamaBahan=unserialize($_POST['namaBahan']);
-    $arrayJumlahBahan=unserialize($_POST['jumlahBahan']);
-    $arrayQTYBahan=unserialize($_POST['qtyBahan']);
+  $arrayBahan = array();
+  $arrayBarang = array();
+  if(isset($_POST['Bahan'])){
+    $arrayBahan=unserialize($_POST['Bahan']);
   }
-  if(isset($_POST['idBarang']) &&isset($_POST['namaBarang'])&&isset($_POST['jumlahBarang'])&&isset($_POST['qtyBarang'])){
-    $arrayIdBarang=unserialize($_POST['idBarang']);
-    $arrayNamaBarang=unserialize($_POST['namaBarang']);
-    $arrayJumlahBarang=unserialize($_POST['jumlahBarang']);
-    $arrayQTYBarang=unserialize($_POST['qtyBarang']);
+  if(isset($_POST['Barang'])){
+    $arrayBarang=unserialize($_POST['Barang']);
   }
   if(isset($_POST['nBahan'])&&isset($_POST['jBahan'])&&$_POST['jBahan']!=""){
-    $bahan = explode('|', $_POST['nBahan']);
-    array_push($arrayIdBahan, $bahan[0]);
-    array_push($arrayNamaBahan, $bahan[1]);
-    array_push($arrayJumlahBahan, $bahan[2]);
-    array_push($arrayQTYBahan, $_POST['jBahan']);
+    array_push($arrayBahan, $_POST['nBahan']."|".$_POST['jBahan']);
   }
+  
   if(isset($_POST['nBarang'])&&isset($_POST['jBarang'])&&$_POST['jBarang']!=""){
-    $bahan = explode('|', $_POST['nBarang']);
-    array_push($arrayIdBarang, $bahan[0]);
-    array_push($arrayNamaBarang, $bahan[1]);
-    array_push($arrayJumlahBarang, $bahan[2]);
-    array_push($arrayQTYBarang, $_POST['jBarang']);
+    array_push($arrayBarang, $_POST['nBarang']."|".$_POST['jBarang']);
+  }
+  if(isset($_POST['hapusBahan'])){
+    foreach($arrayBahan as $key =>$value){
+      $lol = explode('|',$value);
+      if($lol[0]==$_POST['hapusBahan']){
+        unset($arrayBahan[$key]);
+      }
+    }
+  }
+  if(isset($_POST['hapusBarang'])){
+    foreach($arrayBarang as $key =>$value){
+      $lol = explode('|',$value);
+      if($lol[0]==$_POST['hapusBarang']){
+        unset($arrayBarang[$key]);
+      }
+    }
   }
   //print_r($arrayIdBahan);
     $sqlBahan = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Bahan Produksi'";
@@ -243,9 +240,15 @@
                   <div class="col-sm-10">
                     <select name='nBahan' class="form-control" style="width: 30%">
                       <?php 
+                        $tampungBahan = array();
+                        foreach($arrayBahan as $value){
+                              $lol = explode('|',$value);
+                              array_push($tampungBahan, $lol[0]);
+                          }
                         while($rowBahan=mysqli_fetch_object($resultBahan)){
-                          echo "<option value='".$rowBahan->id."|".$rowBahan->nama."|".$rowBahan->quantity."|".$rowBahan->jenis."'>".$rowBahan->nama."
-                              </option>";
+                          if(!in_array($rowBahan->id, $tampungBahan)){
+                          echo "<option value='".$rowBahan->id."|".$rowBahan->nama."|".$rowBahan->quantity."'>".$rowBahan->nama."
+                              </option>";}
                               }?>
                     </select>
                   </div>
@@ -261,14 +264,8 @@
                 <div class="form-group">
                   <div class="col-sm-10">
                     <input type='submit'>
-                    <input type='hidden' value='<?php echo serialize($arrayIdBahan)?>' name='idBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayNamaBahan)?>' name='namaBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayJumlahBahan)?>' name='jumlahBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayQTYBahan)?>' name='qtyBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayIdBarang)?>' name='idBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayNamaBarang)?>' name='namaBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayJumlahBarang)?>' name='jumlahBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayQTYBarang)?>' name='qtyBarang'>
+                    <input type='hidden' value='<?php echo serialize($arrayBahan)?>' name='Bahan'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarang)?>' name='Barang'>
                   </div>
                   <br>
                 </div>
@@ -279,13 +276,20 @@
               <table id="example2" class="table table-bordered table-hover">
                 <tr>
                   <th>Nama</th>
-                  <th>Jenis</th>
                   <th>Jumlah</th>
+                  <th>Hapus</th>
                 </tr>
                 <?php
-                  for($i=0;$i<count($arrayIdBahan);$i++){
+                  foreach($arrayBahan as $value){
+                    $bahan = explode('|', $value);
                     echo "<tr>";
-                    echo "<th>(".$arrayIdBahan[$i].") ".$arrayNamaBahan[$i]."</th><th>".$arrayJumlahBahan[$i]."</th><th>".$arrayQTYBahan[$i]."</th>";
+                    echo "<th>(".$bahan[0].") ".$bahan[1]."</th><th>".$bahan[3]."</th>";
+                    echo "<th><form action='#' method='POST'>
+                          <input type='hidden' value='".$bahan[0]."' name='hapusBahan'>
+                          <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
+                          <input type='hidden' value='".serialize($arrayBarang)."' name='Barang'>
+                          <input type='submit' value='Hapus'>
+                          </form></th>";
                     echo "</tr>";
                   }
                 ?>
@@ -304,9 +308,15 @@
                   <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Bahan</label>
                   <div class="col-sm-10">
                     <select name='nBarang' class="form-control" style="width: 30%">
-                      <?php 
+                      <?php  
+                        $tampungBarang = array();
+                        foreach($arrayBarang as $value){
+                              $lol = explode('|',$value);
+                              array_push($tampungBarang, $lol[0]);
+                          }
                         while($rowBarang=mysqli_fetch_object($resultBarang)){
-                        echo "<option value='".$rowBarang->id."|".$rowBarang->nama."|".$rowBarang->quantity."|".$rowBarang->jenis."'>".$rowBarang->nama."</option>";
+                        if(!in_array($rowBarang->id, $tampungBarang))
+                        echo "<option value='".$rowBarang->id."|".$rowBarang->nama."|".$rowBarang->quantity."'>".$rowBarang->nama."</option>";
                         }?>
                     </select>
                   </div>
@@ -322,14 +332,8 @@
                 <div class="form-group">
                   <div class="col-sm-10">
                     <input type='submit'>
-                    <input type='hidden' value='<?php echo serialize($arrayIdBahan)?>' name='idBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayNamaBahan)?>' name='namaBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayJumlahBahan)?>' name='jumlahBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayQTYBahan)?>' name='qtyBahan'>
-                    <input type='hidden' value='<?php echo serialize($arrayIdBarang)?>' name='idBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayNamaBarang)?>' name='namaBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayJumlahBarang)?>' name='jumlahBarang'>
-                    <input type='hidden' value='<?php echo serialize($arrayQTYBarang)?>' name='qtyBarang'>
+                    <input type='hidden' value='<?php echo serialize($arrayBahan)?>' name='Bahan'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarang)?>' name='Barang'>
                   </div>
                   <br>
                 </div>
@@ -341,13 +345,20 @@
               <table id="example2" class="table table-bordered table-hover">
                 <tr>
                   <th>Nama</th>
-                  <th>Jenis</th>
                   <th>Jumlah</th>
+                  <th>Hapus</th>
                 </tr>
                 <?php
-                  for($i=0;$i<count($arrayIdBarang);$i++){
+                  foreach($arrayBarang as $value){
+                    $barang = explode('|', $value);
                     echo "<tr>";
-                    echo "<th>(".$arrayIdBarang[$i].") ".$arrayNamaBarang[$i]."</th><th>".$arrayJumlahBarang[$i]."</th><th>".$arrayQTYBarang[$i]."</th>";
+                    echo "<th>(".$barang[0].") ".$barang[1]."</th><th>".$barang[3]."</th>";
+                    echo "<th><form action='#' method='POST'>
+                          <input type='hidden' value='".$barang[0]."' name='hapusBarang'>
+                          <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
+                          <input type='hidden' value='".serialize($arrayBarang)."' name='Barang'>
+                          <input type='submit' value='Hapus'>
+                          </form></th>";
                     echo "</tr>";
                   }
                 ?>
@@ -404,14 +415,8 @@
   (function($){
   $(document).ready(function() {
       $("#insert").click(function() {
-        var jIdBahan = <?php echo json_encode($arrayIdBahan); ?>;
-        var jNamaBahan = <?php echo json_encode($arrayNamaBahan); ?>;
-        var jJumlahBahan = <?php echo json_encode($arrayJumlahBahan); ?>;
-        var jQtyBahan = <?php echo json_encode($arrayQTYBahan); ?>;
-        var jIdBarang = <?php echo json_encode($arrayIdBarang); ?>;
-        var jNamaBarang = <?php echo json_encode($arrayNamaBarang); ?>;
-        var jJumlahBarang = <?php echo json_encode($arrayJumlahBarang); ?>;
-        var jQtyBarang = <?php echo json_encode($arrayQTYBarang); ?>;
+        var bahan = <?php echo json_encode($arrayBahan); ?>;
+        var barang = <?php echo json_encode($arrayBarang); ?>;
         $.ajax({
               type: "POST",
               url: "queryproduksi.php",
@@ -429,21 +434,25 @@
             window.location = "informasiproduksi.php";
         }});
         function produksi_barang(smth) {        
-          for( i = 0 ;i < jIdBahan.length ; i++){
+          for( i = 0 ;i < bahan.length ; i++){
+              alert(bahan[i]);
+              var tBahan = bahan[i].split("|");
               $.ajax({
                   type: "POST",
                   url: "queryproduksibahan.php",
-                  data: 'produksi_id=' + smth+ '&barang_id=' + jIdBahan[i]+ '&qty=' + jQtyBahan[i]+ '&jumlah=' + jJumlahBahan[i],
+                  data: 'produksi_id=' + smth+ '&barang_id=' + tBahan[0]+ '&qty=' + tBahan[3]+ '&jumlah=' + tBahan[2],
                   success: function(result) {
                     alert("Sukses Bahan");
                   }
               });
           }
-          for( i = 0 ;i < jIdBarang.length ; i++){
+          for( i = 0 ;i < barang.length ; i++){
+              var tBarang = barang[i].split("|");
+              alert(barang[i]);
               $.ajax({
                   type: "POST",
                   url: "queryproduksibarang.php",
-                  data: 'produksi_id=' + smth+ '&barang_id=' + jIdBarang[i]+ '&qty=' + jQtyBarang[i]+ '&jumlah=' + jJumlahBarang[i],
+                  data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&qty=' + tBarang[3]+ '&jumlah=' + tBarang[2],
                   success: function(result) {
                     alert("Sukses Barang");
                   }
