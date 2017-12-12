@@ -238,7 +238,7 @@
                   <div class="form-group">
                   <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Bahan</label>
                   <div class="col-sm-10">
-                    <select name='nBahan' class="form-control" style="width: 30%">
+                    <select name='nBahan' id="nBahan" class="form-control" style="width: 30%">
                       <?php 
                         $tampungBahan = array();
                         foreach($arrayBahan as $value){
@@ -257,7 +257,7 @@
                 <div class="form-group">
                   <label for="inputNamaBahan" class="col-sm-2 control-label">Jumlah</label>
                   <div class="col-sm-10">
-                    <input type='number' name='jBahan' class="form-control" style="width: 30%">
+                    <input type='number' name="jBahan" id="jBahan" min=1 class="form-control" style="width: 30%">
                   </div>
                   <br>
                 </div>
@@ -307,7 +307,7 @@
                 <div class="form-group">
                   <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Bahan</label>
                   <div class="col-sm-10">
-                    <select name='nBarang' class="form-control" style="width: 30%">
+                    <select name='nBarang' id="nBarang" class="form-control" style="width: 30%">
                       <?php  
                         $tampungBarang = array();
                         foreach($arrayBarang as $value){
@@ -325,7 +325,7 @@
                 <div class="form-group">
                   <label for="inputNamaBarang" class="col-sm-2 control-label">Jumlah</label>
                   <div class="col-sm-10">
-                    <input type='number' name='jBarang' class="form-control" style="width: 30%">
+                    <input type='number' name='jBarang' id="jBarang" min=1 class="form-control" style="width: 30%">
                   </div>
                   <br>
                 </div>
@@ -414,6 +414,16 @@
 <script>
   (function($){
   $(document).ready(function() {
+      $('#nBahan').change(function(){
+          var tampung = $(this).val().split("|");
+          var angka = 1 * tampung[2];
+          document.getElementById("jBahan").max = angka;
+      });
+      $('#jBahan').ready(function(){
+          var tampung = $('#nBahan').val().split("|");
+          var angka = 1 * tampung[2];
+          document.getElementById("jBahan").max = angka;
+      });
       $("#insert").click(function() {
         var bahan = <?php echo json_encode($arrayBahan); ?>;
         var barang = <?php echo json_encode($arrayBarang); ?>;
