@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 $act = $_GET["act"];
 
 /* Region Karyawan*/
@@ -165,6 +166,84 @@ switch ($act) {
 	}
 	else{
 		echo "gagal";
+	}
+	break;
+
+	case "inserttanggalproduksi":
+	require 'db.php';
+	$tanggal = date_create('now')->format('Y-m-d H:i:s');
+	$sql = "INSERT INTO `produksi`(`tanggal`) VALUES('".$tanggal."')";
+	$result = mysqli_query($link,$sql);
+	if($result){}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "ambiltanggalproduksi":
+	require 'db.php';
+	$sql = "SELECT max(id) as id FROM `produksi`";
+	$result = mysqli_query($link,$sql);
+	while($row = mysqli_fetch_object($result)){
+		$data["id"] = $row->id;
+	}
+	echo json_encode($data);
+	break;
+
+	case "insertproduksibahan":
+	require 'db.php';
+	$produksi_id = $_POST["produksi_id"];
+	$barang_id = $_POST["barang_id"];
+	$qty = $_POST["qty"];
+	$jumlah = $_POST["jumlah"];
+	$total = $jumlah - $qty;
+	$sql = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUbah = "UPDATE `barang` SET `quantity` = '".$total."' WHERE `barang`.`id` = '".$barang_id."';";
+		$resultUbah = mysqli_query($link,$sqlUbah);
+		if(!$resultUbah){
+			echo "gagal";
+		}
+	}
+	break;
+
+	case "insertproduksibarang":
+	require 'db.php';
+	$produksi_id = $_POST["produksi_id"];
+	$barang_id = $_POST["barang_id"];
+	$qty = $_POST["qty"];
+	$jumlah = $_POST["jumlah"];
+	$total = $jumlah + $qty;
+	$sql = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUbah = "UPDATE `barang` SET `quantity` = '".$total."' WHERE `barang`.`id` = '".$barang_id."';";
+		$resultUbah = mysqli_query($link,$sqlUbah);
+		if(!$resultUbah){
+			echo "gagal";
+		}
+	}
+	break;
+
+	case "insertproduksibarangbaru":
+	require 'db.php';
+	$produksi_id = $_POST["produksi_id"];
+	$barang_id = $_POST["barang_id"];
+	$nama = $_POST["nama"];
+	$qty = $_POST["qty"];
+	$pjg = $_POST["pjg"];
+	$lbr = $_POST["lbr"];
+	$kategori_id = $_POST["kategori_id"];
+	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$barang_id."','".$nama."','".$qty."','".$pjg." Cm x ".$lbr." Cm',".$kategori_id.")";
+	//$sql = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlProduksi = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
+		$resultProduksi = mysqli_query($link,$sqlProduksi);
+		if(!$resultProduksi){
+			echo "gagal";
+		}
 	}
 	break;
 }

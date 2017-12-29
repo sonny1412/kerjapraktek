@@ -186,18 +186,25 @@
   require "db.php";
   $arrayBahan = array();
   $arrayBarang = array();
+  $arrayBarangBaru = array();
   if(isset($_POST['Bahan'])){
     $arrayBahan=unserialize($_POST['Bahan']);
   }
   if(isset($_POST['Barang'])){
     $arrayBarang=unserialize($_POST['Barang']);
   }
+  if(isset($_POST['BarangBaru'])){
+    $arrayBarangBaru=unserialize($_POST['BarangBaru']);
+  }
   if(isset($_POST['nBahan'])&&isset($_POST['jBahan'])&&$_POST['jBahan']!=""){
     array_push($arrayBahan, $_POST['nBahan']."|".$_POST['jBahan']);
-  }
-  
+  } 
   if(isset($_POST['nBarang'])&&isset($_POST['jBarang'])&&$_POST['jBarang']!=""){
     array_push($arrayBarang, $_POST['nBarang']."|".$_POST['jBarang']);
+  }
+  if(isset($_POST['idBarangBaru'])&&isset($_POST['nBarangBaru'])&&isset($_POST['jBarangBaru'])&&isset($_POST['lBarangBaru'])&&isset($_POST['pBarangBaru'])&&isset($_POST['kBarangBaru'])&&$_POST['jBarangBaru']!=""){
+    $barangBaru = $_POST['idBarangBaru']."|".$_POST['nBarangBaru']."|".$_POST['jBarangBaru']."|".$_POST['pBarangBaru']."|".$_POST['lBarangBaru']."|".$_POST['kBarangBaru'];
+    array_push($arrayBarangBaru,$barangBaru);
   }
   if(isset($_POST['hapusBahan'])){
     foreach($arrayBahan as $key =>$value){
@@ -215,13 +222,23 @@
       }
     }
   }
+  if(isset($_POST['hapusBarangBaru'])){
+    foreach($arrayBarangBaru as $key =>$value){
+      $lol = explode('|',$value);
+      if($lol[0]==$_POST['hapusBarangBaru']){
+        unset($arrayBarangBaru[$key]);
+      }
+    }
+  }
   //print_r($arrayIdBahan);
     $sqlBahan = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Bahan Produksi'";
     $sqlBarang = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Barang Jadi'";
     $sqlKaryawan = "SELECT * FROM `karyawan`b where jabatan ='Penjahit'";
+    $sqlKategori = "select * from Kategori where jenis='Barang Jadi';";
     $resultBahan = mysqli_query($link,$sqlBahan);
     $resultBarang = mysqli_query($link,$sqlBarang);
     $resultKaryawan = mysqli_query($link,$sqlKaryawan);
+    $resultKategori = mysqli_query($link,$sqlKategori);
 ?>
 
     <!-- Main content -->
@@ -266,6 +283,7 @@
                     <input type='submit'>
                     <input type='hidden' value='<?php echo serialize($arrayBahan)?>' name='Bahan'>
                     <input type='hidden' value='<?php echo serialize($arrayBarang)?>' name='Barang'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarangBaru)?>' name='BarangBaru'>
                   </div>
                   <br>
                 </div>
@@ -334,6 +352,7 @@
                     <input type='submit'>
                     <input type='hidden' value='<?php echo serialize($arrayBahan)?>' name='Bahan'>
                     <input type='hidden' value='<?php echo serialize($arrayBarang)?>' name='Barang'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarangBaru)?>' name='BarangBaru'>
                   </div>
                   <br>
                 </div>
@@ -357,6 +376,102 @@
                           <input type='hidden' value='".$barang[0]."' name='hapusBarang'>
                           <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
                           <input type='hidden' value='".serialize($arrayBarang)."' name='Barang'>
+                          <input type='hidden' value='".serialize($arrayBarangBaru)."' name='BarangBaru'>
+                          <input type='submit' value='Hapus'>
+                          </form></th>";
+                    echo "</tr>";
+                  }
+                ?>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <fieldset>
+                <legend> Input Barang Produksi Baru</legend>
+                <form action='#' method='POST'>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">ID</label>
+                  <div class="col-sm-10">
+                  <input type="number" name="idBarangBaru" id="idBarangBaru" class="form-control" style="width:30%">
+                  </div>
+                  <br>
+                </div>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Nama</label>
+                  <div class="col-sm-10">
+                  <input type="text" name="nBarangBaru" id="nBarangBaru" class="form-control" style="width:30%">
+                  </div>
+                  <br>
+                </div>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Jumlah</label>
+                  <div class="col-sm-10">
+                    <input type='number' name='jBarangBaru' id="jBarangBaru" min=1 class="form-control" style="width: 30%">
+                  </div>
+                  <br>
+                </div>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Panjang</label>
+                  <div class="col-sm-10">
+                    <input type='number' name='pBarangBaru' id="pBarangBaru" min=1 class="form-control" style="width: 30%">
+                  </div>
+                  <tr>
+                </div>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Lebar</label>
+                  <div class="col-sm-10">
+                    <input type='number' name='lBarangBaru' id="lBarangBaru" min=1 class="form-control" style="width: 30%">
+                  </div>
+                  <tr>
+                </div>
+                <div class="form-group">
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Kategori</label>
+                  <div class="col-sm-10">
+                    <select name="kBarangBaru" class="form-control" style="width:30%">
+                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
+                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
+
+                        }?>
+                    </select>
+                  </div>
+                  <tr>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-10">
+                    <input type='submit'>
+                    <input type='hidden' value='<?php echo serialize($arrayBahan)?>' name='Bahan'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarang)?>' name='Barang'>
+                    <input type='hidden' value='<?php echo serialize($arrayBarangBaru)?>' name='BarangBaru'>
+                  </div>
+                  <br>
+                </div>
+                    
+              </form>
+                
+              </fieldset>
+              
+              <table id="example2" class="table table-bordered table-hover">
+                <tr>
+                  <th>ID</th>
+                  <th>Nama</th>
+                  <th>Jumlah</th>
+                  <th>Ukuran</th>
+                  <th>Kategori</th>
+                  <th>Hapus</th>
+                </tr>
+                <?php
+                  foreach($arrayBarangBaru as $value){
+                    $barang = explode('|', $value);
+                    echo "<tr>";
+                    echo "<th>".$barang[0]."</th><th>".$barang[1]."</th><th>".$barang[2]."</th><th>".$barang[3]." cm x ".$barang[4]." cm</th><th>".$barang[5]."</th>";
+                    echo "<th><form action='#' method='POST'>
+                          <input type='hidden' value='".$barang[0]."' name='hapusBarangBaru'>
+                          <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
+                          <input type='hidden' value='".serialize($arrayBarang)."' name='Barang'>
+                          <input type='hidden' value='".serialize($arrayBarangBaru)."' name='BarangBaru'>
                           <input type='submit' value='Hapus'>
                           </form></th>";
                     echo "</tr>";
@@ -427,21 +542,22 @@
       $("#insert").click(function() {
         var bahan = <?php echo json_encode($arrayBahan); ?>;
         var barang = <?php echo json_encode($arrayBarang); ?>;
+        var barangBaru = <?php echo json_encode($arrayBarangBaru); ?>;
         $.ajax({
               type: "POST",
-              url: "queryproduksi.php",
+              url: "manage.php?act=inserttanggalproduksi",
               data: 'tanggal=' + Date.now(),
               success: function(result) {
                 $.ajax({ 
                     type: "POST",
-                    url: "queryambiltanggal.php",
+                    url: "manage.php?act=ambiltanggalproduksi",
                     cache: false, 
                     dataType :"JSON",                         
                     success: function(data){
                       var raw_result=JSON.stringify(data.id);
                         produksi_barang(data.id);
                     }});
-            window.location = "informasiproduksi.php";
+            
         }});
         function produksi_barang(smth) {        
           for( i = 0 ;i < bahan.length ; i++){
@@ -449,7 +565,7 @@
               var tBahan = bahan[i].split("|");
               $.ajax({
                   type: "POST",
-                  url: "queryproduksibahan.php",
+                  url: "manage.php?act=insertproduksibahan",
                   data: 'produksi_id=' + smth+ '&barang_id=' + tBahan[0]+ '&qty=' + tBahan[3]+ '&jumlah=' + tBahan[2],
                   success: function(result) {
                     alert("Sukses Bahan");
@@ -461,13 +577,27 @@
               alert(barang[i]);
               $.ajax({
                   type: "POST",
-                  url: "queryproduksibarang.php",
+                  url: "manage.php?act=insertproduksibarang",
                   data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&qty=' + tBarang[3]+ '&jumlah=' + tBarang[2],
                   success: function(result) {
                     alert("Sukses Barang");
                   }
               });
           }
+          //$barangBaru = $_POST['idBarangBaru']."|".$_POST['nBarangBaru']."|".$_POST['jBarangBaru']."|".$_POST['pBarangBaru']."|".$_POST['lBarangBaru']."|".$_POST['kBarangBaru'];
+          for( i = 0 ;i < barangBaru.length ; i++){
+              var tBarang = barangBaru[i].split("|");
+              alert(tBarang[i]);
+              $.ajax({
+                  type: "POST",
+                  url: "manage.php?act=insertproduksibarangbaru",
+                  data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&nama=' + tBarang[1]+ '&qty=' + tBarang[2]+ '&pjg=' + tBarang[3]+ '&lbr='+tBarang[4]+ '&kategori_id=' + tBarang[5],
+                  success: function(result) {
+                    alert("Sukses Barang");
+                  }
+              });
+          }
+          window.location = "informasiproduksi.php";
       }
       });
     });
