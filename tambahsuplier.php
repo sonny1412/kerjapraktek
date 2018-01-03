@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Karyawan | Tambah Karyawan</title>
+  <title>Bahan | Tambah Bahan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -96,8 +97,7 @@
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-        
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
@@ -118,12 +118,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
@@ -132,12 +132,12 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li><a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
+            <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
+            <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -145,7 +145,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
+            <li class="active"> <a href="#"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
             <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
@@ -180,9 +180,10 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Karyawan
+        Tambah Supplier
       </h1>
-    </section>  
+    </section>
+    
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -191,39 +192,26 @@
             
             <!-- /.box-header -->
             <fieldset>
-              <legend style="text-align: center;">Masukan data Karyawan</legend>
-              <form class="form-horizontal" action="manage.php?act=insertbarang" method="POST">
+              <legend style="text-align: center;">Masukan data Supplier</legend>
+              <form class="form-horizontal" action="manage.php?act=insertsupplier" method="POST">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputNamaKaryawan" class="col-sm-2 control-label">Nama</label>
-
+                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Perusahaan</label>
                   <div class="col-sm-10">
-                    <input type="text" name="nama" required autofocus class="form-control">
+                    <input type="text" name="nama" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputAlamatKaryawan" class="col-sm-2 control-label">Alamat</label>
-
+                  <label for="inputJumlahBahan" class="col-sm-2 control-label">Alamat</label>
                   <div class="col-sm-10">
-                    <input type="text" name="alamat" required class="form-control">
+                    <input type="text" name="alamat" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputKontakKaryawan" class="col-sm-2 control-label">Kontak</label>
+                  <label for="inputKeteranganBahan" class="col-sm-2 control-label">Kontak</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="telepon" required class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputJabatanKaryawan" class="col-sm-2 control-label">Jabatan</label>
-
-                  <div class="col-sm-10">
-                    <select name="jabatan" class="form-control">
-                      <option value="Penjualan">Penjualan</option>
-                      <option value="Pembelian">Pembelian</option>
-                      <option value="Gudang">Gudang</option>
-                    </select>
+                    <input type="number" name="kontak" class="form-control">
                   </div>
                 </div>
               </div>

@@ -132,6 +132,21 @@ switch ($act) {
 	}
 	break;
 
+	case "insertsupplier";
+	require 'db.php';
+	$nama = $_POST["nama"];
+	$alamat = $_POST["alamat"];
+	$kontak = $_POST["kontak"];
+	$sql = "INSERT INTO `supplier` (`nama`, `telepon`, `alamat`) VALUES ('".$nama."', '".$kontak."', '".$alamat."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		header("location: informasisuplier.php");
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
 	case "ubahbarang":
 	require 'db.php';
 	$hidden = $_POST["hidden"];

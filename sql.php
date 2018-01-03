@@ -19,6 +19,12 @@
         die("SQL Error: ".$sqlKaryawan);
     }
 
+    $sqlSupplier = "select * from supplier";     
+    $resultSupplier = mysqli_query($link, $sqlSupplier);
+    if(!$resultSupplier) {
+        die("SQL Error: ".$sqlSupplier);
+    }
+
     $sqlKategoriBahan = "select * from Kategori WHERE jenis = 'Bahan Produksi'";
     $resultKategoriBahan = mysqli_query($link,$sqlKategoriBahan);
     if(!$resultKategoriBahan){
