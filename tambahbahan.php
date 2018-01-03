@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -117,8 +118,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
@@ -181,16 +182,6 @@
         Tambah Bahan
       </h1>
     </section>
-    <?php
-        require 'db.php';
-        $sql = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Bahan Produksi')";
-        $result = mysqli_query($link,$sql);
-        $sqlKategori = "select * from Kategori where jenis='Bahan Produksi';";
-        $resultKategori = mysqli_query($link,$sqlKategori);
-        if(!$result){
-          die("SQL Error :".$sql);
-        }
-    ?>
     
     <!-- Main content -->
     <section class="content">
@@ -229,8 +220,8 @@
 
                   <div class="col-sm-10">
                     <select name="idKategori" class="form-control">
-                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
-                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
+                    <?php while($rowKategoriBahan=mysqli_fetch_object($resultKategoriBahan)){
+                        echo "<option value='".$rowKategoriBahan->id."'>".$rowKategoriBahan->nama."</option>";
                         }?>
                     </select>
                   </div>

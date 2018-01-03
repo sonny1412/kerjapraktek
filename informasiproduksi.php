@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -182,12 +183,6 @@
         Informasi Produksi
       </h1>
     </section>
-    <?php
-    require 'db.php';
-    $sqlProduksi = "SELECT * FROM `produksi` order by tanggal DESC";
-    $resultProduksi = mysqli_query($link,$sqlProduksi);
-    ?> 
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -205,6 +200,7 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                  <th>Tanggal</th>
                   <th>Id Produksi</th>
                   <th>Bahan Digunakan</th>
                   <th>Barang Terproduksi</th>
@@ -213,20 +209,19 @@
                 </thead>
                 <tbody>
                 <?php
-                while($rowProduksi = mysqli_fetch_object($resultProduksi)) {
+                while($rowProduksi = mysqli_fetch_object($resultInformasiProduksi)) {
                     echo "<tr>";
+                    echo "<td>".$rowProduksi->date."</td>";
                     echo "<td>".$rowProduksi->id."</td>";
                     echo "<td>";
-                    $sqlBahan = "SELECT b.nama , pb.qty , b.keterangan FROM barang b, produksi_barang pb, kategori k WHERE b.id = pb.Barang_id and b.Kategori_id = k.id and pb.Produksi_id = '".$rowProduksi->id."' and k.jenis='Bahan Produksi'";
-                    $resultBahan = mysqli_query($link,$sqlBahan);
+                    $resultBahan = ProduksiBahan($rowProduksi->id);
                     while($rowBahan = mysqli_fetch_object($resultBahan)){
                       echo $rowBahan->nama." : ".$rowBahan->qty." ".$rowBahan->keterangan;
                       echo "</br>";
                     }
                     echo "</td>";
                     echo "<td>";
-                    $sqlBarang = "SELECT b.nama , pb.qty FROM barang b, produksi_barang pb, kategori k WHERE b.id = pb.Barang_id and b.Kategori_id = k.id and pb.Produksi_id = '".$rowProduksi->id."' and k.jenis='Barang Jadi'";
-                    $resultBarang = mysqli_query($link,$sqlBarang);
+                    $resultBarang = ProduksiBarang($rowProduksi->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
                       echo $rowBarang->nama." : ".$rowBarang->qty." Buah";
                       echo "</br>";

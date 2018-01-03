@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <?php include 'sql.php'; ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bahan | Informasi Bahan</title>
+  <title>Bahan | Tambah Bahan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -29,7 +30,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
-<?php include 'sql.php'; ?>
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
@@ -97,9 +97,8 @@
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-        
-        
-        <li class="active treeview">
+
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
             <span class="pull-right-container">
@@ -107,8 +106,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
-            <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
+            <li><a href="informasibahan.php"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
+            <li ><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -119,8 +118,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
@@ -138,7 +137,7 @@
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -147,7 +146,7 @@
           </a>
           <ul class="treeview-menu">
             <li> <a href="laporanpembelian.php"><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
-            <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
@@ -180,63 +179,130 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Informasi Bahan
+        Tambah Bahan
       </h1>
-    </section>
+    </section>  
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box">
-            
+          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Nama Bahan</th>
-                  <th>Jenis</th>
-                  <th>Kuantitas</th>
-                  <th>Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                while($rowBahan = mysqli_fetch_object($resultBahan)) {
-                    echo "<tr>";
-                    echo "<td>".$rowBahan->nama."</td>
-                    <td>".Kategori($rowBahan->Kategori_id)."</td>
-                    <td>".$rowBahan->quantity." ".$rowBahan->keterangan."</td>
-                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowBahan->id.">edit</a></td>";
-                    echo "</tr>";
-                     } ?>
-                     
-                </tbody>
-                
-              </table>
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Detail Bahan</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="fetched-data"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
-                        </div>
+            <fieldset>
+              <legend style="text-align: center;">Masukan data Bahan</legend>
+              <form class="form-horizontal" action="manage.php?act=insertbahan" method="POST">
+              <div class="panel-body">
+                <div class="col-sm-6 col-md-6">
+                  <div id="formAwal">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Nomor Nota<span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="number" name="noNota" class="form-control"  required/>
+                      </div>
                     </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label ">Tanggal <span class="asterisk">*</span></label>
+                      <div class="col-sm-9">                      
+                        <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>" required/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Supplier <span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <select name="supplier" class="form-control">
+                          <option value="" disabled selected style="display: none;">[Pilih Supplier]</option>
+                          
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group" style="margin: 0; padding: 15px 0; border-top: 1px solid #d3d7db;">
+                      <label class="col-sm-3 control-label">Jenis Pembayaran<span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();" required>
+                          <option value="" disabled selected style="display: none;">Pilih Pembayaran</option>
+                          <option value="T">Tunai</option>
+                          <option value="TR">Transfer</option>
+                          <option value="K">Kredit</option>
+                          <option value="C">Cek</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="caraBayar"></div>
+                    <div class="form-group" style="margin: 0; padding: 15px 0; border-top: 1px solid #d3d7db;">
+                      <label class="col-sm-3 control-label">Diskon Langsung</label>
+                      <div class="col-sm-9">                      
+                        <input type="number" min="0" name="diskonLangsung" class="form-control" placeholder="Masukan Diskon Langsung" />
+                      </div>
+                    </div>                 
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Diskon Pelunasan</label>
+                      <div class="col-sm-9">                      
+                        <input type="number" min="0" name="diskonPelunasan" class="form-control" placeholder="Masukan Diskon Pelunasan" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label ">Batas Diskon Pelunasan</label>
+                      <?php  $date = date("Y-m-d");
+                      $date = strtotime($date);
+                      $date2 = strtotime("+7 day", $date);?>
+                      <div class="col-sm-9">
+                        <input type="date" name="tanggalBatasNota" class="form-control" value="<?php echo date("Y-m-d", $date2);?>"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Status Kirim<span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
+                          <option selected="true" value="1">Diterima Langsung</option>
+                          <option value="0">Dikirim</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="barangDikirim"></div>
+                  </div>
                 </div>
-             </div>
-            </div>
+
+                <div class="col-sm-6 col-md-6">
+                  <div id="formBarang"> 
+                    <div class="form-group" id="divBarang">
+                      <label class="col-sm-3 control-label">Barang <span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <select name="nama-barang[]" class="form-control">
+                          <option value="" disabled selected style="display: none;">[Pilih Barang]</option>
+                          
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group" id="divJumlah">
+                      <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="number" min="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang" required/>
+                      </div>
+                    </div>
+                    <div class="form-group" id="divHarga">
+                      <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang" required/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="divButton">
+                    <div class="col-sm-12">
+                      <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">Insert</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+
+            </fieldset>
+            
             <!-- /.box-body -->
           </div>
       </div>
@@ -271,6 +337,7 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- page script -->
 <script>
   $(function () {
     $('#example1').DataTable()
@@ -312,7 +379,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalbahan.php',
+                url : 'modalbarang.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
@@ -320,6 +387,14 @@ function myFunction() {
             });
          });
     });
+    var htmlNama = $('#divBarang:eq(0)')[0].outerHTML;
+    var htmlJumlah = $('#divJumlah:eq(0)')[0].outerHTML;
+    var htmlHarga = $('#divHarga:eq(0)')[0].outerHTML;
+    $("#next").click(function() {
+      $('#formBarang').append(htmlNama);
+      $('#formBarang').append(htmlJumlah);
+      $('#formBarang').append(htmlHarga);
+   });
   </script>
 </body>
 </html>

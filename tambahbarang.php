@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -181,18 +182,7 @@
       <h1>
         Tambah Barang
       </h1>
-    </section>
-    <?php
-        require 'db.php';
-        $sql = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Barang Jadi')";
-        $result = mysqli_query($link,$sql);
-        $sqlKategori = "select * from Kategori where jenis='Barang Jadi';";
-        $resultKategori = mysqli_query($link,$sqlKategori);
-        if(!$result){
-          die("SQL Error :".$sql);
-        }
-    ?>
-    
+    </section>    
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -237,8 +227,8 @@
 
                   <div class="col-sm-10">
                     <select name="idKategori" class="form-control">
-                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
-                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
+                    <?php while($rowKategoriBarang=mysqli_fetch_object($resultKategoriBarang)){
+                        echo "<option value='".$rowKategoriBarang->id."'>".$rowKategoriBarang->nama."</option>";
                         }?>
                     </select>
                   </div>

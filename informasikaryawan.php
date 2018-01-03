@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -182,17 +183,6 @@
         Informasi Karyawan
       </h1>
     </section>
-    <?php 
-        require 'db.php';
-        $sql = "select * from karyawan";
-        
-        $result = mysqli_query($link, $sql);
-        if(!$result) {
-            die("SQL Error: ".$sql);
-        }
-         
-    ?>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -219,7 +209,7 @@
                 </thead>
                 <tbody>
                 <?php
-                  while($row = mysqli_fetch_object($result)) {
+                  while($row = mysqli_fetch_object($resultKaryawan)) {
                     echo "<tr>";
                     echo "<td>".$row->nama."</td>
                           <td>".$row->alamat."</td>

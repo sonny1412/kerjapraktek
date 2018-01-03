@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -230,17 +231,7 @@
       }
     }
   }
-  //print_r($arrayIdBahan);
-    $sqlBahan = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Bahan Produksi'";
-    $sqlBarang = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Barang Jadi'";
-    $sqlKaryawan = "SELECT * FROM `karyawan`b where jabatan ='Penjahit'";
-    $sqlKategori = "select * from Kategori where jenis='Barang Jadi';";
-    $resultBahan = mysqli_query($link,$sqlBahan);
-    $resultBarang = mysqli_query($link,$sqlBarang);
-    $resultKaryawan = mysqli_query($link,$sqlKaryawan);
-    $resultKategori = mysqli_query($link,$sqlKategori);
 ?>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -262,9 +253,9 @@
                               $lol = explode('|',$value);
                               array_push($tampungBahan, $lol[0]);
                           }
-                        while($rowBahan=mysqli_fetch_object($resultBahan)){
-                          if(!in_array($rowBahan->id, $tampungBahan)){
-                          echo "<option value='".$rowBahan->id."|".$rowBahan->nama."|".$rowBahan->quantity."'>".$rowBahan->nama."
+                        while($rowProduksiBahan=mysqli_fetch_object($resultProduksiBahan)){
+                          if(!in_array($rowProduksiBahan->id, $tampungBahan)){
+                          echo "<option value='".$rowProduksiBahan->id."|".$rowProduksiBahan->nama."|".$rowProduksiBahan->quantity."'>".$rowProduksiBahan->nama."
                               </option>";}
                               }?>
                     </select>
@@ -328,13 +319,13 @@
                     <select name='nBarang' id="nBarang" class="form-control" style="width: 30%">
                       <?php  
                         $tampungBarang = array();
-                        foreach($arrayBarang as $value){
+                        foreach($arrayProduksiBarang as $value){
                               $lol = explode('|',$value);
                               array_push($tampungBarang, $lol[0]);
                           }
-                        while($rowBarang=mysqli_fetch_object($resultBarang)){
-                        if(!in_array($rowBarang->id, $tampungBarang))
-                        echo "<option value='".$rowBarang->id."|".$rowBarang->nama."|".$rowBarang->quantity."'>".$rowBarang->nama."</option>";
+                        while($rowProduksiBarang=mysqli_fetch_object($resultProduksiBarang)){
+                        if(!in_array($rowProduksiBarang->id, $tampungBarang))
+                        echo "<option value='".$rowProduksiBarang->id."|".$rowProduksiBarang->nama."|".$rowProduksiBarang->quantity."'>".$rowProduksiBarang->nama."</option>";
                         }?>
                     </select>
                   </div>
@@ -431,8 +422,8 @@
                   <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Kategori</label>
                   <div class="col-sm-10">
                     <select name="kBarangBaru" class="form-control" style="width:30%">
-                    <?php while($rowKategori=mysqli_fetch_object($resultKategori)){
-                        echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
+                    <?php while($rowProduksiKategori=mysqli_fetch_object($resultProduksiKategori)){
+                        echo "<option value='".$rowProduksiKategori->id."'>".$rowProduksiKategori->nama."</option>";
 
                         }?>
                     </select>
@@ -543,6 +534,13 @@
         var bahan = <?php echo json_encode($arrayBahan); ?>;
         var barang = <?php echo json_encode($arrayBarang); ?>;
         var barangBaru = <?php echo json_encode($arrayBarangBaru); ?>;
+        if(bahan.length == 0){
+          alert("Isi data bahan terlebih dahulu");
+        }
+        else if(barang.length == 0 && barangBaru.length==0){
+          alert("Isi data barang atau barang baru terlebih dahulu");
+        }
+        else{
         $.ajax({
               type: "POST",
               url: "manage.php?act=inserttanggalproduksi",
@@ -558,42 +556,36 @@
                         produksi_barang(data.id);
                     }});
             
-        }});
+        }});}
         function produksi_barang(smth) {        
           for( i = 0 ;i < bahan.length ; i++){
-              alert(bahan[i]);
               var tBahan = bahan[i].split("|");
               $.ajax({
                   type: "POST",
                   url: "manage.php?act=insertproduksibahan",
                   data: 'produksi_id=' + smth+ '&barang_id=' + tBahan[0]+ '&qty=' + tBahan[3]+ '&jumlah=' + tBahan[2],
                   success: function(result) {
-                    alert("Sukses Bahan");
                   }
               });
           }
           for( i = 0 ;i < barang.length ; i++){
               var tBarang = barang[i].split("|");
-              alert(barang[i]);
               $.ajax({
                   type: "POST",
                   url: "manage.php?act=insertproduksibarang",
                   data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&qty=' + tBarang[3]+ '&jumlah=' + tBarang[2],
                   success: function(result) {
-                    alert("Sukses Barang");
                   }
               });
           }
           //$barangBaru = $_POST['idBarangBaru']."|".$_POST['nBarangBaru']."|".$_POST['jBarangBaru']."|".$_POST['pBarangBaru']."|".$_POST['lBarangBaru']."|".$_POST['kBarangBaru'];
           for( i = 0 ;i < barangBaru.length ; i++){
               var tBarang = barangBaru[i].split("|");
-              alert(tBarang[i]);
               $.ajax({
                   type: "POST",
                   url: "manage.php?act=insertproduksibarangbaru",
                   data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&nama=' + tBarang[1]+ '&qty=' + tBarang[2]+ '&pjg=' + tBarang[3]+ '&lbr='+tBarang[4]+ '&kategori_id=' + tBarang[5],
                   success: function(result) {
-                    alert("Sukses Barang");
                   }
               });
           }

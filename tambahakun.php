@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -182,17 +183,6 @@
         Tambah Akun Karyawan
       </h1>
     </section>
-    <?php 
-        require 'db.php';
-        $sql = "select * from user";
-        
-        $result = mysqli_query($link, $sql);
-        if(!$result) {
-            die("SQL Error: ".$sql);
-        }   
-        $sqlUser = "select * from karyawan where jabatan = 'Penjualan' or jabatan = 'Pembelian' or jabatan ='Gudang' having id not in(select Karyawan_id from user)";  
-        $resultUser = mysqli_query($link,$sqlUser);
-    ?>  
     <!-- Main content -->
     <section class="content">
       <div class="row">

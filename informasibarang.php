@@ -28,6 +28,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -118,8 +119,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasigudang.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
@@ -182,17 +183,6 @@
         Informasi Barang
       </h1>
     </section>
-    <?php
-        require 'db.php';
-        $sql = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Barang Jadi')";
-        $result = mysqli_query($link,$sql);
-        $sqlKategori = "select * from Kategori where jenis='Barang Jadi';";
-        $resultKategori = mysqli_query($link,$sqlKategori);
-        if(!$result){
-          die("SQL Error :".$sql);
-        }
-    ?>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -219,16 +209,13 @@
                 </thead>
                 <tbody>
                 <?php
-                while($row = mysqli_fetch_object($result)) {
-                    $sqlLol = "SELECT * FROM `kategori` WHERE id ='".$row->Kategori_id."';";
-                    $resultLol = mysqli_query($link,$sqlLol);
-                    $rowLol = mysqli_fetch_object($resultLol);
+                while($rowBarang = mysqli_fetch_object($resultBarang)) {
                     echo "<tr>";
-                    echo "<td>".$row->nama."</td>
-                    <td>".$rowLol->nama."</td>
-                    <td>".$row->quantity."</td>
-                    <td>".$row->keterangan."</td>
-                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$row->id.">edit</a></td>";
+                    echo "<td>".$rowBarang->nama."</td>
+                    <td>".Kategori($rowBarang->Kategori_id)."</td>
+                    <td>".$rowBarang->quantity."</td>
+                    <td>".$rowBarang->keterangan."</td>
+                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowBarang->id.">edit</a></td>";
                     echo "</tr>";
                      } ?>
                 </tbody>
