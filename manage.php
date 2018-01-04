@@ -195,6 +195,21 @@ switch ($act) {
 	}
 	break;
 
+	case "insertpembelian":
+	require 'db.php';
+	$noNota = $_POST["noNota"];
+	$tanggal = $_POST["tanggal"];
+	$supplier= $_POST["idSupplier"];
+	$jenisBayar = $_POST["jenisBayar"];
+	$jatuhTempo = $_POST["tanggalJatuhTempo"];
+	$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '25000');";
+	$result = mysqli_query($link,$sql);
+	if($result){}
+	else{
+		echo "gagal";
+	}
+	break;
+
 	case "ambiltanggalproduksi":
 	require 'db.php';
 	$sql = "SELECT max(id) as id FROM `produksi`";
