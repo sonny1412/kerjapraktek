@@ -197,12 +197,40 @@ switch ($act) {
 
 	case "insertpembelian":
 	require 'db.php';
+	$sql;
 	$noNota = $_POST["noNota"];
 	$tanggal = $_POST["tanggal"];
 	$supplier= $_POST["idSupplier"];
 	$jenisBayar = $_POST["jenisBayar"];
 	$jatuhTempo = $_POST["tanggalJatuhTempo"];
-	$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '25000');";
+	$total = $_POST["total"];
+	if($jenisBayar == "K"){
+		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0');";
+	}
+	else if($jenisBayar == "T"){
+		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$tanggal."', '".$total."');";
+	}
+	$result = mysqli_query($link,$sql);
+	if($result){}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertpembelianbarang":
+	require 'db.php';
+	$sql;
+	$noNota = $_POST["noNota"];
+	$barang_id = $_POST["barang_id"];
+	$qty= $_POST["qty"];
+	$harga = $_POST["harga"];
+	$jenisBayar = $_POST["jenisBayar"];
+	if($jenisBayar == "K"){
+		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Belom Lunas');";
+	}
+	else if($jenisBayar == "T"){
+		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Lunas');";
+	}
 	$result = mysqli_query($link,$sql);
 	if($result){}
 	else{

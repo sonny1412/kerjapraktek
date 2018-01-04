@@ -160,8 +160,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="laporanpenjualan.php"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
+            <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
+            <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
             <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
+            <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
           </ul>
         </li>
       

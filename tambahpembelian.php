@@ -147,7 +147,7 @@
           <ul class="treeview-menu">
             <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
+            <li class="active"><a href="#.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
@@ -159,8 +159,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="laporanpenjualan.php"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
+            <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
+            <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
             <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
+            <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
           </ul>
         </li>
       
@@ -338,6 +340,7 @@
     var jumlah = [];
     var harga=[];
     var total = 0;
+    var cek=0;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
     $('input[name="tanggalNota"]').each( function(){ tanggal = $(this).val(); });
@@ -347,27 +350,38 @@
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
     $('input[name="jumlah-barang[]"]').each( function(){ jumlah.push($(this).val()); });
     $('input[name="harga-barang[]"]').each( function(){ harga.push($(this).val()); }); 
-    for(i = 0; i < jumlah.length ; i++){
-      total += harga[i] * jumlah[i];
-    }  
 
-    $.ajax({
+    for(i = 0; i < jumlah.length ; i++){
+      if(nama[i] && jumlah[i] && harga[i]){
+        total += harga[i] * jumlah[i];
+      }
+      else{
+        cek++;
+      }
+    } 
+
+    if(cek==0){
+      $.ajax({
       type: "POST",
       url: "manage.php?act=insertpembelian",
-      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo,
+      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total,
       success: function(result) {
-        alert(total);
-        alert("Lol");
-        /*$.ajax({ 
-          type: "POST",
-          url: "manage.php?act=ambiltanggalproduksi",
-          cache: false, 
-          dataType :"JSON",                         
-          success: function(data){
-            var raw_result=JSON.stringify(data.id);
-            produksi_barang(data.id);
-           }});*/     
-    }});
+        for( i = 0 ;i < nama.length ; i++){
+          $.ajax({
+            type: "POST",
+            url: "manage.php?act=insertpembelianbarang",
+            data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&jenisBayar=' + jenisBayar,
+            success: function(result) {
+            }
+          });
+        }    
+      }});
+    }
+    else{
+      alert("Tolong cek isi semua field diatas");
+    }
+
+    
   });
 
   function copyjenisBayar() {
