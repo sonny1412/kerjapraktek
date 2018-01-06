@@ -147,7 +147,7 @@
           <ul class="treeview-menu">
             <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
-            <li class="active"><a href="#.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
+            <li class="active"><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
@@ -228,13 +228,23 @@
                       <label class="col-sm-3 control-label">Jenis Pembayaran<span class="asterisk">*</span></label>
                       <div class="col-sm-9">
                         <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();" required>
-                          <option value="" disabled selected style="display: none;">Pilih Pembayaran</option>
+                          <option value="" disabled selected style="display: none;">[Pilih Pembayaran]</option>
                           <option value="T">Tunai</option>
                           <option value="K">Kredit</option>
                         </select>
                       </div>
                     </div>
-                    <div id="caraBayar"></div>                
+                    <div id="caraBayar"></div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Status Kirim<span class="asterisk">*</span></label>
+                      <div class="col-sm-9">
+                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
+                          <option value="" disabled selected style="display: none;">[Pilih Status Kirim]</option>
+                          <option value="T">Diterima Langsung</option>
+                          <option value="K">Dikirim</option>
+                        </select>
+                      </div>
+                    </div>               
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
@@ -341,10 +351,12 @@
     var harga=[];
     var total = 0;
     var cek=0;
+    var statusKirim;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
     $('input[name="tanggalNota"]').each( function(){ tanggal = $(this).val(); });
     $('select[name="supplier"]').each( function(){ idSupplier = $(this).val(); });
+    $('select[name="statusKirim"]').each( function(){ statusKirim = $(this).val(); });
     $('select[name="jenisBayar"]').each( function(){ jenisBayar = $(this).val(); });
     $('input[name="tanggalJatuhTempo"]').each( function(){ tanggalJatuhTempo = $(this).val(); });
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
@@ -358,7 +370,7 @@
       else{
         cek++;
       }
-    } 
+    }
 
     if(cek==0){
       $.ajax({
@@ -370,7 +382,7 @@
           $.ajax({
             type: "POST",
             url: "manage.php?act=insertpembelianbarang",
-            data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&jenisBayar=' + jenisBayar,
+            data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
             success: function(result) {
             }
           });

@@ -224,12 +224,12 @@ switch ($act) {
 	$barang_id = $_POST["barang_id"];
 	$qty= $_POST["qty"];
 	$harga = $_POST["harga"];
-	$jenisBayar = $_POST["jenisBayar"];
-	if($jenisBayar == "K"){
-		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Belom Lunas');";
+	$statusKirim = $_POST["statusKirim"];
+	if($statusKirim == "K"){
+		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Proses');";
 	}
-	else if($jenisBayar == "T"){
-		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Lunas');";
+	else if($statusKirim == "T"){
+		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Sampai');";
 	}
 	$result = mysqli_query($link,$sql);
 	if($result){}

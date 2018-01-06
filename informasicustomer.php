@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bahan | Tambah Bahan</title>
+  <title>Bahan | Informasi Bahan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,8 +28,8 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
+<?php include 'sql.php'; ?>
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
@@ -97,7 +97,7 @@
             <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-
+               
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
@@ -118,8 +118,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
-            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
@@ -159,8 +159,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="active"> <a href="#"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
-            <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
+            <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
+            <li  class="active"> <a href="#"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
             <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
             <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
           </ul>
@@ -182,50 +182,63 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Customer
+        Informasi Customer
       </h1>
     </section>
-    
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
+          <div class="box">
             
             <!-- /.box-header -->
-            <fieldset>
-              <legend style="text-align: center;">Masukan data Customer</legend>
-              <form class="form-horizontal" action="manage.php?act=insertcustomer" method="POST">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Perusahaan</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control">
+            <div class="box-body">
+              <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
                   </div>
+                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
                 </div>
-                <div class="form-group">
-                  <label for="inputJumlahBahan" class="col-sm-2 control-label">Alamat</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="alamat" class="form-control">
-                  </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Kontak</th>
+                  <th>Alamat</th>
+                  <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                while($row = mysqli_fetch_object($resultCustomer)) {
+                    echo "<tr>";
+                    echo "<td>".$row->nama."</td>
+                    <td>".$row->telepon."</td>
+                    <td>".$row->alamat."</td>
+                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$row->id.">edit</a></td>";
+                    echo "</tr>";
+                     } ?>
+                     
+                </tbody>
+                
+              </table>
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Detail Bahan</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fetched-data"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="inputKeteranganBahan" class="col-sm-2 control-label">Kontak</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="kontak" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Insert</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
-
-            </fieldset>
-            
+             </div>
+            </div>
             <!-- /.box-body -->
           </div>
       </div>
@@ -260,7 +273,6 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- page script -->
 <script>
   $(function () {
     $('#example1').DataTable()
@@ -302,7 +314,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalbarang.php',
+                url : 'modalbahan.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
