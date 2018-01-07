@@ -238,6 +238,40 @@ switch ($act) {
 	}
 	break;
 
+	case "insertpembelianbarangBaru";
+	require 'db.php';
+	$sqlPembelian;
+	$id = $_POST["idBarang"];
+	$nama = $_POST["nama"];
+	$kuantitas = $_POST["kuantitas"];
+	$lbr = $_POST["lbr"];
+	$idKategori = $_POST["idKategori"];
+	$pjg = $_POST["pjg"];
+	$noNota = $_POST["noNota"];
+	$statusKirim = $_POST["statusKirim"];
+	$harga=$_POST["harga"];
+	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		if($statusKirim == "K"){
+		$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."', 'Sampai');";
+		}
+		$resultPembelian = mysqli_query($link,$sqlPembelian);
+		if($resultPembelian){
+
+		}
+		else{
+			echo "gagal";
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
 	case "ambiltanggalproduksi":
 	require 'db.php';
 	$sql = "SELECT max(id) as id FROM `produksi`";

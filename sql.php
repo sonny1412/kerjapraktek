@@ -37,6 +37,12 @@
        die("SQL Error :".$sqlKategoriBarang);
     }
 
+    $sqlKategori = "select * from Kategori";
+    $resultKategori = mysqli_query($link,$sqlKategori);
+    if(!$resultKategori){
+       die("SQL Error :".$sqlKategori);
+    }
+
     $sqlProduksiBahan = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Bahan Produksi'";
     $resultProduksiBahan = mysqli_query($link,$sqlProduksiBahan);
     if(!$resultProduksiBahan){
