@@ -203,12 +203,24 @@ switch ($act) {
 	$supplier= $_POST["idSupplier"];
 	$jenisBayar = $_POST["jenisBayar"];
 	$jatuhTempo = $_POST["tanggalJatuhTempo"];
+	$statusKirim = $_POST["statusKirim"];
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
-		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0');";
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
+		}
+		
 	}
-	else if($jenisBayar == "T"){
-		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$tanggal."', '".$total."');";
+	if($jenisBayar == "T"){
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Sampai');";
+		}		
 	}
 	$result = mysqli_query($link,$sql);
 	if($result){}
@@ -225,14 +237,19 @@ switch ($act) {
 	$qty= $_POST["qty"];
 	$harga = $_POST["harga"];
 	$statusKirim = $_POST["statusKirim"];
-	if($statusKirim == "K"){
-		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Proses');";
-	}
-	else if($statusKirim == "T"){
-		$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."', 'Sampai');";
-	}
+	$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."');";
 	$result = mysqli_query($link,$sql);
-	if($result){}
+	if($result){
+		if($statusKirim == "T"){
+			$sqlKurang = "UPDATE `barang` SET quantity = quantity + ".$qty." WHERE id = '".$barang_id."'";
+			$resultKurang = mysqli_query($link,$sqlKurang);
+			if($resultKurang){
+			}
+			else{
+				echo "gagal";
+			}
+		}
+	}
 	else{
 		echo "gagal";
 	}
@@ -240,7 +257,7 @@ switch ($act) {
 
 	case "insertpembelianbarangBaru";
 	require 'db.php';
-	$sqlPembelian;
+	$sql;
 	$id = $_POST["idBarang"];
 	$nama = $_POST["nama"];
 	$kuantitas = $_POST["kuantitas"];
@@ -250,22 +267,17 @@ switch ($act) {
 	$noNota = $_POST["noNota"];
 	$statusKirim = $_POST["statusKirim"];
 	$harga=$_POST["harga"];
-	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+	if($statusKirim == "T"){
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+	}
+	else if($statusKirim == "K"){
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','0','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+	}
 	$result = mysqli_query($link,$sql);
-	if($result){
-		if($statusKirim == "K"){
-		$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."', 'Proses');";
-		}
-		else if($statusKirim == "T"){
-			$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."', 'Sampai');";
-		}
-		$resultPembelian = mysqli_query($link,$sqlPembelian);
-		if($resultPembelian){
+	$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."');";
+	$resultPembelian = mysqli_query($link,$sqlPembelian);
+	if($resultPembelian){
 
-		}
-		else{
-			echo "gagal";
-		}
 	}
 	else{
 		echo "gagal";

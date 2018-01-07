@@ -73,6 +73,12 @@
        die("SQL Error :".$sqlUser);
     }
 
+    $sqlPembelian = "SELECT p.id, p.tanggal,p.Supplier_id, p.saldo,p.status_kirim, SUM(pb.harga*pb.qty) as total FROM pembelian p, pembelian_barang pb WHERE p.id = pb.Pembelian_id GROUP BY p.id";
+    $resultPembelian = mysqli_query($link,$sqlPembelian);
+    if(!$resultPembelian){
+       die("SQL Error :".$sqlPembelian);
+    }
+
     //Function
     function Kategori($kid){
         require 'db.php';
@@ -92,5 +98,11 @@
         $sqlBarang = "SELECT b.nama , pb.qty FROM barang b, produksi_barang pb, kategori k WHERE b.id = pb.Barang_id and b.Kategori_id = k.id and pb.Produksi_id = '".$pid."' and k.jenis='Barang Jadi'";
         $resultBarang = mysqli_query($link,$sqlBarang);
         return $resultBarang;
+    }
+    function PembelianBarang($pid){
+        require 'db.php';
+        $sqlPembelianBarang = "SELECT b.nama, pb.qty,pb.harga FROM pembelian_barang pb, barang b WHERE pb.pembelian_id = ".$pid." and pb.Barang_id = b.id";
+        $resultPembelianBarang = mysqli_query($link,$sqlPembelianBarang);
+        return $resultPembelianBarang;
     }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 06 Jan 2018 pada 14.20
+-- Generation Time: 07 Jan 2018 pada 18.50
 -- Versi Server: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -41,8 +41,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `nama`, `quantity`, `keterangan`, `Kategori_id`) VALUES
-(1, 'Selimut My Love Flower Pattern', 1012, 'makanan', 1),
-(2, 'Karpet Normandy Red', 2135, '150 Cm x 100 Cm', 1),
+(1, 'Selimut My Love Flower Pattern', 1111, 'makanan', 1),
+(2, 'Karpet Normandy Red', 2540, '150 Cm x 100 Cm', 1),
 (3, 'Bordir Merah', 8, 'Meter', 3),
 (4, 'Bordir Biru', 20, 'Meter', 3),
 (5, 'Alas Matras Karet Hitam', 300, 'Buah', 3),
@@ -60,7 +60,16 @@ INSERT INTO `barang` (`id`, `nama`, `quantity`, `keterangan`, `Kategori_id`) VAL
 (17, 'sepatu', 16, '19 Cm x 19 Cm', 1),
 (18, 'kain emas', 13, '21 Cm x 19 Cm', 2),
 (19, 'Karpet buatan tangan', 19, '16 Cm x 16 Cm', 2),
-(20, 'benang anti putus', 15, 'Meter', 3);
+(20, 'benang anti putus', 15, 'Meter', 3),
+(21, 'Kekuatan', 12, '12 Cm x 12 Cm', 1),
+(100, 'fdf', 124312, '43214 Cm x 132431 Cm', 1),
+(101, 'sad', 123, '123 Cm x 123 Cm', 1),
+(555, 'dsgdsg', 12, '12 Cm x 12 Cm', 1),
+(1010, 'lol', 123, '123 Cm x 123 Cm', 1),
+(123123, 'sqf', 123, '123 Cm x 123 Cm', 1),
+(987654, 'Rama Best Carpet', 100, '150 Cm x 100 Cm', 1),
+(6575657, 'Rama Best Carpet', 100, '150 Cm x 100 Cm', 1),
+(7585785, 'Rama Testing Item', 100, '150 Cm x 100 Cm', 1);
 
 -- --------------------------------------------------------
 
@@ -144,17 +153,20 @@ CREATE TABLE `pembelian` (
   `Karyawan_id` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
   `jatuh_tempo` date NOT NULL,
-  `saldo` int(11) NOT NULL
+  `saldo` int(11) NOT NULL,
+  `status_kirim` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `pembelian`
 --
 
-INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES
-(1, 1, 1, '2018-01-06', '2018-01-06', 1),
-(2, 1, 1, '2018-01-06', '2018-01-06', 1),
-(3, 1, 1, '2018-01-06', '2018-01-06', 1);
+INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES
+(1, 1, 1, '2018-01-07', '0000-00-00', 10000000, 'Sampai'),
+(2, 1, 1, '2018-01-07', '0000-00-00', 0, 'Sampai'),
+(3, 1, 1, '2018-01-07', '0000-00-00', 0, 'Proses'),
+(4, 1, 1, '2018-01-07', '0000-00-00', 11000000, 'Sampai'),
+(5, 1, 1, '2018-01-07', '0000-00-00', 20000000, 'Proses');
 
 -- --------------------------------------------------------
 
@@ -167,16 +179,21 @@ CREATE TABLE `pembelian_barang` (
   `Pembelian_id` int(11) NOT NULL,
   `Barang_id` int(11) NOT NULL,
   `qty` int(11) DEFAULT NULL,
-  `harga` int(11) DEFAULT NULL,
-  `status_kirim` varchar(20) NOT NULL
+  `harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `pembelian_barang`
 --
 
-INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`, `status_kirim`) VALUES
-(14, 3, 1, 1, 1, 'Sampai');
+INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES
+(54, 1, 2, 100, 100000),
+(55, 2, 1, 100, 100000),
+(56, 3, 2, 100, 100000),
+(57, 4, 2, 100, 10000),
+(58, 4, 6575657, 100, 100000),
+(59, 5, 2, 1000, 10000),
+(60, 5, 7585785, 100, 100000);
 
 -- --------------------------------------------------------
 
@@ -449,7 +466,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7585786;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -473,13 +490,13 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234567892;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=675275248;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
 --
 ALTER TABLE `pembelian_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `penjualan`

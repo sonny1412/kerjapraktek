@@ -265,13 +265,13 @@
                     <div class="form-group" id="divJumlah">
                       <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang" required/>
+                        <input type="number" min="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang" required/>
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/>
                       </div>
                     </div>
                   </div>
@@ -288,31 +288,31 @@
                     <div class="form-group" id="divIdBarang">
                       <label class="col-sm-3 control-label">Id Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="id-barangBaru[]" class="form-control" placeholder="Id Barang" required/>
+                        <input type="number" min="0" name="id-barangBaru[]" class="form-control" placeholder="Id Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divNamaBarang">
                       <label class="col-sm-3 control-label">Nama Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="text" min="0" name="nama-barangBaru[]" class="form-control" placeholder="Nama Barang" required/>
+                        <input type="text" min="0" name="nama-barangBaru[]" class="form-control" placeholder="Nama Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divJumlahBarang">
                       <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="jumlah-barangBaru[]" class="form-control" placeholder="Jumlah Barang" required/>
+                        <input type="number" min="0" name="jumlah-barangBaru[]" class="form-control" placeholder="Jumlah Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divPanjangBarang">
                       <label class="col-sm-3 control-label">Panjang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="panjang-barangBaru[]" class="form-control" placeholder="Panjang" required/>
+                        <input type="number" min="0" name="panjang-barangBaru[]" class="form-control" placeholder="Panjang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divLebarBarang">
                       <label class="col-sm-3 control-label">Lebar <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="lebar-barangBaru[]" class="form-control" placeholder="Lebar" required/>
+                        <input type="number" min="0" name="lebar-barangBaru[]" class="form-control" placeholder="Lebar"/>
                       </div>
                     </div>
                     <div class="form-group" id="divKategoriBarang">
@@ -332,7 +332,7 @@
                     <div class="form-group" id="divHargaBaru">
                       <label class="col-sm-3 control-label">Harga Barang Baru <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru" required/>
+                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"/>
                       </div>
                     </div>
                   </div>
@@ -479,7 +479,7 @@
       $.ajax({
       type: "POST",
       url: "manage.php?act=insertpembelian",
-      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total,
+      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
       success: function(result) {
         for( i = 0 ;i < nama.length ; i++){
           $.ajax({
