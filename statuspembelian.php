@@ -217,7 +217,7 @@
                     echo "<tr>";
                     echo "<td>".$rowPembelian->tanggal."</td>";
                     echo "<td>".$rowPembelian->id."</td>";
-                    echo "<td>".$rowPembelian->Supplier_id."</td>";
+                    echo "<td>".$rowPembelian->nama."</td>";
                     echo "<td>";
                     $resultBarang = PembelianBarang($rowPembelian->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
@@ -229,9 +229,15 @@
                       echo "<td>Lunas</td>";
                     }
                     else{
-                      echo "<td>Belum Lunas</td>";
+                      echo "<td><a href=konfirmasibayarpembelian.php?cmd=".$rowPembelian->id.">Belum Lunas</a></td>";
                     }
-                    echo "<td>".$rowPembelian->status_kirim."</td>";
+                    if($rowPembelian->status_kirim == "Proses"){
+                      echo "<td><a href=konfirmasikirimpembelian.php?cmd=".$rowPembelian->status_kirim.">".$rowPembelian->status_kirim."</a></td>";
+                    }
+                    else{
+                      echo "<td>".$rowPembelian->status_kirim."</td>";
+                    }
+                    
                     echo "</tr>";
                 } ?>
                 </tbody>

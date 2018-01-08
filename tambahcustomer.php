@@ -145,7 +145,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
+            <li> <a href="#"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
             <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
@@ -159,7 +159,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class="active"> <a href="#"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
+            <li class="active"> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
             <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
             <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
             <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>

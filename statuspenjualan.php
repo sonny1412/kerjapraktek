@@ -111,7 +111,7 @@
             <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Produksi</span>
             <span class="pull-right-container">
@@ -119,7 +119,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
             <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
@@ -152,7 +152,7 @@
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Penjualan</span>
             <span class="pull-right-container">
@@ -163,7 +163,7 @@
             <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
             <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
             <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
-            <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
+            <li class="active"><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
           </ul>
         </li>
       
@@ -183,7 +183,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Informasi Produksi
+        Status Penjualan
       </h1>
     </section>
     <!-- Main content -->
@@ -204,32 +204,39 @@
                 <thead>
                 <tr>
                   <th>Tanggal</th>
-                  <th>Id Produksi</th>
-                  <th>Bahan Digunakan</th>
-                  <th>Barang Terproduksi</th>
-                  
+                  <th>Nomor Nota</th>
+                  <th>Supplier</th>
+                  <th>Daftar Barang</th>
+                  <th>Status Pembayaran</th>
+                  <th>Status Pengiriman</th>          
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                while($rowProduksi = mysqli_fetch_object($resultInformasiProduksi)) {
+                while($rowPenjualan = mysqli_fetch_object($resultPenjualan)) {
                     echo "<tr>";
-                    echo "<td>".$rowProduksi->date."</td>";
-                    echo "<td>".$rowProduksi->id."</td>";
+                    echo "<td>".$rowPenjualan->tanggal."</td>";
+                    echo "<td>".$rowPenjualan->id."</td>";
+                    echo "<td>".$rowPenjualan->nama."</td>";
                     echo "<td>";
-                    $resultBahan = ProduksiBahan($rowProduksi->id);
-                    while($rowBahan = mysqli_fetch_object($resultBahan)){
-                      echo $rowBahan->nama." : ".$rowBahan->qty." ".$rowBahan->keterangan;
-                      echo "</br>";
-                    }
-                    echo "</td>";
-                    echo "<td>";
-                    $resultBarang = ProduksiBarang($rowProduksi->id);
+                    $resultBarang = PenjualanBarang($rowPenjualan->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." : ".$rowBarang->qty." Buah";
+                      echo $rowBarang->nama." : ".$rowBarang->qty." ".$rowBarang->harga;
                       echo "</br>";
                     }
                     echo "</td>";
+                    if($rowPenjualan->saldo == $rowPenjualan->total){
+                      echo "<td>Lunas</td>";
+                    }
+                    else{
+                      echo "<td><a href=konfirmasibayarpenjualan.php?cmd=".$rowPenjualan->id.">Belum Lunas</a></td>";
+                    }
+                    if($rowPenjualan->status_kirim == "Proses" || $rowPenjualan->status_kirim == "Menunggu"){
+                      echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->status_kirim.">".$rowPenjualan->status_kirim."</a></td>";
+                    }
+                    else{
+                      echo "<td>".$rowPenjualan->status_kirim."</td>";
+                    }
                     echo "</tr>";
                 } ?>
                 </tbody>

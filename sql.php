@@ -1,6 +1,12 @@
 <?php
     require 'db.php';
     //SQL
+    $sqlB = "SELECT * FROM `barang`";
+    $resultB = mysqli_query($link,$sqlB);
+    if(!$resultB){
+       die("SQL Error :".$sqlB);
+    }
+
     $sqlBahan = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Bahan Produksi')";
     $resultBahan = mysqli_query($link,$sqlBahan);
     if(!$resultBahan){
@@ -23,6 +29,12 @@
     $resultSupplier = mysqli_query($link, $sqlSupplier);
     if(!$resultSupplier) {
         die("SQL Error: ".$sqlSupplier);
+    }
+
+    $sqlCustomer = "select * from customer";     
+    $resultCustomer = mysqli_query($link, $sqlCustomer);
+    if(!$resultCustomer) {
+        die("SQL Error: ".$sqlCustomer);
     }
 
     $sqlKategoriBahan = "select * from Kategori WHERE jenis = 'Bahan Produksi'";
@@ -73,10 +85,16 @@
        die("SQL Error :".$sqlUser);
     }
 
-    $sqlPembelian = "SELECT p.id, p.tanggal,p.Supplier_id, p.saldo,p.status_kirim, SUM(pb.harga*pb.qty) as total FROM pembelian p, pembelian_barang pb WHERE p.id = pb.Pembelian_id GROUP BY p.id";
+    $sqlPembelian = "SELECT p.id, p.tanggal,s.nama, p.saldo,p.status_kirim, SUM(pb.harga*pb.qty) as total FROM pembelian p, pembelian_barang pb,supplier s WHERE p.id = pb.Pembelian_id and p.Supplier_id = s.id GROUP BY p.id";
     $resultPembelian = mysqli_query($link,$sqlPembelian);
     if(!$resultPembelian){
        die("SQL Error :".$sqlPembelian);
+    }
+
+    $sqlPenjualan = "SELECT p.id, p.tanggal,c.nama, p.saldo,p.status_kirim, SUM(pb.harga*pb.qty) as total FROM penjualan p, penjualan_barang pb,customer c WHERE p.id = pb.Penjualan_id and p.Customer_id = c.id GROUP BY p.id";
+    $resultPenjualan = mysqli_query($link,$sqlPenjualan);
+    if(!$resultPenjualan){
+       die("SQL Error :".$sqlPenjualan);
     }
 
     //Function
@@ -104,5 +122,11 @@
         $sqlPembelianBarang = "SELECT b.nama, pb.qty,pb.harga FROM pembelian_barang pb, barang b WHERE pb.pembelian_id = ".$pid." and pb.Barang_id = b.id";
         $resultPembelianBarang = mysqli_query($link,$sqlPembelianBarang);
         return $resultPembelianBarang;
+    }
+    function PenjualanBarang($pid){
+        require 'db.php';
+        $sqlPenjualanBarang = "SELECT b.nama, pb.qty,pb.harga FROM penjualan_barang pb, barang b WHERE pb.penjualan_id = ".$pid." and pb.Barang_id = b.id";
+        $resultPenjualanBarang = mysqli_query($link,$sqlPenjualanBarang);
+        return $resultPenjualanBarang;
     }
 ?>

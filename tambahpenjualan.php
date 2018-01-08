@@ -137,7 +137,7 @@
           </ul>
         </li>
 
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -147,11 +147,11 @@
           <ul class="treeview-menu">
             <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
-            <li class="active"><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
+            <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Penjualan</span>
             <span class="pull-right-container">
@@ -161,7 +161,7 @@
           <ul class="treeview-menu">
             <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
             <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
-            <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
+            <li class="active"><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
             <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
           </ul>
         </li>
@@ -210,13 +210,13 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Supplier <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Customer <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <select name="supplier" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Supplier]</option>
+                        <select name="customer" class="form-control">
+                          <option value="" disabled selected style="display: none;">[Pilih Customer]</option>
                           <?php 
-                            while($rowSupplier = mysqli_fetch_object($resultSupplier)){
-                              echo "<option value='".$rowSupplier->id."'>".$rowSupplier->nama."</option>";
+                            while($rowCustomer = mysqli_fetch_object($resultCustomer)){
+                              echo "<option value='".$rowCustomer->id."'>".$rowCustomer->nama."</option>";
                             }
 
                           ?>
@@ -255,7 +255,7 @@
                         <select name="nama-barang[]" class="form-control">
                           <option value="" disabled selected style="display: none;">[Pilih Barang]</option>
                           <?php 
-                            while($rowBarang = mysqli_fetch_object($resultB)){
+                            while($rowBarang = mysqli_fetch_object($resultBarang)){
                               echo "<option value='".$rowBarang->id."'>".$rowBarang->nama."</option>";
                             }
                           ?>                   
@@ -282,68 +282,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="col-sm-6 col-md-6">
-                  <div id="formBarangBaru"> 
-                    <div class="form-group" id="divIdBarang">
-                      <label class="col-sm-3 control-label">Id Barang <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="id-barangBaru[]" class="form-control" placeholder="Id Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divNamaBarang">
-                      <label class="col-sm-3 control-label">Nama Barang <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="text" min="0" name="nama-barangBaru[]" class="form-control" placeholder="Nama Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divJumlahBarang">
-                      <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="jumlah-barangBaru[]" class="form-control" placeholder="Jumlah Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divPanjangBarang">
-                      <label class="col-sm-3 control-label">Panjang <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="panjang-barangBaru[]" class="form-control" placeholder="Panjang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divLebarBarang">
-                      <label class="col-sm-3 control-label">Lebar <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="lebar-barangBaru[]" class="form-control" placeholder="Lebar"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divKategoriBarang">
-                      <label class="col-sm-3 control-label">Kategori Barang <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <select name="kategori-barangBaru[]" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Kategori]</option>
-                          <?php 
-                            while($rowKategori = mysqli_fetch_object($resultKategori)){
-                              echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
-                            }
-                          ?>                   
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group" id="divHargaBaru">
-                      <label class="col-sm-3 control-label">Harga Barang Baru <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="divButton">
-                    <div class="col-sm-12">
-                      <button style="float: right;" id="nextBaru" class="btn btn-primary">Tambah Barang Baru</button>
-                    </div>
-                  </div>
-                </div>
-
               </div>              <!-- /.box-body -->
               <div class="box-footer">
                 <button id="submit" class="btn btn-info pull-right">Insert</button>
@@ -393,69 +331,35 @@
   var htmlNama = $('#divBarang:eq(0)')[0].outerHTML;
   var htmlJumlah = $('#divJumlah:eq(0)')[0].outerHTML;
   var htmlHarga = $('#divHarga:eq(0)')[0].outerHTML;
-
-  var htmlIdBarang = $('#divIdBarang:eq(0)')[0].outerHTML;
-  var htmlNamaBaru = $('#divNamaBarang:eq(0)')[0].outerHTML;
-  var htmlJumlahBaru = $('#divJumlahBarang:eq(0)')[0].outerHTML;
-  var htmlPanjangBarang = $('#divPanjangBarang:eq(0)')[0].outerHTML;
-  var htmlLebarBarang = $('#divLebarBarang:eq(0)')[0].outerHTML;
-  var htmlKategoriBarang = $('#divKategoriBarang:eq(0)')[0].outerHTML;
-  var htmlHargaBarang = $('#divHargaBaru:eq(0)')[0].outerHTML;
   $("#next").click(function() {
     $('#formBarang').append(htmlNama);
     $('#formBarang').append(htmlJumlah);
     $('#formBarang').append(htmlHarga);
   });
-  $("#nextBaru").click(function() {
-    $('#formBarangBaru').append(htmlIdBarang);
-    $('#formBarangBaru').append(htmlNamaBaru);
-    $('#formBarangBaru').append(htmlJumlahBaru);
-    $('#formBarangBaru').append(htmlPanjangBarang);
-    $('#formBarangBaru').append(htmlLebarBarang);
-    $('#formBarangBaru').append(htmlKategoriBarang);
-    $('#formBarangBaru').append(htmlHargaBarang);
-  });
-
   $("#submit").click(function(){
     
     var noNota;
     var tanggal;
-    var idSupplier;
+    var idCustomer;
     var jenisBayar;
     var tanggalJatuhTempo;
     var karyawan = "Rama"; 
     var nama = [];
     var jumlah = [];
     var harga= [];
-    var idBaru= [];
-    var namaBaru= [];
-    var jumlahBaru = [];
-    var panjangBaru = [];
-    var lebarBaru = [];
-    var kategoriBaru = [];
-    var hargaBaru = [];
     var total = 0;
     var cek=0;
-    var cekBaru = 0;
     var statusKirim;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
     $('input[name="tanggalNota"]').each( function(){ tanggal = $(this).val(); });
-    $('select[name="supplier"]').each( function(){ idSupplier = $(this).val(); });
+    $('select[name="customer"]').each( function(){ idCustomer = $(this).val(); });
     $('select[name="statusKirim"]').each( function(){ statusKirim = $(this).val(); });
     $('select[name="jenisBayar"]').each( function(){ jenisBayar = $(this).val(); });
     $('input[name="tanggalJatuhTempo"]').each( function(){ tanggalJatuhTempo = $(this).val(); }); 
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
     $('input[name="jumlah-barang[]"]').each( function(){ jumlah.push($(this).val()); });
     $('input[name="harga-barang[]"]').each( function(){ harga.push($(this).val()); });
-
-    $('input[name="id-barangBaru[]"]').each( function(){ idBaru.push($(this).val()); });
-    $('input[name="nama-barangBaru[]"]').each( function(){ namaBaru.push($(this).val()); });
-    $('input[name="jumlah-barangBaru[]"]').each( function(){ jumlahBaru.push($(this).val()); });
-    $('input[name="panjang-barangBaru[]"]').each( function(){ panjangBaru.push($(this).val()); }); 
-    $('select[name="kategori-barangBaru[]"]').each( function(){ kategoriBaru.push($(this).val()); });
-    $('input[name="lebar-barangBaru[]"]').each( function(){ lebarBaru.push($(this).val()); });
-    $('input[name="harga-barangBaru[]"]').each( function(){ hargaBaru.push($(this).val()); });
 
     for(i = 0; i < jumlah.length ; i++){
       if(nama[i] && jumlah[i] && harga[i]){
@@ -465,36 +369,17 @@
         cek++;
       }
     }
-    for(i = 0; i< idBaru.length ; i++){
-      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && panjangBaru[i] && kategoriBaru[i] && lebarBaru[i] && hargaBaru[i]){
-        total += jumlahBaru[i] * hargaBaru[i];
-      }
-      else{
-        cekBaru++;
-      }
-    }
-
-
     if(cek==0 || cekBaru == 0){
       $.ajax({
       type: "POST",
-      url: "manage.php?act=insertpembelian",
-      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
+      url: "manage.php?act=insertpenjualan",
+      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
       success: function(result) {
         for( i = 0 ;i < nama.length ; i++){
           $.ajax({
             type: "POST",
-            url: "manage.php?act=insertpembelianbarang",
+            url: "manage.php?act=insertpenjualanbarang",
             data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
-            success: function(result) {
-            }
-          });
-        }
-        for( i = 0 ;i < idBaru.length ; i++){
-          $.ajax({
-            type: "POST",
-            url: "manage.php?act=insertpembelianbarangBaru",
-            data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&lbr=' + lebarBaru[i]+ '&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru+ '&harga='+hargaBaru,
             success: function(result) {
             }
           });

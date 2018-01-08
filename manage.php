@@ -147,6 +147,21 @@ switch ($act) {
 	}
 	break;
 
+	case "insertcustomer";
+	require 'db.php';
+	$nama = $_POST["nama"];
+	$alamat = $_POST["alamat"];
+	$kontak = $_POST["kontak"];
+	$sql = "INSERT INTO `customer` (`nama`, `telepon`, `alamat`) VALUES ('".$nama."', '".$kontak."', '".$alamat."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		header("location: informasicustomer.php");
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
 	case "ubahbarang":
 	require 'db.php';
 	$hidden = $_POST["hidden"];
@@ -278,6 +293,66 @@ switch ($act) {
 	$resultPembelian = mysqli_query($link,$sqlPembelian);
 	if($resultPembelian){
 
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertpenjualan":
+	require 'db.php';
+	$sql;
+	$noNota = $_POST["noNota"];
+	$tanggal = $_POST["tanggal"];
+	$customer= $_POST["idCustomer"];
+	$jenisBayar = $_POST["jenisBayar"];
+	$jatuhTempo = $_POST["tanggalJatuhTempo"];
+	$statusKirim = $_POST["statusKirim"];
+	$total = $_POST["total"];
+	if($jenisBayar == "K"){
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
+		}
+		
+	}
+	if($jenisBayar == "T"){
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Sampai');";
+		}		
+	}
+	$result = mysqli_query($link,$sql);
+	if($result){}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertpenjualanbarang":
+	require 'db.php';
+	$sql;
+	$noNota = $_POST["noNota"];
+	$barang_id = $_POST["barang_id"];
+	$qty= $_POST["qty"];
+	$harga = $_POST["harga"];
+	$statusKirim = $_POST["statusKirim"];
+	$sql = "INSERT INTO `penjualan_barang` (`id`, `Penjualan_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		if($statusKirim == "T"){
+			$sqlKurang = "UPDATE `barang` SET quantity = quantity - ".$qty." WHERE id = '".$barang_id."'";
+			$resultKurang = mysqli_query($link,$sqlKurang);
+			if($resultKurang){
+			}
+			else{
+				echo "gagal";
+			}
+		}
 	}
 	else{
 		echo "gagal";
