@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Karyawan | Tambah Akun</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,7 +28,9 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php require 'sql.php';?>
+<?php require 'sql.php';
+$cmd = $_GET["cmd"];
+?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -124,7 +126,7 @@
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
@@ -133,12 +135,12 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
+            <li><a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
           </ul>
         </li>
 
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -149,7 +151,7 @@
             <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
             <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
             <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
-            <li class="active"><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
+            <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -183,86 +185,56 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Status Pembelian
+        Konfirmasi Pengiriman
       </h1>
     </section>
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box" style="width: 70%; margin: auto; margin-top: 5%">
             
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Nomor Nota</th>
-                  <th>Supplier</th>
-                  <th>Daftar Barang</th>
-                  <th>Status Pembayaran</th>
-                  <th>Status Pengiriman</th>          
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                while($rowPembelian = mysqli_fetch_object($resultPembelian)) {
-                    echo "<tr>";
-                    echo "<td>".$rowPembelian->tanggal."</td>";
-                    echo "<td>".$rowPembelian->id."</td>";
-                    echo "<td>".$rowPembelian->nama."</td>";
-                    echo "<td>";
-                    $resultBarang = PembelianBarang($rowPembelian->id);
-                    while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
-                      echo "</br>";
-                    }
-                    echo "</td>";
-                    if($rowPembelian->saldo == $rowPembelian->total){
-                      echo "<td>Lunas</td>";
-                    }
-                    else if($rowPembelian->saldo > $rowPembelian->total){
-                      echo "<td><a href=konfirmasirefundpembelian.php?cmd=".$rowPembelian->id.">Konfirmasi Refund</a></td>";
-                    }
-                    else{
-                      echo "<td><a href=konfirmasibayarpembelian.php?cmd=".$rowPembelian->id.">Belum Lunas</a></td>";
-                    }
-                    if($rowPembelian->status_kirim == "Proses"){
-                      echo "<td><a href=konfirmasikirimpembelian.php?cmd=".$rowPembelian->id.">".$rowPembelian->status_kirim."</a></td>";
-                    }
-                    else{
-                      echo "<td>".$rowPembelian->status_kirim."</td>";
-                    }
-                    
-                    echo "</tr>";
-                } ?>
-                </tbody>
-                
-              </table>
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Detail Barang</h4>
+            <fieldset>
+              <legend style="text-align: center;">Konfirmasi Refund Pembelian</legend>
+              <form class="form-horizontal" action="manage.php?act=insertrefundpembelian" method="POST">
+              <?php
+              $resultBayar = PembayaranPembelian($cmd);
+              if($rowBayar = mysqli_fetch_object($resultBayar)){
+              echo "<div class=box-body>
+                      <div class=form-group>
+                      <label for=inputBayarn class=col-sm-2 control-label>Total Kewajiban Refund</label>
+                        <div class=col-sm-10>
+                          <select disabled class=form-control>
+                            <option>".(($rowBayar->total - $rowBayar->saldo) *-1)."</option>                                        
+                          </select>
                         </div>
-                        <div class="modal-body">
-                            <div class="fetched-data"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-            </div>
+                      </div>
+                      <div class=form-group>
+                        <label for=inputUserKaryawan class=col-sm-2 control-label>Jumlah Bayar</label>
+                          <div class=col-sm-10>
+                            <input type=number name=jumlah max=".(($rowBayar->total - $rowBayar->saldo)*-1)." required autofocus class=form-control>
+                          </div>
+                      </div> 
+                      <div class=form-group>
+                        <label for=inputUserKaryawan class=col-sm-2 control-label>Keterangan Cara Bayar</label>
+                          <div class=col-sm-10>
+                            <input type=text name=keterangan required autofocus class=form-control>
+                            <input type=hidden name=id value=".$cmd.">
+                          </div>
+                      </div>              
+                    </div>";
+                  }
+              ?>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">Insert</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+
+            </fieldset>
+            
             <!-- /.box-body -->
           </div>
       </div>

@@ -221,18 +221,24 @@
                     echo "<td>";
                     $resultBarang = PenjualanBarang($rowPenjualan->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." : ".$rowBarang->qty." ".$rowBarang->harga;
+                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
                       echo "</br>";
                     }
                     echo "</td>";
                     if($rowPenjualan->saldo == $rowPenjualan->total){
                       echo "<td>Lunas</td>";
                     }
+                    else if($rowPenjualan->saldo > $rowPenjualan->total){
+                      echo "<td><a href=konfirmasirefundpenjualan.php?cmd=".$rowPenjualan->id.">Konfirmasi Refund</a></td>";
+                    }
                     else{
                       echo "<td><a href=konfirmasibayarpenjualan.php?cmd=".$rowPenjualan->id.">Belum Lunas</a></td>";
                     }
-                    if($rowPenjualan->status_kirim == "Proses" || $rowPenjualan->status_kirim == "Menunggu"){
+                    if($rowPenjualan->status_kirim == "Menunggu"){
                       echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                    }
+                    else if($rowPenjualan->status_kirim == "Proses"){
+                      echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
                     }
                     else{
                       echo "<td>".$rowPenjualan->status_kirim."</td>";

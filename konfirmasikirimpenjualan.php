@@ -199,8 +199,8 @@ $cmd = $_GET["cmd"];
               <legend style="text-align: center;">Konfirmasi Surat Jalan</legend>
               <form class="form-horizontal">
               <?php 
-              $resultPembelian = NotaPembelian($cmd);
-              if($row = mysqli_fetch_object($resultPembelian)){
+              $resultPenjualan = NotaPenjualan($cmd);
+              if($row = mysqli_fetch_object($resultPenjualan)){
                 echo "<div class=box-body>
                   <div class=form-group>
                   <label for=inputNamaKaryawan class=col-sm-2 control-label>Nomor Nota</label>
@@ -237,7 +237,7 @@ $cmd = $_GET["cmd"];
               ?>
 
               <?php
-              $resultKirim = KofirmasiPengiriman($cmd);
+              $resultKirim = KofirmasiPengirimanPenjualan($cmd);
               while($rowKirim = mysqli_fetch_object($resultKirim)){
               echo "<div class=box-body>
                       <div class=form-group>
@@ -337,13 +337,13 @@ $cmd = $_GET["cmd"];
         for( i = 0 ;i < barang.length ; i++){
           $.ajax({
             type: "POST",
-            url: "manage.php?act=updatepembelianbarang",
+            url: "manage.php?act=updatepenjualanbarang",
             data: 'noNota=' + id+ '&barang_id=' + barang[i]+ '&qty=' + qty[i],
             success: function(result) {
             }
           });
         } 
-        window.location = "statuspembelian.php";  
+        window.location = "statuspenjualan.php";  
       }});
     }
     else{

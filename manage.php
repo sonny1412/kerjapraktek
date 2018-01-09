@@ -162,6 +162,82 @@ switch ($act) {
 	}
 	break;
 
+	case "insertpembayaranpenjualan";
+	require 'db.php';
+	$id = $_POST["id"];
+	$jumlah = $_POST["jumlah"];
+	$keterangan = $_POST["keterangan"];
+	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUpdate = "UPDATE `penjualan` SET saldo = saldo + ".$jumlah." WHERE `penjualan`.`id` = ".$id.";";
+		$resultUpdate = mysqli_query($link,$sqlUpdate);
+		if($resultUpdate){
+			header("location: statuspenjualan.php");
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertpembayaranpembelian";
+	require 'db.php';
+	$id = $_POST["id"];
+	$jumlah = $_POST["jumlah"];
+	$keterangan = $_POST["keterangan"];
+	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUpdate = "UPDATE `pembelian` SET saldo = saldo + ".$jumlah." WHERE `pembelian`.`id` = ".$id.";";
+		$resultUpdate = mysqli_query($link,$sqlUpdate);
+		if($resultUpdate){
+			header("location: statuspembelian.php");
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertrefundpembelian";
+	require 'db.php';
+	$id = $_POST["id"];
+	$jumlah = $_POST["jumlah"];
+	$keterangan = $_POST["keterangan"];
+	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUpdate = "UPDATE `pembelian` SET saldo = saldo - ".$jumlah." WHERE `pembelian`.`id` = ".$id.";";
+		$resultUpdate = mysqli_query($link,$sqlUpdate);
+		if($resultUpdate){
+			header("location: statuspembelian.php");
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "insertrefundpenjualan";
+	require 'db.php';
+	$id = $_POST["id"];
+	$jumlah = $_POST["jumlah"];
+	$keterangan = $_POST["keterangan"];
+	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlUpdate = "UPDATE `penjualan` SET saldo = saldo - ".$jumlah." WHERE `penjualan`.`id` = ".$id.";";
+		$resultUpdate = mysqli_query($link,$sqlUpdate);
+		if($resultUpdate){
+			header("location: statuspenjualan.php");
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
 	case "ubahbarang":
 	require 'db.php';
 	$hidden = $_POST["hidden"];
@@ -363,6 +439,75 @@ switch ($act) {
 	$id = $_POST["noNota"];
 	$kirim = $_POST["kirim"];
 	$sql = "UPDATE penjualan set status_kirim = '".$kirim."' where id = '".$id."'";
+	$result = mysqli_query($link,$sql);
+	if($result){
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "updatepenjualanbarang":
+	require 'db.php';
+	$id = $_POST["noNota"];
+	$barang = $_POST["barang_id"];
+	$qty = $_POST["qty"];
+	$sql = "UPDATE penjualan_barang set qty = '".$qty."' where Penjualan_id = '".$id."' and Barang_id = '".$barang."'";
+	$result = mysqli_query($link,$sql);
+	if($result){
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "updatepenjualanbarangfinal":
+	require 'db.php';
+	$id = $_POST["noNota"];
+	$barang = $_POST["barang_id"];
+	$qty = $_POST["qty"];
+	$sql = "UPDATE penjualan_barang set qty = '".$qty."' where Penjualan_id = '".$id."' and Barang_id = '".$barang."'";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlBarang = "UPDATE `barang` set quantity = (quantity - ".$qty.") WHERE id = '".$barang."'";
+		$resultBarang = mysqli_query($link,$sqlBarang);
+		if($resultBarang){
+		} 
+		else{
+			echo "gagal";
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "updatepembelianbarang":
+	require 'db.php';
+	$id = $_POST["noNota"];
+	$barang = $_POST["barang_id"];
+	$qty = $_POST["qty"];
+	$sql = "UPDATE pembelian_barang set qty = '".$qty."' where Pembelian_id = '".$id."' and Barang_id = '".$barang."'";
+	$result = mysqli_query($link,$sql);
+	if($result){
+		$sqlBarang = "UPDATE `barang` set quantity = (quantity + ".$qty.") WHERE id = '".$barang."'";
+		$resultBarang = mysqli_query($link,$sqlBarang);
+		if($resultBarang){
+		} 
+		else{
+			echo "gagal";
+		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "updatepembelian":
+	require 'db.php';
+	$id = $_POST["noNota"];
+	$kirim = $_POST["kirim"];
+	$sql = "UPDATE pembelian set status_kirim = '".$kirim."' where id = '".$id."'";
 	$result = mysqli_query($link,$sql);
 	if($result){
 	}

@@ -129,16 +129,41 @@
         $resultPenjualanBarang = mysqli_query($link,$sqlPenjualanBarang);
         return $resultPenjualanBarang;
     }
-    Function KofirmasiPengiriman($pid){
+    Function KofirmasiPengirimanPenjualan($pid){
         require 'db.php';
         $sqlKirimPenjualan = "SELECT pb.Barang_id,b.nama,pb.qty,pb.harga FROM penjualan_barang pb , barang b where pb.Penjualan_id = '".$pid."' and pb.Barang_id = b.id";
         $resultKirimPenjualan = mysqli_query($link, $sqlKirimPenjualan);
         return $resultKirimPenjualan;
     }
+    Function KofirmasiPengirimanPembelian($pid){
+        require 'db.php';
+        $sqlKirimPembelian = "SELECT pb.Barang_id,b.nama,pb.qty,pb.harga FROM pembelian_barang pb , barang b where pb.Pembelian_id = '".$pid."' and pb.Barang_id = b.id";
+        $resultKirimPembelian = mysqli_query($link, $sqlKirimPembelian);
+        return $resultKirimPembelian;
+    }
+
     function NotaPembelian($pid){
         require 'db.php';
         $sqlPembelian = "SELECT p.id, p.tanggal, c.nama, c.telepon, c.alamat FROM penjualan p, customer c WHERE p.Customer_id = c.id and p.id = '".$pid."'";
         $resultPembelian = mysqli_query($link,$sqlPembelian);
         return $resultPembelian;
+    }
+    function NotaPenjualan($pid){
+        require 'db.php';
+        $sqlPembelian = "SELECT p.id, p.tanggal, c.nama, c.telepon, c.alamat FROM penjualan p, customer c WHERE p.Customer_id = c.id and p.id = '".$pid."'";
+        $resultPembelian = mysqli_query($link,$sqlPembelian);
+        return $resultPembelian;
+    }
+    Function PembayaranPenjualan($pid){
+        require 'db.php';
+        $sqlBayarPembelian = "SELECT pb.Penjualan_id,p.saldo,SUM(pb.qty*pb.harga) as total FROM penjualan_barang pb,penjualan p WHERE pb.Penjualan_id = '".$pid."' and pb.Penjualan_id = p.id";
+        $resultBayarPembelian = mysqli_query($link, $sqlBayarPembelian);
+        return $resultBayarPembelian;
+    }
+    Function PembayaranPembelian($pid){
+        require 'db.php';
+        $sqlBayarPenjualan = "SELECT pb.Pembelian_id,p.saldo,SUM(pb.qty*pb.harga) as total FROM pembelian_barang pb,pembelian p WHERE pb.Pembelian_id = '".$pid."' and pb.Pembelian_id = p.id";
+        $resultBayarPenjualan = mysqli_query($link, $sqlBayarPenjualan);
+        return $resultBayarPenjualan;
     }
 ?>

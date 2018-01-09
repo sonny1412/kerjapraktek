@@ -253,7 +253,7 @@
                       <label class="col-sm-3 control-label">Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
                         <select name="nama-barang[]" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Barang]</option>
+                          <option value="lol" selected style="display: none;">[Pilih Barang]</option>
                           <?php 
                             while($rowBarang = mysqli_fetch_object($resultBarang)){
                               echo "<option value='".$rowBarang->id."'>".$rowBarang->nama."</option>";
@@ -265,13 +265,13 @@
                     <div class="form-group" id="divJumlah">
                       <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang"/>
+                        <input type="number" min="0" value="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/>
+                        <input type="number" min="0" value="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/>
                       </div>
                     </div>
                   </div>
