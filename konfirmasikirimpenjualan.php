@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Karyawan | Tambah Akun</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,7 +28,9 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php require 'sql.php';?>
+<?php require 'sql.php';
+$cmd = $_GET["cmd"];
+?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
@@ -111,7 +113,7 @@
             <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
           </ul>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Produksi</span>
             <span class="pull-right-container">
@@ -119,12 +121,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
             <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Karyawan</span>
             <span class="pull-right-container">
@@ -133,8 +135,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li> <a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li> <a href="tambahakun.php"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
+            <li><a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
           </ul>
         </li>
 
@@ -183,75 +185,87 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Informasi Produksi
+        Konfirmasi Pengiriman
       </h1>
     </section>
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box" style="width: 70%; margin: auto; margin-top: 5%">
             
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Id Produksi</th>
-                  <th>Bahan Digunakan</th>
-                  <th>Barang Terproduksi</th>
-                  
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                while($rowProduksi = mysqli_fetch_object($resultInformasiProduksi)) {
-                    echo "<tr>";
-                    echo "<td>".$rowProduksi->date."</td>";
-                    echo "<td>".$rowProduksi->id."</td>";
-                    echo "<td>";
-                    $resultBahan = ProduksiBahan($rowProduksi->id);
-                    while($rowBahan = mysqli_fetch_object($resultBahan)){
-                      echo $rowBahan->nama." : ".$rowBahan->qty." Meter";
-                      echo "</br>";
-                    }
-                    echo "</td>";
-                    echo "<td>";
-                    $resultBarang = ProduksiBarang($rowProduksi->id);
-                    while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." : ".$rowBarang->qty." Buah";
-                      echo "</br>";
-                    }
-                    echo "</td>";
-                    echo "</tr>";
-                } ?>
-                </tbody>
-                
-              </table>
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Detail Barang</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="fetched-data"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
-                        </div>
+            <fieldset>
+              <legend style="text-align: center;">Konfirmasi Surat Jalan</legend>
+              <form class="form-horizontal">
+              <?php 
+              $resultPembelian = NotaPembelian($cmd);
+              if($row = mysqli_fetch_object($resultPembelian)){
+                echo "<div class=box-body>
+                  <div class=form-group>
+                  <label for=inputNamaKaryawan class=col-sm-2 control-label>Nomor Nota</label>
+                    <div class=col-sm-10>
+                      <input type=number value='".$row->id."' disabled autofocus class=form-control>
                     </div>
-                </div>
-             </div>
-            </div>
+                  </div>
+                  <div class=form-group>
+                  <label for=inputNamaKaryawan class=col-sm-2 control-label>Tanggal</label>
+                    <div class=col-sm-10>
+                      <input type=date value='".$row->tanggal."' disabled autofocus class=form-control>
+                    </div>
+                  </div>
+                  <div class=form-group>
+                  <label for=inputNamaKaryawan class=col-sm-2 control-label>Nama Perusahaan</label>
+                    <div class=col-sm-10>
+                      <input type=text value='".$row->nama."'' disabled autofocus class=form-control>
+                    </div>
+                  </div>
+                  <div class=form-group>
+                  <label for=inputNamaKaryawan class=col-sm-2 control-label>Alamat</label>
+                    <div class=col-sm-10>
+                      <input type=text value='".$row->alamat."' disabled autofocus class=form-control>
+                    </div>
+                  </div>
+                  <div class=form-group>
+                  <label for=inputNamaKaryawan class=col-sm-2 control-label>Kontak</label>
+                    <div class=col-sm-10>
+                      <input type=text value='".$row->telepon."' disabled autofocus class=form-control>
+                    </div>
+                  </div>
+                </div>";
+              }
+              ?>
+
+              <?php
+              $resultKirim = KofirmasiPengiriman($cmd);
+              while($rowKirim = mysqli_fetch_object($resultKirim)){
+              echo "<div class=box-body>
+                      <div class=form-group>
+                      <label for=inputNamaKaryawan class=col-sm-2 control-label>Nama Barang</label>
+                        <div class=col-sm-10>
+                          <select name=idBarang[] disabled class=form-control>
+                            <option value='".$rowKirim->Barang_id."'>(".$rowKirim->Barang_id.") ".$rowKirim->nama."</option>                                        
+                          </select>
+                        </div>
+                      </div>
+                      <div class=form-group>
+                        <label for=inputUserKaryawan class=col-sm-2 control-label>Jumlah</label>
+                          <div class=col-sm-10>
+                            <input type=number name=jumlah[] value =".$rowKirim->qty." required autofocus class=form-control>
+                          </div>
+                      </div>              
+                    </div>";
+                  }
+              ?>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" id="Kirim" name="Kirim" class="btn btn-info pull-right">Insert</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+
+            </fieldset>
+            
             <!-- /.box-body -->
           </div>
       </div>
@@ -287,6 +301,56 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- page script -->
+<script>
+  $("#Kirim").click(function(){
+    var id = <?php echo $cmd ?>;
+    var cekqty=0;
+    var barang = [];
+    var qty = [];
+    var cek=0;
+    var kirim = "";
+    alert("bisa");
+    $('select[name="idBarang[]"]').each( function(){ barang.push($(this).val()); });
+    $('input[name="jumlah[]"]').each( function(){ qty.push($(this).val()); });
+    alert("asdasd");
+    for(i = 0; i < qty.length ; i++){
+      if(barang[i] && qty[i]){
+        alert(barang[i]+" "+qty[i]);
+        cekqty+=qty[i];
+      }
+      else{
+        cek++;
+      }
+    }
+    if(cekqty>0){
+      kirim = "Proses";
+    }
+    else{
+      kirim = "Batal";
+    }
+    if(cek==0){
+      $.ajax({
+      type: "POST",
+      url: "manage.php?act=updatepenjualan",
+      data: 'noNota=' + id + '&kirim='+kirim,
+      success: function(result) {
+        for( i = 0 ;i < barang.length ; i++){
+          $.ajax({
+            type: "POST",
+            url: "manage.php?act=updatepembelianbarang",
+            data: 'noNota=' + id+ '&barang_id=' + barang[i]+ '&qty=' + qty[i],
+            success: function(result) {
+            }
+          });
+        } 
+        window.location = "statuspembelian.php";  
+      }});
+    }
+    else{
+      alert("Pastikan semua field jumlah sudah terisi semua");
+    }
+  });
+</script>
 <script>
   $(function () {
     $('#example1').DataTable()

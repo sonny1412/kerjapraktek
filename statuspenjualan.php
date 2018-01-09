@@ -232,7 +232,7 @@
                       echo "<td><a href=konfirmasibayarpenjualan.php?cmd=".$rowPenjualan->id.">Belum Lunas</a></td>";
                     }
                     if($rowPenjualan->status_kirim == "Proses" || $rowPenjualan->status_kirim == "Menunggu"){
-                      echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->status_kirim.">".$rowPenjualan->status_kirim."</a></td>";
+                      echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
                     }
                     else{
                       echo "<td>".$rowPenjualan->status_kirim."</td>";

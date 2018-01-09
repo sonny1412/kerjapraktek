@@ -106,7 +106,7 @@ switch ($act) {
 	$lbr = $_POST["lbr"];
 	$idKategori = $_POST["idKategori"];
 	$pjg = $_POST["pjg"];
-	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$pjg."',".$idKategori.")";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		header("location: informasibarang.php");
@@ -276,17 +276,16 @@ switch ($act) {
 	$id = $_POST["idBarang"];
 	$nama = $_POST["nama"];
 	$kuantitas = $_POST["kuantitas"];
-	$lbr = $_POST["lbr"];
 	$idKategori = $_POST["idKategori"];
 	$pjg = $_POST["pjg"];
 	$noNota = $_POST["noNota"];
 	$statusKirim = $_POST["statusKirim"];
 	$harga=$_POST["harga"];
 	if($statusKirim == "T"){
-		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg."',".$idKategori.")";
 	}
 	else if($statusKirim == "K"){
-		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','0','".$pjg." Cm x ".$lbr." Cm',".$idKategori.")";
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','0','".$pjg."',".$idKategori.")";
 	}
 	$result = mysqli_query($link,$sql);
 	$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."');";
@@ -311,7 +310,7 @@ switch ($act) {
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Menunggu');";
 		}
 		else if($statusKirim == "T"){
 			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
@@ -320,7 +319,7 @@ switch ($act) {
 	}
 	if($jenisBayar == "T"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Proses');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Menunggu');";
 		}
 		else if($statusKirim == "T"){
 			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Sampai');";
@@ -353,6 +352,19 @@ switch ($act) {
 				echo "gagal";
 			}
 		}
+	}
+	else{
+		echo "gagal";
+	}
+	break;
+
+	case "updatepenjualan":
+	require 'db.php';
+	$id = $_POST["noNota"];
+	$kirim = $_POST["kirim"];
+	$sql = "UPDATE penjualan set status_kirim = '".$kirim."' where id = '".$id."'";
+	$result = mysqli_query($link,$sql);
+	if($result){
 	}
 	else{
 		echo "gagal";
@@ -412,9 +424,8 @@ switch ($act) {
 	$nama = $_POST["nama"];
 	$qty = $_POST["qty"];
 	$pjg = $_POST["pjg"];
-	$lbr = $_POST["lbr"];
 	$kategori_id = $_POST["kategori_id"];
-	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$barang_id."','".$nama."','".$qty."','".$pjg." Cm x ".$lbr." Cm',".$kategori_id.")";
+	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$barang_id."','".$nama."','".$qty."','".$pjg."',".$kategori_id.")";
 	//$sql = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
 	$result = mysqli_query($link,$sql);
 	if($result){

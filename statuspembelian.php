@@ -221,7 +221,7 @@
                     echo "<td>";
                     $resultBarang = PembelianBarang($rowPembelian->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." : ".$rowBarang->qty." ".$rowBarang->harga;
+                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
                       echo "</br>";
                     }
                     echo "</td>";

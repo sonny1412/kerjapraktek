@@ -129,4 +129,16 @@
         $resultPenjualanBarang = mysqli_query($link,$sqlPenjualanBarang);
         return $resultPenjualanBarang;
     }
+    Function KofirmasiPengiriman($pid){
+        require 'db.php';
+        $sqlKirimPenjualan = "SELECT pb.Barang_id,b.nama,pb.qty,pb.harga FROM penjualan_barang pb , barang b where pb.Penjualan_id = '".$pid."' and pb.Barang_id = b.id";
+        $resultKirimPenjualan = mysqli_query($link, $sqlKirimPenjualan);
+        return $resultKirimPenjualan;
+    }
+    function NotaPembelian($pid){
+        require 'db.php';
+        $sqlPembelian = "SELECT p.id, p.tanggal, c.nama, c.telepon, c.alamat FROM penjualan p, customer c WHERE p.Customer_id = c.id and p.id = '".$pid."'";
+        $resultPembelian = mysqli_query($link,$sqlPembelian);
+        return $resultPembelian;
+    }
 ?>

@@ -212,17 +212,10 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPanjangBarang" class="col-sm-2 control-label">Panjang</label>
+                  <label for="inputPanjangBarang" class="col-sm-2 control-label">Keterangan</label>
 
                   <div class="col-sm-10">
-                    <input type="number" name="pjg" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputLebarBarang" class="col-sm-2 control-label">Lebar</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="lbr" class="form-control">
+                    <input type="text" name="pjg" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">

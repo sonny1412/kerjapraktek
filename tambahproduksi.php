@@ -206,8 +206,8 @@
   if(isset($_POST['nBarang'])&&isset($_POST['jBarang'])&&$_POST['jBarang']!=""){
     array_push($arrayBarang, $_POST['nBarang']."|".$_POST['jBarang']);
   }
-  if(isset($_POST['idBarangBaru'])&&isset($_POST['nBarangBaru'])&&isset($_POST['jBarangBaru'])&&isset($_POST['lBarangBaru'])&&isset($_POST['pBarangBaru'])&&isset($_POST['kBarangBaru'])&&$_POST['jBarangBaru']!=""){
-    $barangBaru = $_POST['idBarangBaru']."|".$_POST['nBarangBaru']."|".$_POST['jBarangBaru']."|".$_POST['pBarangBaru']."|".$_POST['lBarangBaru']."|".$_POST['kBarangBaru'];
+  if(isset($_POST['idBarangBaru'])&&isset($_POST['nBarangBaru'])&&isset($_POST['jBarangBaru'])&&isset($_POST['pBarangBaru'])&&isset($_POST['kBarangBaru'])&&$_POST['jBarangBaru']!=""){
+    $barangBaru = $_POST['idBarangBaru']."|".$_POST['nBarangBaru']."|".$_POST['jBarangBaru']."|".$_POST['pBarangBaru']."|".$_POST['kBarangBaru'];
     array_push($arrayBarangBaru,$barangBaru);
   }
   if(isset($_POST['hapusBahan'])){
@@ -300,6 +300,7 @@
                           <input type='hidden' value='".$bahan[0]."' name='hapusBahan'>
                           <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
                           <input type='hidden' value='".serialize($arrayBarang)."' name='Barang'>
+                          <input type='hidden' value='".serialize($arrayBarangBaru)."' name='BarangBaru'>
                           <input type='submit' value='Hapus'>
                           </form></th>";
                     echo "</tr>";
@@ -408,16 +409,9 @@
                   <br>
                 </div>
                 <div class="form-group">
-                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Panjang</label>
+                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Keterangan</label>
                   <div class="col-sm-10">
-                    <input type='number' name='pBarangBaru' id="pBarangBaru" min=1 class="form-control" style="width: 30%">
-                  </div>
-                  <tr>
-                </div>
-                <div class="form-group">
-                  <label for="inputNamaBarangBaru" class="col-sm-2 control-label">Lebar</label>
-                  <div class="col-sm-10">
-                    <input type='number' name='lBarangBaru' id="lBarangBaru" min=1 class="form-control" style="width: 30%">
+                    <input type='text' name='pBarangBaru' id="pBarangBaru" min=1 class="form-control" style="width: 30%">
                   </div>
                   <tr>
                 </div>
@@ -452,7 +446,7 @@
                   <th>ID</th>
                   <th>Nama</th>
                   <th>Jumlah</th>
-                  <th>Ukuran</th>
+                  <th>Keterangan</th>
                   <th>Kategori</th>
                   <th>Hapus</th>
                 </tr>
@@ -460,7 +454,7 @@
                   foreach($arrayBarangBaru as $value){
                     $barang = explode('|', $value);
                     echo "<tr>";
-                    echo "<th>".$barang[0]."</th><th>".$barang[1]."</th><th>".$barang[2]."</th><th>".$barang[3]." cm x ".$barang[4]." cm</th><th>".$barang[5]."</th>";
+                    echo "<th>".$barang[0]."</th><th>".$barang[1]."</th><th>".$barang[2]."</th><th>".$barang[3]."</th><th>".$barang[4]."</th>";
                     echo "<th><form action='#' method='POST'>
                           <input type='hidden' value='".$barang[0]."' name='hapusBarangBaru'>
                           <input type='hidden' value='".serialize($arrayBahan)."' name='Bahan'>
@@ -587,7 +581,7 @@
               $.ajax({
                   type: "POST",
                   url: "manage.php?act=insertproduksibarangbaru",
-                  data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&nama=' + tBarang[1]+ '&qty=' + tBarang[2]+ '&pjg=' + tBarang[3]+ '&lbr='+tBarang[4]+ '&kategori_id=' + tBarang[5],
+                  data: 'produksi_id=' + smth+ '&barang_id=' + tBarang[0]+ '&nama=' + tBarang[1]+ '&qty=' + tBarang[2]+ '&pjg=' + tBarang[3]+ '&kategori_id=' + tBarang[4],
                   success: function(result) {
                   }
               });

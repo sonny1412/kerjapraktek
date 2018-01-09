@@ -193,7 +193,7 @@
             <!-- /.box-header -->
             <fieldset>
               <legend style="text-align: center;">Masukan data Bahan</legend>
-              <form class="form-horizontal">
+              <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="formAwal">
@@ -206,7 +206,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label ">Tanggal <span class="asterisk">*</span></label>
                       <div class="col-sm-9">                      
-                        <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>" required/>
+                        <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>"/>
                       </div>
                     </div>
                     <div class="form-group">
@@ -227,7 +227,7 @@
                     <div class="form-group" style="margin: 0; padding: 15px 0; border-top: 1px solid #d3d7db;">
                       <label class="col-sm-3 control-label">Jenis Pembayaran<span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();" required>
+                        <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();">
                           <option value="" disabled selected style="display: none;">[Pilih Pembayaran]</option>
                           <option value="T">Tunai</option>
                           <option value="K">Kredit</option>
@@ -238,7 +238,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Status Kirim<span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
+                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();">
                           <option value="" disabled selected style="display: none;">[Pilih Status Kirim]</option>
                           <option value="T">Diterima Langsung</option>
                           <option value="K">Dikirim</option>
@@ -304,15 +304,9 @@
                       </div>
                     </div>
                     <div class="form-group" id="divPanjangBarang">
-                      <label class="col-sm-3 control-label">Panjang <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Keterangan <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="panjang-barangBaru[]" class="form-control" placeholder="Panjang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divLebarBarang">
-                      <label class="col-sm-3 control-label">Lebar <span class="asterisk">*</span></label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="lebar-barangBaru[]" class="form-control" placeholder="Lebar"/>
+                        <input type="text" value=" " name="panjang-barangBaru[]" class="form-control" placeholder="Kategori"/>
                       </div>
                     </div>
                     <div class="form-group" id="divKategoriBarang">
@@ -349,7 +343,7 @@
                 <button id="submit" class="btn btn-info pull-right">Insert</button>
               </div>
               <!-- /.box-footer -->
-            </form>
+            </div>
 
             </fieldset>
             
@@ -398,7 +392,6 @@
   var htmlNamaBaru = $('#divNamaBarang:eq(0)')[0].outerHTML;
   var htmlJumlahBaru = $('#divJumlahBarang:eq(0)')[0].outerHTML;
   var htmlPanjangBarang = $('#divPanjangBarang:eq(0)')[0].outerHTML;
-  var htmlLebarBarang = $('#divLebarBarang:eq(0)')[0].outerHTML;
   var htmlKategoriBarang = $('#divKategoriBarang:eq(0)')[0].outerHTML;
   var htmlHargaBarang = $('#divHargaBaru:eq(0)')[0].outerHTML;
   $("#next").click(function() {
@@ -411,7 +404,6 @@
     $('#formBarangBaru').append(htmlNamaBaru);
     $('#formBarangBaru').append(htmlJumlahBaru);
     $('#formBarangBaru').append(htmlPanjangBarang);
-    $('#formBarangBaru').append(htmlLebarBarang);
     $('#formBarangBaru').append(htmlKategoriBarang);
     $('#formBarangBaru').append(htmlHargaBarang);
   });
@@ -431,7 +423,6 @@
     var namaBaru= [];
     var jumlahBaru = [];
     var panjangBaru = [];
-    var lebarBaru = [];
     var kategoriBaru = [];
     var hargaBaru = [];
     var total = 0;
@@ -448,13 +439,11 @@
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
     $('input[name="jumlah-barang[]"]').each( function(){ jumlah.push($(this).val()); });
     $('input[name="harga-barang[]"]').each( function(){ harga.push($(this).val()); });
-
     $('input[name="id-barangBaru[]"]').each( function(){ idBaru.push($(this).val()); });
     $('input[name="nama-barangBaru[]"]').each( function(){ namaBaru.push($(this).val()); });
     $('input[name="jumlah-barangBaru[]"]').each( function(){ jumlahBaru.push($(this).val()); });
     $('input[name="panjang-barangBaru[]"]').each( function(){ panjangBaru.push($(this).val()); }); 
     $('select[name="kategori-barangBaru[]"]').each( function(){ kategoriBaru.push($(this).val()); });
-    $('input[name="lebar-barangBaru[]"]').each( function(){ lebarBaru.push($(this).val()); });
     $('input[name="harga-barangBaru[]"]').each( function(){ hargaBaru.push($(this).val()); });
 
     for(i = 0; i < jumlah.length ; i++){
@@ -466,7 +455,7 @@
       }
     }
     for(i = 0; i< idBaru.length ; i++){
-      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && panjangBaru[i] && kategoriBaru[i] && lebarBaru[i] && hargaBaru[i]){
+      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && panjangBaru[i] && kategoriBaru[i] && hargaBaru[i]){
         total += jumlahBaru[i] * hargaBaru[i];
       }
       else{
@@ -474,35 +463,40 @@
       }
     }
 
-
-    if(cek==0 || cekBaru == 0){
-      $.ajax({
-      type: "POST",
-      url: "manage.php?act=insertpembelian",
-      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
-      success: function(result) {
-        for( i = 0 ;i < nama.length ; i++){
-          $.ajax({
-            type: "POST",
-            url: "manage.php?act=insertpembelianbarang",
-            data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
-            success: function(result) {
-            }
-          });
-        }
-        for( i = 0 ;i < idBaru.length ; i++){
-          $.ajax({
-            type: "POST",
-            url: "manage.php?act=insertpembelianbarangBaru",
-            data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&lbr=' + lebarBaru[i]+ '&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru+ '&harga='+hargaBaru,
-            success: function(result) {
-            }
-          });
-        }   
-      }});
+    if(idSupplier && statusKirim &&jenisBayar){
+      if(cek==0 || cekBaru == 0){
+        $.ajax({
+        type: "POST",
+        url: "manage.php?act=insertpembelian",
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
+        success: function(result) {
+          for( i = 0 ;i < nama.length ; i++){
+            $.ajax({
+              type: "POST",
+              url: "manage.php?act=insertpembelianbarang",
+              data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
+              success: function(result) {
+              }
+            });
+          }
+          for( i = 0 ;i < idBaru.length ; i++){
+            $.ajax({
+              type: "POST",
+              url: "manage.php?act=insertpembelianbarangBaru",
+              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru+ '&harga='+hargaBaru,
+              success: function(result) {
+              }
+            });
+          } 
+          window.location = "statuspembelian.php";  
+        }});
+      }
+      else{
+        alert("Tolong cek isi semua data Barang diatas");
+      }
     }
     else{
-      alert("Tolong cek isi semua data Barang diatas");
+      alert("Cek kembali data nota");
     }
 
     

@@ -193,7 +193,7 @@
             <!-- /.box-header -->
             <fieldset>
               <legend style="text-align: center;">Masukan data Bahan</legend>
-              <form class="form-horizontal">
+              <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="formAwal">
@@ -287,7 +287,7 @@
                 <button id="submit" class="btn btn-info pull-right">Insert</button>
               </div>
               <!-- /.box-footer -->
-            </form>
+            </div>
 
             </fieldset>
             
@@ -369,25 +369,32 @@
         cek++;
       }
     }
-    if(cek==0 || cekBaru == 0){
-      $.ajax({
-      type: "POST",
-      url: "manage.php?act=insertpenjualan",
-      data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
-      success: function(result) {
-        for( i = 0 ;i < nama.length ; i++){
-          $.ajax({
-            type: "POST",
-            url: "manage.php?act=insertpenjualanbarang",
-            data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
-            success: function(result) {
-            }
-          });
-        }   
-      }});
+    if(idCustomer && jenisBayar && statusKirim){
+      if(cek==0 || cekBaru == 0){
+        $.ajax({
+        type: "POST",
+        url: "manage.php?act=insertpenjualan",
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
+        success: function(result) {
+          for( i = 0 ;i < nama.length ; i++){
+            $.ajax({
+              type: "POST",
+              url: "manage.php?act=insertpenjualanbarang",
+              data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
+              success: function(result) {
+
+              }
+            });
+          }
+          window.location = "statuspenjualan.php";    
+        }});
+      }
+      else{
+        alert("Tolong cek isi semua data Barang diatas");
+      }
     }
     else{
-      alert("Tolong cek isi semua data Barang diatas");
+      alert("Cek kembali data nota");
     }
 
     
