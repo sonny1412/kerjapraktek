@@ -28,13 +28,19 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php require 'sql.php';
+<?php
 $cmd = $_GET["cmd"];
 ?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
-<!-- Site wrapper -->
+  <?php
+  session_start();
+  if (isset($_SESSION["logkaryawan"])) {
+    require 'db.php';
+    require 'sql.php';
+    ?>
+    <!-- Site wrapper -->
 <div class="wrapper">
 
   <header class="main-header">
@@ -59,15 +65,26 @@ $cmd = $_GET["cmd"];
         <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
+            <?php
+            $idkaryawan = $_SESSION["logkaryawan"];
+            $result = Karyawan($idkaryawan);
+            $usernameKaryawan;
+            $idKarywan;
+            $jabatan;
+            if ($row = mysqli_fetch_object($result)) {
+              $usernameKaryawan = $row->nama;
+              $idkaryawan = $row->id;
+              $jabatan = $row->jabatan;
+            }
+            ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              
-              <span class="hidden-xs">Sonny</span>
+              <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
             <ul class="dropdown-menu">    
               <!-- Menu Sign Out-->
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="login.php" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -87,87 +104,112 @@ $cmd = $_GET["cmd"];
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Barang</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+        <?php 
+        if($jabatan == "Gudang" || $jabatan == "Pemilik" ||$jabatan == "Pembelian" || $jabatan == "Penjualan")
+        {
+          echo "<li class=treeview>
+            <a href=#>
+              <i class='fa fa-dashboard'></i> <span>Barang</span>
+              <span class=pull-right-container>
+                <i class='fa fa-angle-left pull-right'></i>
+              </span>
+            </a>
+            <ul class=treeview-menu>
+              <li><a href=informasibarang.php><i class='fa fa-circle-o'></i> Informasi Barang</a></li>";
+        }
+        if($jabatan == "Gudang" || $jabatan == "Pemilik"){
+          echo "<li><a href=tambahbarang.php><i class='fa fa-circle-o'></i> Tambah Barang</a></li>";
+        }
+        if($jabatan == "Gudang" || $jabatan == "Pemilik" ||$jabatan == "Pembelian" || $jabatan == "Penjualan"){
+            echo "</ul>
+          </li>
+          
+          
+          <li class=treeview>
+            <a href=#>
+              <i class='fa fa-edit'></i> <span>Bahan</span>
+              <span class=pull-right-container>
+                <i class='fa fa-angle-left pull-right'></i>
+              </span>
+            </a>
+            <ul class=treeview-menu>
+              <li><a href=informasibahan.php><i class='fa fa-circle-o'></i> Informasi Bahan</a></li>";
+        }
+        if($jabatan == "Gudang" || $jabatan == "Pemilik"){
+          echo "<li><a href=tambahbahan.php><i class='fa fa-circle-o'></i> Tambah Bahan</a></li>";
+        }
+        if($jabatan == "Gudang" || $jabatan == "Pemilik" ||$jabatan == "Pembelian" || $jabatan == "Penjualan"){
+          echo "</ul>
+          </li>";
+        }?>
+              
+              
+            
+        <?php
+        if($jabatan == "Gudang" || $jabatan == "Pemilik"){
+          echo "<li class=treeview>
+          <a href=#>
+            <i class='fa fa-table'></i> <span>Produksi</span>
+            <span class=pull-right-container>
+              <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="informasibarang.php"><i class="fa fa-circle-o"></i> Informasi Barang</a></li>
-            <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
+          <ul class=treeview-menu>
+            <li><a href=informasiproduksi.php><i class='fa fa-circle-o'></i> Informasi Produksi</a></li>
+            <li><a href=tambahproduksi.php><i class='fa fa-circle-o'></i> Tambah Produksi</a></li>
           </ul>
-        </li>
-        
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Bahan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+        </li>";
+        }
+        ?>
+        <?php
+        if($jabatan == "Pemilik"){
+          echo "<li class=treeview>
+            <a href=#>
+              <i class='glyphicon glyphicon-user'></i> <span>Karyawan</span>
+              <span class='pull-right-container'>
+                <i class='fa fa-angle-left pull-right'></i>
+              </span>
+            </a>
+            <ul class=treeview-menu>
+              <li><a href=informasikaryawan.php><i class='fa fa-circle-o'></i> Informasi karyawan</a></li>
+              <li> <a href=tambahkaryawan.php><i class='fa fa-circle-o'></i> Tambah Karyawan</a></li>
+              <li> <a href=tambahakun.php><i class='fa fa-circle-o'></i> Tambah Akun </a></li>
+            </ul>
+          </li>";
+        }
+        if($jabatan == "Pembelian" || $jabatan == "Pemilik"){
+          echo "<li class='active treeview'>
+          <a href=#>
+            <i class='fa fa-dashboard'></i> <span>Pembelian</span>
+            <span class=pull-right-container>
+              <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="informasibahan.php"><i class="fa fa-circle-o"></i> Informasi Bahan</a></li>
-            <li><a href="tambahbahan.php"><i class="fa fa-circle-o"></i> Tambah Bahan</a></li>
+          <ul class=treeview-menu>
+            <li class=active><a href=informasisuplier.php><i class='fa fa-circle-o'></i> Informasi Supplier</a></li>
+            <li><a href=tambahsupplier.php><i class='fa fa-circle-o'></i> Tambah Supplier</a></li>
+            <li><a href=tambahpembelian.php><i class='fa fa-circle-o'></i> Tambah Pembelian</a></li>
+            <li><a href=statuspembelian.php><i class='fa fa-circle-o'></i> Status Pembelian</a></li>
           </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Produksi</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+          </li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
+          echo "<li class=treeview>
+          <a href=#>
+            <i class='fa fa-dashboard'></i> <span>Penjualan</span>
+            <span class='pull-right-container'>
+              <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+          <ul class=treeview-menu>
+            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+            <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
+            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
+            <li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
           </ul>
-        </li>
-        
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Karyawan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="informasikaryawan.php"><i class="fa fa-circle-o"></i> Informasi karyawan</a></li>
-            <li><a href="tambahkaryawan.php"><i class="fa fa-circle-o"></i> Tambah Karyawan</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Akun </a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Pembelian</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
-            <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
-            <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
-            <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Penjualan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li> <a href="tambahcustomer.php"><i class="fa fa-circle-o"></i> Tambah Customer</a></li>
-            <li> <a href="informasicustomer.php"><i class="fa fa-circle-o"></i> Informasi Customer</a></li>
-            <li><a href="tambahpenjualan.php"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
-            <li><a href="statuspenjualan.php"><i class="fa fa-circle-o"></i> Status Penjualan</a></li>
-          </ul>
-        </li>
+        </li>";
+        }
+        ?>
       
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
