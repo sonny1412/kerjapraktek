@@ -166,4 +166,10 @@
         $resultBayarPenjualan = mysqli_query($link, $sqlBayarPenjualan);
         return $resultBayarPenjualan;
     }
+    Function Karyawan($pid){
+        require 'db.php';
+        $sqlKaryawan = "SELECT k.nama, k.jabatan, k.id FROM user u, karyawan k WHERE u.Karyawan_id = k.id and u.username = '".$pid."'";
+        $resultKaryawan = mysqli_query($link, $sqlKaryawan);
+        return $resultKaryawan;
+    }
 ?>

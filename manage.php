@@ -102,7 +102,7 @@ switch ($act) {
 	$konfirmasi =MD5($_POST["konfirmasi"]);
 	$idKaryawan = $_POST["idKaryawan"];
 	if($password==$konfirmasi){
-		$sql = "INSERT INTO `user` (`id`, `Karyawan_id`, `username`, `password`) VALUES (NULL, '".$idKaryawan."', '".$username."', '".$password."');";
+		$sql = "INSERT INTO `user` (`Karyawan_id`, `username`, `password`) VALUES ('".$idKaryawan."', '".$username."', '".$password."');";
 		$result = mysqli_query($link,$sql);
 		if($result){
 			header("location: user.php");

@@ -212,7 +212,7 @@
                   <label for="inputUserKaryawan" class="col-sm-2 control-label">Username</label>
 
                   <div class="col-sm-10">
-                    <input type="email" name="user" required autofocus class="form-control">
+                    <input type="text" name="user" required autofocus class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
