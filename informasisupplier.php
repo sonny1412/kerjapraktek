@@ -3,13 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Supplier | Informasi Supplier</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Bootstrap select -->
-  <link rel="stylesheet" href="dist/css/bootstrap-select.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -30,8 +28,8 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php require 'sql.php';?>
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
+<?php include 'sql.php'; ?>
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
@@ -87,7 +85,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Barang</span>
             <span class="pull-right-container">
@@ -96,11 +94,10 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasibarang.php"><i class="fa fa-circle-o"></i> Informasi Barang</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
+            <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-        
-        
+               
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
@@ -122,7 +119,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
           </ul>
         </li>
         
@@ -140,7 +137,7 @@
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -148,8 +145,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
-            <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
+            <li> <a href="tambahsupplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
+            <li class="active"> <a href="#"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
             <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
@@ -185,63 +182,63 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Barang
+        Informasi Supplier
       </h1>
-    </section>    
+    </section>
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
+          <div class="box">
             
             <!-- /.box-header -->
-            <fieldset>
-              <legend style="text-align: center;">Masukan data Barang</legend>
-              <form class="form-horizontal" action="manage.php?act=insertbarang" method="POST">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputNamaBarang" class="col-sm-2 control-label">Nama</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control">
+            <div class="box-body">
+              <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
                   </div>
+                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
                 </div>
-                <div class="form-group">
-                  <label for="inputJumlahBarang" class="col-sm-2 control-label">Kuantitas</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="kuantitas" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPanjangBarang" class="col-sm-2 control-label">Keterangan</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" name="pjg" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
-
-                  <div class="col-sm-10">
-                    <select name="idKategori" class="selectpicker form-control" data-live-search="true">
-                    <?php while($rowKategoriBarang=mysqli_fetch_object($resultKategoriBarang)){
-                        echo "<option value='".$rowKategoriBarang->id."'>".$rowKategoriBarang->nama."</option>";
-                        }?>
-                    </select>
-                  </div>
-                </div>
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Kontak</th>
+                  <th>Alamat</th>
+                  <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                while($row = mysqli_fetch_object($resultSupplier)) {
+                    echo "<tr>";
+                    echo "<td>".$row->nama."</td>
+                    <td>".$row->telepon."</td>
+                    <td>".$row->alamat."</td>
+                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$row->id.">edit</a></td>";
+                    echo "</tr>";
+                     } ?>
+                     
+                </tbody>
                 
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Insert</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
-
-            </fieldset>
-            
+              </table>
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Detail Supplier</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fetched-data"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </div>
             <!-- /.box-body -->
           </div>
       </div>
@@ -265,8 +262,6 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Bootstrap select -->
-<script src="dist/js/bootstrap-select.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -278,7 +273,6 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- page script -->
 <script>
   $(function () {
     $('#example1').DataTable()
@@ -320,7 +314,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalbarang.php',
+                url : 'modalsupplier.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

@@ -8,6 +8,8 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Bootstrap select -->
+  <link rel="stylesheet" href="dist/css/bootstrap-select.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -222,7 +224,7 @@
                   <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
 
                   <div class="col-sm-10">
-                    <select name="idKategori" class="form-control">
+                    <select name="idKategori" class="selectpicker form-control" data-live-search="true">
                     <?php while($rowKategoriBahan=mysqli_fetch_object($resultKategoriBahan)){
                         echo "<option value='".$rowKategoriBahan->id."'>".$rowKategoriBahan->nama."</option>";
                         }?>
@@ -263,6 +265,8 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap select -->
+<script src="dist/js/bootstrap-select.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

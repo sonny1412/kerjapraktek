@@ -3,13 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Bahan | Tambah Bahan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Bootstrap select -->
-  <link rel="stylesheet" href="dist/css/bootstrap-select.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -87,7 +85,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Barang</span>
             <span class="pull-right-container">
@@ -96,11 +94,10 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="informasibarang.php"><i class="fa fa-circle-o"></i> Informasi Barang</a></li>
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
+            <li><a href="tambahbarang.php"><i class="fa fa-circle-o"></i> Tambah Barang</a></li>
           </ul>
         </li>
-        
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bahan</span>
@@ -121,8 +118,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Produksi</a></li>
-            <li><a href="tambahgudang.php"><i class="fa fa-circle-o"></i> Tambah Produksi</a></li>
+            <li><a href="informasiproduksi.php"><i class="fa fa-circle-o"></i> Informasi Gudang</a></li>
+            <li><a href="tambahproduksi.php"><i class="fa fa-circle-o"></i> Tambah Gudang</a></li>
           </ul>
         </li>
         
@@ -140,7 +137,7 @@
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="active treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Pembelian</span>
             <span class="pull-right-container">
@@ -148,8 +145,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li> <a href="tambahsuplier.php"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
-            <li> <a href="informasisuplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
+            <li class="active"> <a href="#"><i class="fa fa-circle-o"></i> Tambah Supplier</a></li>
+            <li> <a href="informasisupplier.php"><i class="fa fa-circle-o"></i> Informasi Supplier</a></li>
             <li><a href="tambahpembelian.php"><i class="fa fa-circle-o"></i> Tambah Pembelian</a></li>
             <li><a href="statuspembelian.php"><i class="fa fa-circle-o"></i> Status Pembelian</a></li>
           </ul>
@@ -185,9 +182,10 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Barang
+        Tambah Supplier
       </h1>
-    </section>    
+    </section>
+    
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -196,42 +194,28 @@
             
             <!-- /.box-header -->
             <fieldset>
-              <legend style="text-align: center;">Masukan data Barang</legend>
-              <form class="form-horizontal" action="manage.php?act=insertbarang" method="POST">
+              <legend style="text-align: center;">Masukan data Supplier</legend>
+              <form class="form-horizontal" action="manage.php?act=insertsupplier" method="POST">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputNamaBarang" class="col-sm-2 control-label">Nama</label>
-
+                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Perusahaan</label>
                   <div class="col-sm-10">
                     <input type="text" name="nama" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputJumlahBarang" class="col-sm-2 control-label">Kuantitas</label>
-
+                  <label for="inputJumlahBahan" class="col-sm-2 control-label">Alamat</label>
                   <div class="col-sm-10">
-                    <input type="number" name="kuantitas" class="form-control">
+                    <input type="text" name="alamat" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPanjangBarang" class="col-sm-2 control-label">Keterangan</label>
+                  <label for="inputKeteranganBahan" class="col-sm-2 control-label">Kontak</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="pjg" class="form-control">
+                    <input type="number" name="kontak" class="form-control">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
-
-                  <div class="col-sm-10">
-                    <select name="idKategori" class="selectpicker form-control" data-live-search="true">
-                    <?php while($rowKategoriBarang=mysqli_fetch_object($resultKategoriBarang)){
-                        echo "<option value='".$rowKategoriBarang->id."'>".$rowKategoriBarang->nama."</option>";
-                        }?>
-                    </select>
-                  </div>
-                </div>
-                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -265,8 +249,6 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Bootstrap select -->
-<script src="dist/js/bootstrap-select.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
