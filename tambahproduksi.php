@@ -68,11 +68,11 @@
             $idkaryawan = $_SESSION["logkaryawan"];
             $result = Karyawan($idkaryawan);
             $usernameKaryawan;
-            $idKarywan;
+            $id;
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $id = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>

@@ -38,6 +38,7 @@
   if (isset($_SESSION["logkaryawan"])) {
     require 'db.php';
     require 'sql.php';
+  }
     ?>
     <!-- Site wrapper -->
 <div class="wrapper">
@@ -72,7 +73,7 @@
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $id = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
@@ -264,6 +265,7 @@
                           <div class=col-sm-10>
                             <input type=text name=keterangan required autofocus class=form-control>
                             <input type=hidden name=id value=".$cmd.">
+                            <input type=hidden name=karyawan value=".$id.">
                           </div>
                       </div>              
                     </div>";

@@ -201,7 +201,9 @@ switch ($act) {
 	$id = $_POST["id"];
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$karyawan = $_POST["karyawan"];
+	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		$sqlUpdate = "UPDATE `penjualan` SET saldo = saldo + ".$jumlah." WHERE `penjualan`.`id` = ".$id.";";
@@ -220,7 +222,9 @@ switch ($act) {
 	$id = $_POST["id"];
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$karyawan = $_POST["karyawan"];
+	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		$sqlUpdate = "UPDATE `pembelian` SET saldo = saldo + ".$jumlah." WHERE `pembelian`.`id` = ".$id.";";
@@ -239,7 +243,9 @@ switch ($act) {
 	$id = $_POST["id"];
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$karyawan = $_POST["karyawan"];
+	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		$sqlUpdate = "UPDATE `pembelian` SET saldo = saldo - ".$jumlah." WHERE `pembelian`.`id` = ".$id.";";
@@ -258,7 +264,9 @@ switch ($act) {
 	$id = $_POST["id"];
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."');";
+	$karyawan = $_POST["karyawan"];
+	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		$sqlUpdate = "UPDATE `penjualan` SET saldo = saldo - ".$jumlah." WHERE `penjualan`.`id` = ".$id.";";

@@ -36,7 +36,12 @@ $cmd = $_GET["cmd"];
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-
+<?php
+  session_start();
+  if (isset($_SESSION["logkaryawan"])) {
+    require 'db.php';
+  }
+    ?>
   <header class="main-header">
     <!-- Logo -->
     <a href="../../index2.html" class="logo">
@@ -59,9 +64,20 @@ $cmd = $_GET["cmd"];
         <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
+            <?php
+            $idkaryawan = $_SESSION["logkaryawan"];
+            $result = Karyawan($idkaryawan);
+            $usernameKaryawan;
+            $idKarywan;
+            $jabatan;
+            if ($row = mysqli_fetch_object($result)) {
+              $usernameKaryawan = $row->nama;
+              $id = $row->id;
+              $jabatan = $row->jabatan;
+            }
+            ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              
-              <span class="hidden-xs">Sonny</span>
+              <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
             <ul class="dropdown-menu">    
               <!-- Menu Sign Out-->
@@ -221,6 +237,7 @@ $cmd = $_GET["cmd"];
                           <div class=col-sm-10>
                             <input type=text name=keterangan required autofocus class=form-control>
                             <input type=hidden name=id value=".$cmd.">
+                            <input type=hidden name=karyawan value=".$id.">
                           </div>
                       </div>              
                     </div>";

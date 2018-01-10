@@ -39,6 +39,7 @@ $cmd = $_GET["cmd"];
   if (isset($_SESSION["logkaryawan"])) {
     require 'db.php';
     require 'sql.php';
+  }
     ?>
     <!-- Site wrapper -->
 <div class="wrapper">

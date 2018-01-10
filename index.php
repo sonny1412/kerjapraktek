@@ -122,7 +122,7 @@
           </li>
           
           
-          <li class=treeview>
+          <li class='treeview'>
             <a href=#>
               <i class='fa fa-edit'></i> <span>Bahan</span>
               <span class=pull-right-container>
@@ -152,7 +152,7 @@
             </span>
           </a>
           <ul class=treeview-menu>
-            <li><a href=#><i class='fa fa-circle-o'></i> Informasi Produksi</a></li>
+            <li><a href=informasiproduksi.php><i class='fa fa-circle-o'></i> Informasi Produksi</a></li>
             <li><a href=tambahproduksi.php><i class='fa fa-circle-o'></i> Tambah Produksi</a></li>
           </ul>
         </li>";
@@ -183,7 +183,8 @@
             </span>
           </a>
           <ul class=treeview-menu>
-            <li> <a href=laporanpembelian.php><i class='fa fa-circle-o'></i> Laporan Pembelian</a></li>
+            <li><a href=informasisuplier.php><i class='fa fa-circle-o'></i> Informasi Supplier</a></li>
+            <li><a href=tambahsupplier.php><i class='fa fa-circle-o'></i> Tambah Supplier</a></li>
             <li><a href=tambahpembelian.php><i class='fa fa-circle-o'></i> Tambah Pembelian</a></li>
             <li><a href=statuspembelian.php><i class='fa fa-circle-o'></i> Status Pembelian</a></li>
           </ul>
@@ -198,13 +199,14 @@
             </span>
           </a>
           <ul class=treeview-menu>
-            <li> <a href=laporanpenjualan.php><i class='fa fa-circle-o'></i> Laporan Penjualan</a></li>
+            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+            <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
             <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
+            <li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
           </ul>
         </li>";
         }
         ?>
-        
       
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
