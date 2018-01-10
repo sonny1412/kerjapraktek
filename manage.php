@@ -59,6 +59,40 @@ switch ($act) {
 		echo $jabatan;
 	}
 	break;
+
+	case "ubahsupplier":
+	require 'db.php';
+	$id=$_POST["id"];
+	$nama = $_POST["nama_supplier"];
+	$telepon =$_POST["kontak_supplier"];
+	$alamat = $_POST["alamat_supplier"];
+	$sql = "UPDATE `supplier` SET `nama` = '".$nama."', `telepon` = '".$telepon."', `alamat` = '".$alamat."' WHERE `id` =".$id;
+	$result = mysqli_query($link,$sql);
+	if($result){
+		header("location: informasisupplier.php");
+	}
+	else{
+		echo "gagal";
+		//echo $jabatan;
+	}
+	break;
+
+	case "ubahcustomer":
+	require 'db.php';
+	$id=$_POST["id"];
+	$nama = $_POST["nama_customer"];
+	$telepon =$_POST["kontak_customer"];
+	$alamat = $_POST["alamat_customer"];
+	$sql = "UPDATE `customer` SET `nama` = '".$nama."', `telepon` = '".$telepon."', `alamat` = '".$alamat."' WHERE `id` =".$id;
+	$result = mysqli_query($link,$sql);
+	if($result){
+		header("location: informasicustomer.php");
+	}
+	else{
+		echo "gagal";
+		//echo $jabatan;
+	}
+	break;
 	/////////////////////////////
 	/* Region User */
 	case "insertuser":

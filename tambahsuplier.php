@@ -255,6 +255,12 @@
   </footer>
 </div>
 <!-- ./wrapper -->
+<?php 
+  } 
+  else {
+    header('Location: login.php');
+  }
+  ?>
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
