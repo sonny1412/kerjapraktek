@@ -31,6 +31,10 @@
 <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
 <!-- the fixed layout is not compatible with sidebar-mini -->
 <body class="hold-transition skin-blue fixed sidebar-mini">
+  <?php
+  session_start();
+  if (isset($_SESSION["logkaryawan"])) {
+    require 'db.php';?>
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -56,15 +60,22 @@
         <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
+            <?php
+            $idkaryawan = $_SESSION["logkaryawan"];
+            $sql = "select * from user where username = '".$idkaryawan."'";
+            $result = mysqli_query($link,$sql);
+            if ($row = mysqli_fetch_object($result)) {
+              $usernameKaryawan = $row->username;
+            }
+            ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              
-              <span class="hidden-xs">Sonny</span>
+              <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
             <ul class="dropdown-menu">    
               <!-- Menu Sign Out-->
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="login.php" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -256,6 +267,12 @@
   </footer>
 </div>
 <!-- ./wrapper -->
+<?php 
+  } 
+  else {
+    header('Location: login.php');
+  }
+  ?>
 
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>

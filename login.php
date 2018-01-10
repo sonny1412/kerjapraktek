@@ -29,31 +29,18 @@
 </head>
 <body class="hold-transition login-page">
   <?php
-    session_start();
-    if(isset($_SESSION["login"])) {
-            require 'connect.php';
-        
-            $sql = "select * from user";
-            $result = mysqli_query($link, $sql);
-            if(!$result) {
-                die("SQL Error: ".$sql);
-            }
-
-            ?>
-            <?php
-        }
-        else {
-        } 
-?>
-<div class="login-box">
+session_start();
+if (!isset($_SESSION["logkaryawan"])) {
+  require 'db.php'; ?>
+  <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>CV Cipta Jujur Kreasi</b></a>
+    <a href="#"><b>CV Cipta Jujur Kreasi</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
-    <form action="manage.php?act=login" method="POST">
+    <form action="proses.php?act=login" method="POST">
       <div class="form-group has-feedback">
         <input type="text" name="Username" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -65,9 +52,7 @@
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
+            
           </div>
         </div>
         <!-- /.col -->
@@ -77,15 +62,13 @@
         <!-- /.col -->
       </div>
     </form>
-
-    <!-- /.social-auth-links -->
-
-    <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
-
   </div>
   <!-- /.login-box-body -->
 </div>
+<?php } else {
+            header('Location: index.php');
+        } ?>
+
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
