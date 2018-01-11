@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Barang | Informasi Barang</title>
+  <title>Dashboard | Control Panel</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,17 +28,16 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<?php
+<!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
+<!-- the fixed layout is not compatible with sidebar-mini -->
+<body class="hold-transition skin-blue fixed sidebar-mini">
+  <?php
   session_start();
   if (isset($_SESSION["logkaryawan"])) {
     require 'db.php';
     require 'sql.php';
-  }
     ?>
-<!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
-<!-- the fixed layout is not compatible with sidebar-mini -->
-<body class="hold-transition skin-blue fixed sidebar-mini">
-<!-- Site wrapper -->
+    <!-- Site wrapper -->
 <div class="wrapper">
 
   <header class="main-header">
@@ -123,7 +122,7 @@
           </li>
           
           
-          <li class=treeview>
+          <li class='treeview'>
             <a href=#>
               <i class='fa fa-edit'></i> <span>Bahan</span>
               <span class=pull-right-container>
@@ -176,7 +175,7 @@
           </li>";
         }
         if($jabatan == "Pembelian" || $jabatan == "Pemilik"){
-          echo "<li class='treeview'>
+          echo "<li class=treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Pembelian</span>
             <span class=pull-right-container>
@@ -192,7 +191,7 @@
           </li>";
         }
         if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
-          echo "<li class='active treeview'>
+          echo "<li class=treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
             <span class='pull-right-container'>
@@ -203,7 +202,7 @@
             <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
             <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
-            <li class=active><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
+            <li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
           </ul>
         </li>";
         }
@@ -225,109 +224,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Status Penjualan
+        Dasboard
+        <small>Control panel</small>
       </h1>
     </section>
     <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Nomor Nota</th>
-                  <th>Supplier</th>
-                  <th>Daftar Barang</th>
-                  <th>Status Pembayaran</th>
-                  <th>Status Pengiriman</th>          
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                while($rowPenjualan = mysqli_fetch_object($resultPenjualan)) {
-                    echo "<tr>";
-                    echo "<td>".$rowPenjualan->tanggal."</td>";
-                    echo "<td>".$rowPenjualan->id."</td>";
-                    echo "<td>".$rowPenjualan->nama."</td>";
-                    echo "<td>";
-                    $resultBarang = PenjualanBarang($rowPenjualan->id);
-                    while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
-                      echo "</br>";
-                    }
-                    echo "</td>";
-                    if($rowPenjualan->saldo == $rowPenjualan->total){
-                      echo "<td>Lunas</td>";
-                    }
-                    else if($rowPenjualan->saldo > $rowPenjualan->total){
-                      echo "<td><a href='#myModal2' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Konfirmasi Refund</a></td>";
-                    }
-                    else{
-                      echo "<td><a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Belum Lunas</a></td>";
-                    }
-                    if($rowPenjualan->status_kirim == "Menunggu"){
-                      echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
-                    }
-                    else if($rowPenjualan->status_kirim == "Proses"){
-                      echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
-                    }
-                    else{
-                      echo "<td>".$rowPenjualan->status_kirim."</td>";
-                    }
-                    echo "</tr>";
-                } ?>
-                </tbody>
-                
-              </table>
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Konfirmasi Barang</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="fetched-data"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-             <div class="modal fade" id="myModal2" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Konfirmasi Barang</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="fetched-data"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-      </div>
-      <!-- /.row -->
-    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -340,6 +241,14 @@
     reserved.
   </footer>
 </div>
+
+  <?php 
+  } 
+  else {
+    header('Location: login.php');
+  }
+  ?>
+
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
@@ -399,23 +308,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalkonfirmasibayarpenjualan.php',
-                data :  'rowid='+ rowid,
-                success : function(data){
-                $('.fetched-data').html(data);//menampilkan data ke dalam modal
-                }
-            });
-         });
-    });
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $('#myModal2').on('show.bs.modal', function (e) {
-            var rowid = $(e.relatedTarget).data('id');
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-                type : 'post',
-                url : 'modalkonfirmasirefundpenjualan.php',
+                url : 'modalbarang.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal

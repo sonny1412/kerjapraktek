@@ -274,7 +274,7 @@
                       echo "<td><a href=konfirmasirefundpembelian.php?cmd=".$rowPembelian->id.">Konfirmasi Refund</a></td>";
                     }
                     else{
-                      echo "<td><a href=konfirmasibayarpembelian.php?cmd=".$rowPembelian->id.">Belum Lunas</a></td>";
+                      echo "<td><a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPembelian->id.">Belum Lunas</a></td>";
                     }
                     if($rowPembelian->status_kirim == "Proses"){
                       echo "<td><a href=konfirmasikirimpembelian.php?cmd=".$rowPembelian->id.">".$rowPembelian->status_kirim."</a></td>";
@@ -293,7 +293,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Detail Barang</h4>
+                            <h4 class="modal-title">Konfirmasi Pengiriman</h4>
                         </div>
                         <div class="modal-body">
                             <div class="fetched-data"></div>
@@ -381,7 +381,7 @@ function myFunction() {
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'post',
-                url : 'modalbarang.php',
+                url : 'modalkonfirmasibayarpembelian.php',
                 data :  'rowid='+ rowid,
                 success : function(data){
                 $('.fetched-data').html(data);//menampilkan data ke dalam modal
