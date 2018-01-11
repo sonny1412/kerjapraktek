@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09 Jan 2018 pada 17.11
+-- Generation Time: 11 Jan 2018 pada 07.36
 -- Versi Server: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -41,11 +41,9 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `nama`, `quantity`, `keterangan`, `Kategori_id`) VALUES
-(2, 'Selimut Bulu Merah', -299, '150cm x 100cm', 6),
-(3, 'Selimut Bulu Merah Kecil', 4, '120cm x 200cm', 6),
-(4, 'Kain Bludru Biru', 495, ' ', 7),
-(7, 'Kain Bludru Merah', 950, '', 7),
-(1233, '1qweddas', 1233, ' asdddd', 6);
+(1, 'Kain Bludru Merah', 1000, ' ', 7),
+(2, 'Selimut Merah', 100, '150cm x 100cm', 6),
+(3, 'Selimut Bulu Merah', 110, '120cm x 200cm', 6);
 
 -- --------------------------------------------------------
 
@@ -89,7 +87,7 @@ CREATE TABLE `karyawan` (
 INSERT INTO `karyawan` (`id`, `nama`, `alamat`, `telp`, `jabatan`, `status`) VALUES
 (1, 'Rama Adhiguna', 'Weodoro', '123456789', 'Pemilik', 1),
 (2, 'Sonny Haryadi', 'Mejoyo Selatan AJ 13', '082243883642', 'Pembelian', 1),
-(3, 'Lucas Leonard', 'Deket Ubaya Depan Metropolis', '081234567892', 'Pembelian', 1),
+(3, 'Lucas Leonard', 'Deket Ubaya Depan Metropolis', '081234567892', 'Gudang', 1),
 (4, 'Evin Cintiawan', 'Rungkut Mejoyo Selatan AJ 13', '0812345566783', 'Penjualan', 1),
 (5, 'Kevin Andryano', 'Mulyosari Selatan 13', '123456789', 'Penjualan', 1),
 (6, 'Billie Arianto', 'Rungkut Mejoyo Utara N42', '123456789', 'Penjualan', 1);
@@ -135,8 +133,7 @@ CREATE TABLE `pembelian` (
 --
 
 INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES
-(1, 4, 1, '2018-01-09', '0000-00-00', 4950000, 'Sampai'),
-(123, 4, 1, '2018-01-09', '0000-00-00', 1520289, 'Sampai');
+(1, 4, 1, '2018-01-10', '0000-00-00', 20000000, 'Sampai');
 
 -- --------------------------------------------------------
 
@@ -157,8 +154,7 @@ CREATE TABLE `pembelian_barang` (
 --
 
 INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES
-(99, 1, 4, 495, 10000),
-(101, 123, 1233, 1233, 1233);
+(105, 1, 1, 2000, 10000);
 
 -- --------------------------------------------------------
 
@@ -170,17 +166,18 @@ CREATE TABLE `pembelian_pembayaran` (
   `id` int(11) NOT NULL,
   `Pembelian_id` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `keterangan` varchar(500) NOT NULL
+  `keterangan` varchar(500) NOT NULL,
+  `Karyawan_id` int(255) NOT NULL,
+  `tanggal_bayar` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pembelian_pembayaran`
 --
 
-INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`) VALUES
-(6, 1, 1000000, 'Tunai'),
-(7, 1, 4000000, 'BCA - 098282729'),
-(8, 1, 50000, 'Tunai');
+INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`, `Karyawan_id`, `tanggal_bayar`) VALUES
+(10, 1, 10000000, 'BCA - 1092029029', 1, '2018-01-10'),
+(11, 1, 10000000, 'ih78gb', 1, '2018-01-10');
 
 -- --------------------------------------------------------
 
@@ -203,12 +200,7 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES
-(1, 3, 1, '2018-01-09', '0000-00-00', 170000, 'Sampai'),
-(111, 3, 1, '2018-01-09', '0000-00-00', 1020000, 'Sampai'),
-(123, 3, 1, '2018-01-09', '0000-00-00', 0, 'Sampai'),
-(444, 3, 1, '2018-01-09', '0000-00-00', 0, 'Sampai'),
-(123333, 3, 1, '2018-01-09', '0000-00-00', 15129, 'Menunggu'),
-(2147483647, 3, 1, '2018-01-09', '0000-00-00', 1090000, 'Sampai');
+(1, 3, 1, '2018-01-10', '0000-00-00', 1900000, 'Sampai');
 
 -- --------------------------------------------------------
 
@@ -229,15 +221,8 @@ CREATE TABLE `penjualan_barang` (
 --
 
 INSERT INTO `penjualan_barang` (`id`, `Penjualan_id`, `Barang_id`, `qty`, `harga`) VALUES
-(31, 1, 2, '2', 50000),
-(32, 1, 3, '2', 35000),
-(33, 123, 2, '1', 10000),
-(34, 444, 3, '1', 10000),
-(35, 123, 2, '100', 500),
-(37, 111, 2, '1', 10000),
-(38, 111, 2, '1', 10000),
-(39, 111, 2, '100', 10000),
-(43, 2147483647, 2, '100', 10900);
+(45, 1, 2, '100', 10000),
+(46, 1, 3, '90', 10000);
 
 -- --------------------------------------------------------
 
@@ -249,16 +234,18 @@ CREATE TABLE `penjualan_pembayaran` (
   `id` int(11) NOT NULL,
   `Penjualan_id` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `keterangan` varchar(500) NOT NULL
+  `keterangan` varchar(500) NOT NULL,
+  `Karyawan_id` int(255) NOT NULL,
+  `tanggal_bayar` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `penjualan_pembayaran`
 --
 
-INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`) VALUES
-(13, 1, 100000, 'Tunai'),
-(14, 1, 70000, 'Tunai');
+INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`, `Karyawan_id`, `tanggal_bayar`) VALUES
+(17, 1, 2000000, 'BCA - 098282729', 1, '2018-01-10'),
+(18, 1, 100000, '190', 1, '2018-01-10');
 
 -- --------------------------------------------------------
 
@@ -276,7 +263,7 @@ CREATE TABLE `produksi` (
 --
 
 INSERT INTO `produksi` (`id`, `tanggal`) VALUES
-(81, '2018-01-09 20:45:03');
+(82, '2018-01-10 23:32:16');
 
 -- --------------------------------------------------------
 
@@ -296,9 +283,9 @@ CREATE TABLE `produksi_barang` (
 --
 
 INSERT INTO `produksi_barang` (`id`, `Produksi_id`, `Barang_id`, `qty`) VALUES
-(51, 81, 7, 50),
-(52, 81, 2, 10),
-(53, 81, 3, 10);
+(54, 82, 1, 1000),
+(55, 82, 2, 200),
+(56, 82, 3, 200);
 
 -- --------------------------------------------------------
 
@@ -330,7 +317,8 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`id`, `nama`, `telepon`, `alamat`) VALUES
-(4, 'CV Randi Motor', '0811353603', 'Jl. Brigjen Katamso 5 Waru');
+(4, 'CV Randi Motor', '0811353603', 'Jl. Brigjen Katamso 5 Waru'),
+(5, 'CV Cupuman', '0928202982', 'LOOOOL');
 
 -- --------------------------------------------------------
 
@@ -339,20 +327,19 @@ INSERT INTO `supplier` (`id`, `nama`, `telepon`, `alamat`) VALUES
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `Karyawan_id` int(11) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `Karyawan_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `Karyawan_id`, `username`, `password`) VALUES
-(1, 1, 'rama', '827ccb0eea8a706c4c34a16891f84e7b'),
-(9, 3, 'lucas', '827ccb0eea8a706c4c34a16891f84e7b'),
-(10, 2, 'sonny@adminciptajujur.com', '827ccb0eea8a706c4c34a16891f84e7b');
+INSERT INTO `user` (`username`, `password`, `Karyawan_id`) VALUES
+('sonny', '827ccb0eea8a706c4c34a16891f84e7b', 2),
+('lucas', '827ccb0eea8a706c4c34a16891f84e7b', 3),
+('rama', '827ccb0eea8a706c4c34a16891f84e7b', 1);
 
 --
 -- Indexes for dumped tables
@@ -458,13 +445,6 @@ ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_User_Karyawan1_idx` (`Karyawan_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -472,7 +452,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1234;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -496,61 +476,55 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=438198675;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
 --
 ALTER TABLE `pembelian_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `pembelian_pembayaran`
 --
 ALTER TABLE `pembelian_pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `penjualan_barang`
 --
 ALTER TABLE `penjualan_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `penjualan_pembayaran`
 --
 ALTER TABLE `penjualan_pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `produksi`
 --
 ALTER TABLE `produksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `produksi_barang`
 --
 ALTER TABLE `produksi_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -603,12 +577,6 @@ ALTER TABLE `produksi_barang`
 ALTER TABLE `produksi_karyawan`
   ADD CONSTRAINT `fk_Produksi_Karyawan_Karyawan1` FOREIGN KEY (`Karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Produksi_Karyawan_Produksi1` FOREIGN KEY (`Produksi_id`) REFERENCES `produksi` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `fk_User_Karyawan1` FOREIGN KEY (`Karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
