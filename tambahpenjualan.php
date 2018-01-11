@@ -290,6 +290,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
+                  <div id="form_block">
                   <div id="formBarang"> 
                     <div class="form-group" id="divBarang">
                       <label class="col-sm-3 control-label">Barang <span class="asterisk">*</span></label>
@@ -313,14 +314,18 @@
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" value="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/>
+                        <input type="number" min="0" value="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
+                        <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>
+
+                  </div>
                   </div>
 
                   <div id="divButton">
                     <div class="col-sm-12">
                       <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
+                      
                     </div>
                   </div>
                 </div>
@@ -376,14 +381,14 @@
 <!-- page script -->
 <!-- script untuk search -->
 <script>
-  var htmlNama = $('#divBarang:eq(0)')[0].outerHTML;
-  var htmlJumlah = $('#divJumlah:eq(0)')[0].outerHTML;
-  var htmlHarga = $('#divHarga:eq(0)')[0].outerHTML;
+  var htmlNama = $('#formBarang:eq(0)')[0].outerHTML;
   $("#next").click(function() {
-    $('#formBarang').append(htmlNama);
-    $('#formBarang').append(htmlJumlah);
-    $('#formBarang').append(htmlHarga);
+    $('#form_block').append(htmlNama);
   });
+  $("#form_block").on('click', '#remove', function(){
+    alert("lol");
+        $(this).closest('#formBarang').remove();
+  })
   $("#submit").click(function(){
     
     var noNota;

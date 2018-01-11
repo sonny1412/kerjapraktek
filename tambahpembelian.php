@@ -290,6 +290,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 col-md-6">
+                  <div id="form_block">
                   <div id="formBarang"> 
                     <div class="form-group" id="divBarang">
                       <label class="col-sm-3 control-label">Barang <span class="asterisk">*</span></label>
@@ -313,10 +314,12 @@
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/>
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
+                        <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>
                   </div>
+                </div>
 
                   <div id="divButton">
                     <div class="col-sm-12">
@@ -326,6 +329,7 @@
                 </div>
 
                 <div class="col-sm-6 col-md-6">
+                  <div id="form_block_baru">
                   <div id="formBarangBaru"> 
                     <div class="form-group" id="divIdBarang">
                       <label class="col-sm-3 control-label">Id Barang <span class="asterisk">*</span></label>
@@ -368,10 +372,12 @@
                     <div class="form-group" id="divHargaBaru">
                       <label class="col-sm-3 control-label">Harga Barang Baru <span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"/>
+                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"/></br>
+                        <button style="float: right;" id="removeBaru" name="removeBaru" class="btn btn-primary">Hapus Barang Baru</button>
                       </div>
                     </div>
                   </div>
+                </div>
 
                   <div id="divButton">
                     <div class="col-sm-12">
@@ -432,29 +438,22 @@
 <!-- page script -->
 <!-- script untuk search -->
 <script>
-  var htmlNama = $('#divBarang:eq(0)')[0].outerHTML;
-  var htmlJumlah = $('#divJumlah:eq(0)')[0].outerHTML;
-  var htmlHarga = $('#divHarga:eq(0)')[0].outerHTML;
-
-  var htmlIdBarang = $('#divIdBarang:eq(0)')[0].outerHTML;
-  var htmlNamaBaru = $('#divNamaBarang:eq(0)')[0].outerHTML;
-  var htmlJumlahBaru = $('#divJumlahBarang:eq(0)')[0].outerHTML;
-  var htmlPanjangBarang = $('#divPanjangBarang:eq(0)')[0].outerHTML;
-  var htmlKategoriBarang = $('#divKategoriBarang:eq(0)')[0].outerHTML;
-  var htmlHargaBarang = $('#divHargaBaru:eq(0)')[0].outerHTML;
+  var htmlBarang = $('#formBarang:eq(0)')[0].outerHTML;
+  var htmlBarangBaru = $('#formBarangBaru:eq(0)')[0].outerHTML;
   $("#next").click(function() {
-    $('#formBarang').append(htmlNama);
-    $('#formBarang').append(htmlJumlah);
-    $('#formBarang').append(htmlHarga);
+    $('#form_block').append(htmlBarang);
   });
   $("#nextBaru").click(function() {
-    $('#formBarangBaru').append(htmlIdBarang);
-    $('#formBarangBaru').append(htmlNamaBaru);
-    $('#formBarangBaru').append(htmlJumlahBaru);
-    $('#formBarangBaru').append(htmlPanjangBarang);
-    $('#formBarangBaru').append(htmlKategoriBarang);
-    $('#formBarangBaru').append(htmlHargaBarang);
+    $('#form_block_baru').append(htmlBarangBaru);
   });
+  $("#form_block").on('click', '#remove', function(){
+    alert("lol");
+        $(this).closest('#formBarang').remove();
+  })
+  $("#form_block_baru").on('click', '#removeBaru', function(){
+    alert("lol");
+        $(this).closest('#formBarangBaru').remove();
+  })
 
   $("#submit").click(function(){
     
