@@ -97,6 +97,12 @@
        die("SQL Error :".$sqlPenjualan);
     }
 
+    $cekNomorNota = "SELECT COUNT(*) as jumlah FROM penjualan WHERE tanggal = '".date("Y-m-d")."'";
+    $resultCekNomorNota = mysqli_query($link, $cekNomorNota);
+
+    $cekNomorNotaBeli = "SELECT COUNT(*) as jumlah FROM pembelian WHERE tanggal = '".date("Y-m-d")."'";
+    $resultCekNomorNotaBeli = mysqli_query($link, $cekNomorNotaBeli);
+
     //Function
     function Kategori($kid){
         require 'db.php';

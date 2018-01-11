@@ -242,8 +242,19 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Nomor Nota<span class="asterisk">*</span></label>
                       <div class="col-sm-9">
-                        <input type="number" name="noNota" class="form-control"  required/>
-                      </div>
+                      <?php 
+                      $date = date("Ymd");
+                      while($rowNomorNotaJual=mysqli_fetch_object($resultCekNomorNota))
+                        $nomorNota = $rowNomorNotaJual->jumlah+1;
+                      if($nomorNota<100){
+                        $nomorBaru = "0".$nomorNota;
+                        if($nomorNota<10){
+                          $nomorBaru = "00".$nomorNota;
+                        }
+                      }
+                      echo '<input name="nomorNota" class="form-control" value="'.$date.$nomorBaru.'" disabled="true"/>';
+                      ?>
+                    </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-3 control-label ">Tanggal <span class="asterisk">*</span></label>
