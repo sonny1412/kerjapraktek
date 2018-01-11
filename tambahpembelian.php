@@ -66,11 +66,11 @@
             $idkaryawan = $_SESSION["logkaryawan"];
             $result = Karyawan($idkaryawan);
             $usernameKaryawan;
-            $idKarywan;
+            $id;
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $id = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
@@ -243,7 +243,7 @@
                       <label class="col-sm-3 control-label">Nomor Nota<span class="asterisk">*</span></label>
                       <div class="col-sm-9">
                       <?php 
-                      $date = date("Ymd");
+                      $date = date("ymd");
                       while($rowNomorNotaBeli=mysqli_fetch_object($resultCekNomorNotaBeli))
                         $nomorNota = $rowNomorNotaBeli->jumlah+1;
                       if($nomorNota<100){
@@ -252,7 +252,7 @@
                           $nomorBaru = "00".$nomorNota;
                         }
                       }
-                      echo '<input name="nomorNota" class="form-control" value="'.$date.$nomorBaru.'" disabled="true"/>';
+                      echo '<input name="noNota" class="form-control" value="'.$date.$nomorBaru.'" disabled="true"/>';
                       ?>
                     </div>
                     </div>
@@ -473,7 +473,7 @@
     var idSupplier;
     var jenisBayar;
     var tanggalJatuhTempo;
-    var karyawan = "Rama"; 
+    var karyawan = <?php echo $id?>; 
     var nama = [];
     var jumlah = [];
     var harga= [];
@@ -486,6 +486,7 @@
     var total = 0;
     var cek=0;
     var cekBaru = 0;
+    var cekada=0;
     var statusKirim;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
@@ -507,6 +508,7 @@
     for(i = 0; i < jumlah.length ; i++){
       if(nama[i] && jumlah[i] && harga[i]){
         total += harga[i] * jumlah[i];
+        cekada++;
       }
       else{
         cek++;
@@ -515,6 +517,7 @@
     for(i = 0; i< idBaru.length ; i++){
       if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && panjangBaru[i] && kategoriBaru[i] && hargaBaru[i]){
         total += jumlahBaru[i] * hargaBaru[i];
+        cekada++;
       }
       else{
         cekBaru++;
@@ -526,7 +529,7 @@
         $.ajax({
         type: "POST",
         url: "manage.php?act=insertpembelian",
-        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim+'&karyawan=' + karyawan,
         success: function(result) {
           for( i = 0 ;i < nama.length ; i++){
             $.ajax({
