@@ -311,7 +311,7 @@
                 <div class="form-group">
                   <label for="inputNamaBahan" class="col-sm-2 control-label">Jumlah</label>
                   <div class="col-sm-10">
-                    <input type='number' name="jBahan" id="jBahan" min=1 class="form-control">
+                    <input type='number' name="jBahan" id="jBahan" min=1 class="form-control" style="width: 30%">
                   </div>
                   <br>
                 </div>
@@ -561,8 +561,6 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- jquery untuk produksi -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <!-- page script -->
 <!-- script untuk produksi -->
 <script>

@@ -77,12 +77,10 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">    
+            <ul class="dropdown-menu dropdown-menu-usermenu pull-right" style="width: 20%">    
               <!-- Menu Sign Out-->
-              <li class="user-footer">
-                <div class="pull-right">
-                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
-                </div>
+              <li>
+                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
               </li>
             </ul>
           </li>

@@ -69,7 +69,7 @@ switch ($act) {
 	$sql = "UPDATE `supplier` SET `nama` = '".$nama."', `telepon` = '".$telepon."', `alamat` = '".$alamat."' WHERE `id` =".$id;
 	$result = mysqli_query($link,$sql);
 	if($result){
-		header("location: informasisupplier.php");
+		header("location: informasisuplier.php");
 	}
 	else{
 		echo "gagal";

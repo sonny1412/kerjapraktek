@@ -224,46 +224,36 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Pembelian
+        Tambah Penjualan
       </h1>
     </section>  
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 50%; margin: auto; margin-top: 5%">
+          <div class="box">
             <!-- /.box-header -->
-            <fieldset>
-              <legend style="text-align: center;">Masukan data Bahan</legend>
+            <div class="box-body">
+              <fieldset>
+              <legend>Masukan Data Nota</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="formAwal">
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Nomor Nota<span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Nomor Nota</label>
                       <div class="col-sm-9">
-                      <?php 
-                      $date = date("Ymd");
-                      while($rowNomorNotaJual=mysqli_fetch_object($resultCekNomorNota))
-                        $nomorNota = $rowNomorNotaJual->jumlah+1;
-                      if($nomorNota<100){
-                        $nomorBaru = "0".$nomorNota;
-                        if($nomorNota<10){
-                          $nomorBaru = "00".$nomorNota;
-                        }
-                      }
-                      echo '<input name="nomorNota" class="form-control" value="'.$date.$nomorBaru.'" disabled="true"/>';
-                      ?>
+                      <input type="number" name="noNota" class="form-control">
                     </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label ">Tanggal <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Tanggal</label>
                       <div class="col-sm-9">                      
                         <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>" required/>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Customer <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Customer</label>
                       <div class="col-sm-9">
                         <select name="customer" class="form-control">
                           <option value="" disabled selected style="display: none;">[Pilih Customer]</option>
@@ -277,8 +267,8 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group" style="margin: 0; padding: 15px 0; border-top: 1px solid #d3d7db;">
-                      <label class="col-sm-3 control-label">Jenis Pembayaran<span class="asterisk">*</span></label>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Jenis Pembayaran</label>
                       <div class="col-sm-9">
                         <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();" required>
                           <option value="" disabled selected style="display: none;">[Pilih Pembayaran]</option>
@@ -289,7 +279,7 @@
                     </div>
                     <div id="caraBayar"></div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Status Kirim<span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Status Kirim</label>
                       <div class="col-sm-9">
                         <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
                           <option value="" disabled selected style="display: none;">[Pilih Status Kirim]</option>
@@ -300,11 +290,24 @@
                     </div>               
                   </div>
                 </div>
+              </div>              <!-- /.box-body -->
+            </div>
+            </fieldset>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <fieldset>
+              <legend>Masukan data Barang</legend>
+              <div class="form-horizontal">
+              <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="form_block">
                   <div id="formBarang"> 
                     <div class="form-group" id="divBarang">
-                      <label class="col-sm-3 control-label">Barang <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Barang</label>
                       <div class="col-sm-9">
                         <select name="nama-barang[]" class="form-control">
                           <option value="lol" selected style="display: none;">[Pilih Barang]</option>
@@ -317,15 +320,15 @@
                       </div>
                     </div>
                     <div class="form-group" id="divJumlah">
-                      <label class="col-sm-3 control-label">Jumlah Barang <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Jumlah Barang</label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" value="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang"/>
+                        <input type="number" min="0" name="jumlah-barang[]" class="form-control" placeholder="Jumlah Barang"/>
                       </div>
                     </div>
                     <div class="form-group" id="divHarga">
-                      <label class="col-sm-3 control-label">Harga Barang <span class="asterisk">*</span></label>
+                      <label class="col-sm-3 control-label">Harga Barang</label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" value="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
                         <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>
@@ -336,19 +339,20 @@
                   <div id="divButton">
                     <div class="col-sm-12">
                       <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
-                      
                     </div>
                   </div>
                 </div>
               </div>              <!-- /.box-body -->
-              <div class="box-footer">
-                <button id="submit" class="btn btn-info pull-right">Insert</button>
-              </div>
-              <!-- /.box-footer -->
             </div>
-
             </fieldset>
-            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <button id="submit" class="btn btn-info pull-right" style="width: 100%">Insert</button>
+            </div>
             <!-- /.box-body -->
           </div>
       </div>
@@ -357,6 +361,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
