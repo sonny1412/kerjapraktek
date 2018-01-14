@@ -328,7 +328,7 @@
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang</label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"><br>
                         <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>

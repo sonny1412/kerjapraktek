@@ -231,10 +231,11 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="box" style="width: 80%; margin: auto; margin-top: 5%">
+          <div class="box">
             <!-- /.box-header -->
-            <fieldset>
-              <legend style="text-align: center;">Masukan data Bahan</legend>
+            <div class="box-body">
+              <fieldset>
+              <legend>Masukan Data Nota</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
@@ -242,24 +243,13 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Nomor Nota</label>
                       <div class="col-sm-9">
-                      <?php 
-                      $date = date("ymd");
-                      while($rowNomorNotaBeli=mysqli_fetch_object($resultCekNomorNotaBeli))
-                        $nomorNota = $rowNomorNotaBeli->jumlah+1;
-                      if($nomorNota<100){
-                        $nomorBaru = "0".$nomorNota;
-                        if($nomorNota<10){
-                          $nomorBaru = "00".$nomorNota;
-                        }
-                      }
-                      echo '<input name="noNota" class="form-control" value="'.$date.$nomorBaru.'" disabled="true"/>';
-                      ?>
+                      <input type="number" name="noNota" class="form-control">
                     </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label ">Tanggal</label>
+                      <label class="col-sm-3 control-label">Tanggal</label>
                       <div class="col-sm-9">                      
-                        <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>"/>
+                        <input type="date" name="tanggalNota" class="form-control" value="<?php echo date("Y-m-d");?>" required/>
                       </div>
                     </div>
                     <div class="form-group">
@@ -280,7 +270,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Jenis Pembayaran</label>
                       <div class="col-sm-9">
-                        <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();">
+                        <select id="jenisBayar" name="jenisBayar" class="form-control" onchange="copyjenisBayar();" required>
                           <option value="" disabled selected style="display: none;">[Pilih Pembayaran]</option>
                           <option value="T">Tunai</option>
                           <option value="K">Kredit</option>
@@ -291,7 +281,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Status Kirim</label>
                       <div class="col-sm-9">
-                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();">
+                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
                           <option value="" disabled selected style="display: none;">[Pilih Status Kirim]</option>
                           <option value="T">Diterima Langsung</option>
                           <option value="K">Dikirim</option>
@@ -300,6 +290,20 @@
                     </div>               
                   </div>
                 </div>
+              </div>              
+            </div>
+            </fieldset>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- input bahan -->
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <fieldset>
+              <legend>Masukan Data Bahan</legend>
+              <div class="form-horizontal">
+              <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="form_block">
                   <div id="formBarang"> 
@@ -325,7 +329,7 @@
                     <div class="form-group" id="divHarga">
                       <label class="col-sm-3 control-label">Harga Barang</label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"/></br>
+                        <input type="number" min="0" name="harga-barang[]" class="form-control" placeholder="Harga Barang"><br>
                         <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>
@@ -337,8 +341,20 @@
                       <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
                     </div>
                   </div>
-                </div>
-
+                </div> <!-- sampai di sini -->
+              </div>              
+            </div>
+            </fieldset>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <fieldset>
+              <legend>Masukan Data Bahan Baru</legend>
+              <div class="form-horizontal">
+              <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
                   <div id="form_block_baru">
                   <div id="formBarangBaru"> 
@@ -383,7 +399,7 @@
                     <div class="form-group" id="divHargaBaru" style="margin-right: 1%">
                       <label class="col-sm-3 control-label">Harga Barang Baru</label>
                       <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"/></br>
+                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"><br>
                         <button style="float: right;" id="removeBaru" name="removeBaru" class="btn btn-primary">Hapus Barang Baru</button>
                       </div>
                     </div>
@@ -396,16 +412,17 @@
                     </div>
                   </div>
                 </div>
-
-              </div>              <!-- /.box-body -->
-              <div class="box-footer">
-                <button id="submit" class="btn btn-info pull-right">Insert</button>
-              </div>
-              <!-- /.box-footer -->
+              </div>              
             </div>
-
             </fieldset>
-            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <button id="submit" class="btn btn-info pull-right" style="width: 100%">Insert</button>
+            </div>
             <!-- /.box-body -->
           </div>
       </div>
