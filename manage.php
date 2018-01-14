@@ -202,7 +202,7 @@ switch ($act) {
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
 	$karyawan = $_POST["karyawan"];
-	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$dateTime = date_create('now')->format('Y-m-d');
 	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -223,7 +223,7 @@ switch ($act) {
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
 	$karyawan = $_POST["karyawan"];
-	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$dateTime = date_create('now')->format('Y-m-d');
 	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -244,7 +244,7 @@ switch ($act) {
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
 	$karyawan = $_POST["karyawan"];
-	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$dateTime = date_create('now')->format('Y-m-d');
 	$sql = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -265,7 +265,7 @@ switch ($act) {
 	$jumlah = $_POST["jumlah"];
 	$keterangan = $_POST["keterangan"];
 	$karyawan = $_POST["karyawan"];
-	$dateTime = date_create('now')->format('Y-m-d H:i:s');
+	$dateTime = date_create('now')->format('Y-m-d');
 	$sql = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$id."', '".$jumlah."', '".$keterangan."','".$karyawan."','".$dateTime."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -334,29 +334,38 @@ switch ($act) {
 	$noNota = $_POST["noNota"];
 	$tanggal = $_POST["tanggal"];
 	$supplier= $_POST["idSupplier"];
+	$karyawan = $_POST["karyawan"];
 	$jenisBayar = $_POST["jenisBayar"];
-	$jatuhTempo = $_POST["tanggalJatuhTempo"];
+	$jatuhTempo = $_POST["jatuhTempo"];
 	$statusKirim = $_POST["statusKirim"];
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
 		}
 		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
 		}
 		
 	}
 	if($jenisBayar == "T"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Proses');";
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Proses');";
 		}
 		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Sampai');";
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Sampai');";
 		}		
 	}
 	$result = mysqli_query($link,$sql);
-	if($result){}
+	if($result){
+		if($jenisBayar == "T"){
+			$sqlBayar = "INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$noNota."', '".$total."', 'Pelunasan Nota Penjualan ".$noNota."','".$karyawan."','".$tanggal."');";
+			$resultBayar = mysqli_query($link,$sqlBayar);
+			if($resultBayar){
+
+			}
+		}
+	}
 	else{
 		echo "gagal";
 	}
@@ -422,29 +431,38 @@ switch ($act) {
 	$noNota = $_POST["noNota"];
 	$tanggal = $_POST["tanggal"];
 	$customer= $_POST["idCustomer"];
+	$karyawan = $_POST["karyawan"];
 	$jenisBayar = $_POST["jenisBayar"];
-	$jatuhTempo = $_POST["tanggalJatuhTempo"];
+	$jatuhTempo = $_POST["jatuhTempo"];
 	$statusKirim = $_POST["statusKirim"];
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Menunggu');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Menunggu');";
 		}
 		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
 		}
 		
 	}
 	if($jenisBayar == "T"){
 		if($statusKirim == "K"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Menunggu');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Menunggu');";
 		}
 		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '1', '".$tanggal."', '".$jatuhTempo."', '".$total."', 'Sampai');";
+			$sql = "INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$customer."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Sampai');";
 		}		
 	}
 	$result = mysqli_query($link,$sql);
-	if($result){}
+	if($result){
+		if($jenisBayar == "T"){
+			$sqlBayar = "INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`,`Karyawan_id`,`tanggal_bayar`) VALUES (NULL, '".$noNota."', '".$total."', 'Pelunasan Nota Penjualan ".$noNota."','".$karyawan."','".$tanggal."');";
+			$resultBayar = mysqli_query($link,$sqlBayar);
+			if($resultBayar){
+
+			}
+		}
+	}
 	else{
 		echo "gagal";
 	}

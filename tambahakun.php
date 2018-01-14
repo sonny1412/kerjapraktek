@@ -242,7 +242,7 @@
                   <label for="inputUserKaryawan" class="col-sm-2 control-label">Username</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="user" required autofocus class="form-control" placeholder="NamaKodeJabatan" pattern="[A-Z]{1}[a-z]{5}[0-9]{1}">
+                    <input type="text" name="user" required autofocus class="form-control" placeholder="NamaKodeJabatan">
                   </div>
                 </div>
                 <div class="form-group">

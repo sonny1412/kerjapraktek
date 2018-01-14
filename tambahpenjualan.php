@@ -66,11 +66,11 @@
             $idkaryawan = $_SESSION["logkaryawan"];
             $result = Karyawan($idkaryawan);
             $usernameKaryawan;
-            $idKarywan;
+            $id;
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $id = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
@@ -402,8 +402,7 @@
     $('#form_block').append(htmlNama);
   });
   $("#form_block").on('click', '#remove', function(){
-    alert("lol");
-        $(this).closest('#formBarang').remove();
+    $(this).closest('#formBarang').remove();
   })
   $("#submit").click(function(){
     
@@ -412,12 +411,13 @@
     var idCustomer;
     var jenisBayar;
     var tanggalJatuhTempo;
-    var karyawan = "Rama"; 
+    var karyawan = <?php echo $id ?>; 
     var nama = [];
     var jumlah = [];
     var harga= [];
     var total = 0;
     var cek=0;
+    var cekada=0;
     var statusKirim;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
@@ -433,17 +433,18 @@
     for(i = 0; i < jumlah.length ; i++){
       if(nama[i] && jumlah[i] && harga[i]){
         total += harga[i] * jumlah[i];
+        cekada++;
       }
       else{
         cek++;
       }
     }
     if(idCustomer && jenisBayar && statusKirim){
-      if(cek==0 || cekBaru == 0){
+      if(cek==0 && cekada>0){
         $.ajax({
         type: "POST",
         url: "manage.php?act=insertpenjualan",
-        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim,
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim+'&karyawan=' + karyawan,
         success: function(result) {
           for( i = 0 ;i < nama.length ; i++){
             $.ajax({
@@ -459,7 +460,7 @@
         }});
       }
       else{
-        alert("Tolong cek isi semua data Barang diatas");
+        alert("Tolong Isi data Barang dengan benar");
       }
     }
     else{
