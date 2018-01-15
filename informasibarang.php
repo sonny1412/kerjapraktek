@@ -77,10 +77,21 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-usermenu pull-right" style="width: 20%">    
-              <!-- Menu Sign Out-->
-              <li>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p style="margin-top: 20%">
+                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
+                  <small>CV Cipta Jujur Kreasi</small>
+                </p>
+              </li>
+              
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                
+                <div class="pull-right">
                   <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
+                </div>
               </li>
             </ul>
           </li>
@@ -88,6 +99,7 @@
       </div>
     </nav>
   </header>
+
 
   <!-- =============================================== -->
 
