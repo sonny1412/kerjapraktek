@@ -190,20 +190,26 @@
           </ul>
           </li>";
         }
-        if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
-          echo "<li class='treeview'>
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li class=treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
             <span class='pull-right-container'>
               <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class=treeview-menu>
-            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+          <ul class=treeview-menu>";}
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik")
+        {
+          echo "<li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
-            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
-            <li class=active><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
-          </ul>
+            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "</ul>
         </li>";
         }
         ?>
@@ -301,7 +307,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan Data Bahan</legend>
+              <legend>Masukan Data Barang Pembelian</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
@@ -352,7 +358,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan Data Bahan Baru</legend>
+              <legend>Masukan Data Barang Baru Pembelian</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
@@ -374,6 +380,12 @@
                       <label class="col-sm-3 control-label">Jumlah Barang</label>
                       <div class="col-sm-9">
                         <input type="number" min="0" name="jumlah-barangBaru[]" class="form-control" placeholder="Jumlah Barang"/>
+                      </div>
+                    </div>
+                    <div class="form-group" id="divSatuanBarang">
+                      <label class="col-sm-3 control-label">Satuan</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="satuan-barangBaru[]" class="form-control" placeholder="Satuan"/>
                       </div>
                     </div>
                     <div class="form-group" id="divPanjangBarang">
@@ -475,11 +487,9 @@
     $('#form_block_baru').append(htmlBarangBaru);
   });
   $("#form_block").on('click', '#remove', function(){
-    alert("lol");
         $(this).closest('#formBarang').remove();
   })
   $("#form_block_baru").on('click', '#removeBaru', function(){
-    alert("lol");
         $(this).closest('#formBarangBaru').remove();
   })
 
@@ -492,6 +502,7 @@
     var tanggalJatuhTempo;
     var karyawan = <?php echo $id?>; 
     var nama = [];
+    var satuan = [];
     var jumlah = [];
     var harga= [];
     var idBaru= [];
@@ -514,6 +525,7 @@
     $('input[name="tanggalJatuhTempo"]').each( function(){ tanggalJatuhTempo = $(this).val(); }); 
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
     $('input[name="jumlah-barang[]"]').each( function(){ jumlah.push($(this).val()); });
+    $('input[name="satuan-barangBaru[]"]').each( function(){ satuan.push($(this).val()); });
     $('input[name="harga-barang[]"]').each( function(){ harga.push($(this).val()); });
     $('input[name="id-barangBaru[]"]').each( function(){ idBaru.push($(this).val()); });
     $('input[name="nama-barangBaru[]"]').each( function(){ namaBaru.push($(this).val()); });
@@ -528,21 +540,21 @@
         cekada++;
       }
       else{
-        cek++;
+        cekada = cekada;
       }
     }
     for(i = 0; i< idBaru.length ; i++){
-      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && panjangBaru[i] && kategoriBaru[i] && hargaBaru[i]){
+      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && satuan[i] && panjangBaru[i] && kategoriBaru[i] && hargaBaru[i]){
         total += jumlahBaru[i] * hargaBaru[i];
         cekada++;
       }
       else{
-        cekBaru++;
+        cekada = cekada;
       }
     }
 
     if(idSupplier && statusKirim &&jenisBayar){
-      if(cek==0 || cekBaru == 0){
+      if(cekada > 0){
         $.ajax({
         type: "POST",
         url: "manage.php?act=insertpembelian",
@@ -561,7 +573,7 @@
             $.ajax({
               type: "POST",
               url: "manage.php?act=insertpembelianbarangBaru",
-              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru+ '&harga='+hargaBaru,
+              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&satuan='+satuan[i] +'&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru[i]+ '&harga='+hargaBaru[i],
               success: function(result) {
               }
             });

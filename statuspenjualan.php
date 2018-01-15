@@ -191,20 +191,26 @@
           </ul>
           </li>";
         }
-        if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
-          echo "<li class='active treeview'>
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li class=active treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
             <span class='pull-right-container'>
               <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class=treeview-menu>
-            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+          <ul class=treeview-menu>";}
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik")
+        {
+          echo "<li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
-            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
-            <li class=active><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
-          </ul>
+            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li class=active><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "</ul>
         </li>";
         }
         ?>
@@ -263,7 +269,12 @@
                     echo "<td>";
                     $resultBarang = PenjualanBarang($rowPenjualan->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
+                      if($jabatan == "Gudang"){
+                        echo $rowBarang->nama." x ".$rowBarang->qty." Buah";
+                      }
+                      else{
+                        echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
+                      }
                       echo "</br>";
                     }
                     echo "</td>";
@@ -271,10 +282,21 @@
                       echo "<td>Lunas</td>";
                     }
                     else if($rowPenjualan->saldo > $rowPenjualan->total){
-                      echo "<td><a href='#myModal2' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Konfirmasi Refund</a></td>";
+                      if($jabatan == "Gudang"){
+                        echo "<td>Konfirmasi Refund</td>";
+                      }
+                      else{
+                        echo "<td><a href='#myModal2' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Konfirmasi Refund</a></td>";
+                      }
                     }
                     else{
-                      echo "<td><a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Belum Lunas</a></td>";
+                      if($jabatan == "Gudang"){
+                        echo "<td>Belom Lunas</td>";
+                      }
+                      else{
+                        echo "<td><a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPenjualan->id.">Belum Lunas</a></td>";
+                      }
+                      
                     }
                     if($rowPenjualan->status_kirim == "Menunggu"){
                       echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";

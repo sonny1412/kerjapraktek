@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 11 Jan 2018 pada 07.36
+-- Generation Time: 15 Jan 2018 pada 07.34
 -- Versi Server: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -32,6 +32,7 @@ CREATE TABLE `barang` (
   `id` int(11) NOT NULL,
   `nama` varchar(45) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
+  `satuan` varchar(50) NOT NULL,
   `keterangan` varchar(100) NOT NULL,
   `Kategori_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,10 +41,11 @@ CREATE TABLE `barang` (
 -- Dumping data untuk tabel `barang`
 --
 
-INSERT INTO `barang` (`id`, `nama`, `quantity`, `keterangan`, `Kategori_id`) VALUES
-(1, 'Kain Bludru Merah', 1000, ' ', 7),
-(2, 'Selimut Merah', 100, '150cm x 100cm', 6),
-(3, 'Selimut Bulu Merah', 110, '120cm x 200cm', 6);
+INSERT INTO `barang` (`id`, `nama`, `quantity`, `satuan`, `keterangan`, `Kategori_id`) VALUES
+(1, 'Kain Bludru Merah', 1000, 'Meter', ' ', 16),
+(2, 'Kain Bludru Biru', 1000, 'Meter', ' ', 16),
+(3, 'Kain Bludru Hijau', 3000, 'Meter', ' ', 16),
+(5, 'Selimut Birui', 600, 'pcs', '150 x 200 cm', 14);
 
 -- --------------------------------------------------------
 
@@ -109,8 +111,11 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id`, `nama`, `jenis`) VALUES
-(6, 'Selimut', 'Barang Jadi'),
-(7, 'Kain Bludru', 'Bahan Produksi');
+(14, 'Selimut', 'Barang Jadi'),
+(15, 'Matras', 'Barang Jadi'),
+(16, 'Kain Bludru', 'Bahan Produksi'),
+(17, 'Kain Bulu', 'Bahan Produksi'),
+(18, 'Alas Karpet', 'Bahan Produksi');
 
 -- --------------------------------------------------------
 
@@ -133,7 +138,8 @@ CREATE TABLE `pembelian` (
 --
 
 INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES
-(1, 4, 1, '2018-01-10', '0000-00-00', 20000000, 'Sampai');
+(1, 4, 1, '2018-01-15', '2018-01-15', 140000000, 'Sampai'),
+(1000, 4, 1, '2018-01-15', '2018-01-15', 0, 'Sampai');
 
 -- --------------------------------------------------------
 
@@ -154,7 +160,9 @@ CREATE TABLE `pembelian_barang` (
 --
 
 INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES
-(105, 1, 1, 2000, 10000);
+(124, 1, 1, 1000, 10000),
+(125, 1, 2, 2000, 20000),
+(126, 1, 3, 3000, 30000);
 
 -- --------------------------------------------------------
 
@@ -176,8 +184,8 @@ CREATE TABLE `pembelian_pembayaran` (
 --
 
 INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`, `Karyawan_id`, `tanggal_bayar`) VALUES
-(10, 1, 10000000, 'BCA - 1092029029', 1, '2018-01-10'),
-(11, 1, 10000000, 'ih78gb', 1, '2018-01-10');
+(18, 1, 140000000, 'Pelunasan Nota Penjualan 1', 1, '2018-01-15'),
+(19, 1000, 0, 'Pelunasan Nota Penjualan 1000', 1, '2018-01-15');
 
 -- --------------------------------------------------------
 
@@ -186,7 +194,7 @@ INSERT INTO `pembelian_pembayaran` (`id`, `Pembelian_id`, `jumlah`, `keterangan`
 --
 
 CREATE TABLE `penjualan` (
-  `id` int(11) NOT NULL,
+  `id` int(25) NOT NULL,
   `Customer_id` int(11) NOT NULL,
   `Karyawan_id` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
@@ -200,7 +208,7 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES
-(1, 3, 1, '2018-01-10', '0000-00-00', 1900000, 'Sampai');
+(123, 3, 1, '2018-01-15', '2018-01-15', 1500000, 'Sampai');
 
 -- --------------------------------------------------------
 
@@ -210,7 +218,7 @@ INSERT INTO `penjualan` (`id`, `Customer_id`, `Karyawan_id`, `tanggal`, `jatuh_t
 
 CREATE TABLE `penjualan_barang` (
   `id` int(11) NOT NULL,
-  `Penjualan_id` int(11) NOT NULL,
+  `Penjualan_id` int(25) NOT NULL,
   `Barang_id` int(11) NOT NULL,
   `qty` varchar(45) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL
@@ -221,8 +229,7 @@ CREATE TABLE `penjualan_barang` (
 --
 
 INSERT INTO `penjualan_barang` (`id`, `Penjualan_id`, `Barang_id`, `qty`, `harga`) VALUES
-(45, 1, 2, '100', 10000),
-(46, 1, 3, '90', 10000);
+(66, 123, 5, '100', 15000);
 
 -- --------------------------------------------------------
 
@@ -232,7 +239,7 @@ INSERT INTO `penjualan_barang` (`id`, `Penjualan_id`, `Barang_id`, `qty`, `harga
 
 CREATE TABLE `penjualan_pembayaran` (
   `id` int(11) NOT NULL,
-  `Penjualan_id` int(11) NOT NULL,
+  `Penjualan_id` int(25) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `keterangan` varchar(500) NOT NULL,
   `Karyawan_id` int(255) NOT NULL,
@@ -244,8 +251,7 @@ CREATE TABLE `penjualan_pembayaran` (
 --
 
 INSERT INTO `penjualan_pembayaran` (`id`, `Penjualan_id`, `jumlah`, `keterangan`, `Karyawan_id`, `tanggal_bayar`) VALUES
-(17, 1, 2000000, 'BCA - 098282729', 1, '2018-01-10'),
-(18, 1, 100000, '190', 1, '2018-01-10');
+(24, 123, 1500000, 'Pelunasan Nota Penjualan 123', 1, '2018-01-15');
 
 -- --------------------------------------------------------
 
@@ -263,7 +269,7 @@ CREATE TABLE `produksi` (
 --
 
 INSERT INTO `produksi` (`id`, `tanggal`) VALUES
-(82, '2018-01-10 23:32:16');
+(84, '2018-01-15 13:32:46');
 
 -- --------------------------------------------------------
 
@@ -283,9 +289,8 @@ CREATE TABLE `produksi_barang` (
 --
 
 INSERT INTO `produksi_barang` (`id`, `Produksi_id`, `Barang_id`, `qty`) VALUES
-(54, 82, 1, 1000),
-(55, 82, 2, 200),
-(56, 82, 3, 200);
+(59, 84, 2, 1000),
+(60, 84, 5, 700);
 
 -- --------------------------------------------------------
 
@@ -339,7 +344,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`username`, `password`, `Karyawan_id`) VALUES
 ('sonny', '827ccb0eea8a706c4c34a16891f84e7b', 2),
 ('lucas', '827ccb0eea8a706c4c34a16891f84e7b', 3),
-('rama', '827ccb0eea8a706c4c34a16891f84e7b', 1);
+('rama', '827ccb0eea8a706c4c34a16891f84e7b', 1),
+('kevin', '827ccb0eea8a706c4c34a16891f84e7b', 5);
 
 --
 -- Indexes for dumped tables
@@ -452,7 +458,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123124;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -470,55 +476,55 @@ ALTER TABLE `karyawan`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180111002;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
 --
 ALTER TABLE `pembelian_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `pembelian_pembayaran`
 --
 ALTER TABLE `pembelian_pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201801009;
 
 --
 -- AUTO_INCREMENT for table `penjualan_barang`
 --
 ALTER TABLE `penjualan_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `penjualan_pembayaran`
 --
 ALTER TABLE `penjualan_pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `produksi`
 --
 ALTER TABLE `produksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `produksi_barang`
 --
 ALTER TABLE `produksi_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `supplier`
