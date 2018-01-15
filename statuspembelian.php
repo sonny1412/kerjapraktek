@@ -251,8 +251,8 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Tanggal</th>
                   <th>Nomor Nota</th>
+                  <th>Tanggal</th>
                   <th>Supplier</th>
                   <th>Daftar Barang</th>
                   <th>Status Pembayaran</th>
@@ -263,8 +263,8 @@
                 <?php
                 while($rowPembelian = mysqli_fetch_object($resultPembelian)) {
                     echo "<tr>";
-                    echo "<td>".$rowPembelian->tanggal."</td>";
                     echo "<td>".$rowPembelian->id."</td>";
+                    echo "<td>".$rowPembelian->tanggal."</td>";
                     echo "<td>".$rowPembelian->nama."</td>";
                     echo "<td>";
                     $resultBarang = PembelianBarang($rowPembelian->id);
