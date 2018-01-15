@@ -121,12 +121,18 @@ switch ($act) {
 	/* Region Gudang */
 	case "insertkategori";
 	require 'db.php';
-	$nama = $_POST["nama"];
+	$nama = $_POST["namakategori"];
 	$jenis = $_POST["jenis"];
 	$sql = "INSERT INTO `kategori`(`nama`,`jenis`) VALUES('".$nama."','".$jenis."');";
 	$result=mysqli_query($link,$sql);
 	if($result){
-		header("location: kategorigudang.php");
+		if($jenis == "Bahan Produksi"){
+			header("location: tambahbahan.php");
+		}
+		else{
+			header("location: tambahbarang.php");
+		}
+		
 	}
 	else{
 		echo "gagal";
@@ -140,7 +146,7 @@ switch ($act) {
 	$lbr = $_POST["lbr"];
 	$idKategori = $_POST["idKategori"];
 	$pjg = $_POST["pjg"];
-	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$pjg."',".$idKategori.")";
+	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`satuan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$pjg."','pcs',".$idKategori.")";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		header("location: informasibarang.php");
@@ -154,9 +160,10 @@ switch ($act) {
 	require 'db.php';
 	$nama = $_POST["nama"];
 	$kuantitas = $_POST["kuantitas"];
+	$satuan = $_POST["satuan"];
 	$keterangan = $_POST["keterangan"];
 	$idKategori = $_POST["idKategori"];
-	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$keterangan."',".$idKategori.")";
+	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`satuan`,`keterangan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$satuan."','".$keterangan."',".$idKategori.")";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		header("location: informasibahan.php");
@@ -405,14 +412,15 @@ switch ($act) {
 	$kuantitas = $_POST["kuantitas"];
 	$idKategori = $_POST["idKategori"];
 	$pjg = $_POST["pjg"];
+	$satuan = $_POST["satuan"];
 	$noNota = $_POST["noNota"];
 	$statusKirim = $_POST["statusKirim"];
 	$harga=$_POST["harga"];
 	if($statusKirim == "T"){
-		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$pjg."',".$idKategori.")";
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`satuan`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','".$kuantitas."','".$satuan."','".$pjg."',".$idKategori.")";
 	}
 	else if($statusKirim == "K"){
-		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','0','".$pjg."',".$idKategori.")";
+		$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`satuan`,`keterangan`,`Kategori_id`) VALUES('".$id."','".$nama."','0','".$satuan."','".$pjg."',".$idKategori.")";
 	}
 	$result = mysqli_query($link,$sql);
 	$sqlPembelian = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$id."', '".$kuantitas."', '".$harga."');";
@@ -630,7 +638,7 @@ switch ($act) {
 	$qty = $_POST["qty"];
 	$pjg = $_POST["pjg"];
 	$kategori_id = $_POST["kategori_id"];
-	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`keterangan`,`Kategori_id`) VALUES('".$barang_id."','".$nama."','".$qty."','".$pjg."',".$kategori_id.")";
+	$sql = "INSERT INTO `barang`(`id`,`nama`,`quantity`,`satuan`,`keterangan`,`Kategori_id`) VALUES('".$barang_id."','".$nama."','".$qty."','pcs','".$pjg."',".$kategori_id.")";
 	//$sql = "INSERT INTO `produksi_barang`(`Produksi_id`,`Barang_id`,`qty`) VALUES('".$produksi_id."','".$barang_id."','".$qty."')";
 	$result = mysqli_query($link,$sql);
 	if($result){

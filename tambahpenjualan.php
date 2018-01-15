@@ -190,20 +190,26 @@
           </ul>
           </li>";
         }
-        if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
-          echo "<li class='active treeview'>
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li class=active treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
             <span class='pull-right-container'>
               <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class=treeview-menu>
-            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+          <ul class=treeview-menu>";}
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik")
+        {
+          echo "<li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
-            <li class=active><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
-            <li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
-          </ul>
+            <li class=active><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "</ul>
         </li>";
         }
         ?>
@@ -435,12 +441,9 @@
         total += harga[i] * jumlah[i];
         cekada++;
       }
-      else{
-        cek++;
-      }
     }
     if(idCustomer && jenisBayar && statusKirim){
-      if(cek==0 && cekada>0){
+      if(cekada>0){
         $.ajax({
         type: "POST",
         url: "manage.php?act=insertpenjualan",

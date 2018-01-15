@@ -191,7 +191,7 @@
           </ul>
           </li>";
         }
-        if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
           echo "<li class=treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
@@ -199,12 +199,18 @@
               <i class='fa fa-angle-left pull-right'></i>
             </span>
           </a>
-          <ul class=treeview-menu>
-            <li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
+          <ul class=treeview-menu>";}
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik")
+        {
+          echo "<li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
-            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>
-            <li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>
-          </ul>
+            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "<li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>";
+        }
+        if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
+          echo "</ul>
         </li>";
         }
         ?>
@@ -257,7 +263,7 @@
                     echo "<tr>";
                     echo "<td>".$rowBahan->nama."</td>
                     <td>".Kategori($rowBahan->Kategori_id)."</td>
-                    <td>".$rowBahan->quantity." ".$rowBahan->keterangan."</td>
+                    <td>".$rowBahan->quantity." ".$rowBahan->satuan."</td>
                     <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowBahan->id.">edit</a></td>";
                     echo "</tr>";
                      } ?>
