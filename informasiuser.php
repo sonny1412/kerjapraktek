@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Karyawan | Informasi User</title>
+  <title>User | Informasi User</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -78,11 +78,20 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">    
-              <!-- Menu Sign Out-->
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p style="margin-top: 20%">
+                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
+                  <small>CV Cipta Jujur Kreasi</small>
+                </p>
+              </li>
+              
+              <!-- Menu Footer-->
               <li class="user-footer">
+                
                 <div class="pull-right">
-                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
                 </div>
               </li>
             </ul>
