@@ -306,7 +306,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan data Barang</legend>
+              <legend>Masukan Data Barang Penjualan</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">

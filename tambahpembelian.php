@@ -307,7 +307,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan Data Bahan</legend>
+              <legend>Masukan Data Barang Pembelian</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
@@ -358,7 +358,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan Data Bahan Baru</legend>
+              <legend>Masukan Data Barang Baru Pembelian</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">

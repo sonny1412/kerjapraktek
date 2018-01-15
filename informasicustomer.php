@@ -239,7 +239,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Informasi Supplier
+        Informasi Customer
       </h1>
     </section>
     <!-- Main content -->
