@@ -251,8 +251,8 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Tanggal</th>
                   <th>Nomor Nota</th>
+                  <th>Tanggal</th>
                   <th>Supplier</th>
                   <th>Daftar Barang</th>
                   <th>Status Pembayaran</th>
@@ -263,8 +263,8 @@
                 <?php
                 while($rowPenjualan = mysqli_fetch_object($resultPenjualan)) {
                     echo "<tr>";
-                    echo "<td>".$rowPenjualan->tanggal."</td>";
                     echo "<td>".$rowPenjualan->id."</td>";
+                    echo "<td>".$rowPenjualan->tanggal."</td>";
                     echo "<td>".$rowPenjualan->nama."</td>";
                     echo "<td>";
                     $resultBarang = PenjualanBarang($rowPenjualan->id);
@@ -395,6 +395,17 @@
 </script>
 <!-- script untuk search -->
 <script>
+var time = new Date().getTime();
+$(document.body).bind("mousemove keypress", function () {
+    time = new Date().getTime();
+});
+
+setInterval(function() {
+    if (new Date().getTime() - time >= 10000) {
+        window.location.reload(true);
+    }
+}, 1000);
+
 function myFunction() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("myInput");
