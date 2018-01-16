@@ -77,11 +77,20 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">    
-              <!-- Menu Sign Out-->
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p style="margin-top: 20%">
+                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
+                  <small>CV Cipta Jujur Kreasi</small>
+                </p>
+              </li>
+              
+              <!-- Menu Footer-->
               <li class="user-footer">
+                
                 <div class="pull-right">
-                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
                 </div>
               </li>
             </ul>
@@ -168,7 +177,7 @@
               </span>
             </a>
             <ul class=treeview-menu>
-              <li class'active><a href=informasikaryawan.php><i class='fa fa-circle-o'></i> Informasi karyawan</a></li>
+              <li class=active><a href=informasikaryawan.php><i class='fa fa-circle-o'></i> Informasi karyawan</a></li>
               <li> <a href=tambahkaryawan.php><i class='fa fa-circle-o'></i> Tambah Karyawan</a></li>
               <li> <a href=tambahakun.php><i class='fa fa-circle-o'></i> Tambah Akun </a></li>
             </ul>
@@ -330,9 +339,6 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- edit table modal -->
- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- page script -->
 <script>
   $(function () {
