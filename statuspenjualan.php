@@ -253,7 +253,7 @@
                 <tr>
                   <th>Nomor Nota</th>
                   <th>Tanggal</th>
-                  <th>Supplier</th>
+                  <th>Customer</th>
                   <th>Daftar Barang</th>
                   <th>Status Pembayaran</th>
                   <th>Status Pengiriman</th>          
@@ -299,10 +299,21 @@
                       
                     }
                     if($rowPenjualan->status_kirim == "Menunggu"){
-                      echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      if($jabatan == "Gudang" || $jabatan == "Pemilik"){
+                        echo "<td><a href=konfirmasikirimpenjualan.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      }
+                      else{
+                        echo "<td>".$rowPenjualan->status_kirim."</td>";
+                      }
                     }
                     else if($rowPenjualan->status_kirim == "Proses"){
-                      echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
+                        echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      }
+                      else{
+                        echo "<td><a href=halamanprint.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      }
+                      
                     }
                     else{
                       echo "<td>".$rowPenjualan->status_kirim."</td>";
