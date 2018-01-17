@@ -137,7 +137,7 @@
     }
     Function KofirmasiPengirimanPenjualan($pid){
         require 'db.php';
-        $sqlKirimPenjualan = "SELECT pb.Barang_id,b.nama,pb.qty,pb.harga FROM penjualan_barang pb , barang b where pb.Penjualan_id = '".$pid."' and pb.Barang_id = b.id";
+        $sqlKirimPenjualan = "SELECT pb.Barang_id,b.nama,b.keterangan,pb.qty,pb.harga FROM penjualan_barang pb , barang b where pb.Penjualan_id = '".$pid."' and pb.Barang_id = b.id";
         $resultKirimPenjualan = mysqli_query($link, $sqlKirimPenjualan);
         return $resultKirimPenjualan;
     }

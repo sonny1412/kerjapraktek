@@ -28,14 +28,12 @@
   <div id="body_nota">
    <table border="1">
       <tr>
-          <th>  </th>
           <th> Nama Produk </th>
           <th> Kuantitas </th>
           <th> Satuan </th>
           <th> Keterangan </th>
       </tr>
       <tr>
-          <td>  </td>
           <td> Selimut Merah </td>
           <td> 750 </td>
           <td> PCS </td>
