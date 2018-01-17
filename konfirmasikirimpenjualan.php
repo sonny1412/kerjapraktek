@@ -357,10 +357,10 @@
     var qty = [];
     var cek=0;
     var kirim = "";
-    alert("bisa");
+    //alert("bisa");
     $('select[name="idBarang[]"]').each( function(){ barang.push($(this).val()); });
     $('input[name="jumlah[]"]').each( function(){ qty.push($(this).val()); });
-    alert("asdasd");
+    //alert("asdasd");
     for(i = 0; i < qty.length ; i++){
       if(barang[i] && qty[i]){
         alert(barang[i]+" "+qty[i]);
