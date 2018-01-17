@@ -307,11 +307,12 @@
                       }
                     }
                     else if($rowPenjualan->status_kirim == "Proses"){
-                      if($jabatan == "Penjualan" || $jabatan == "Pemilik"){
-                        echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                      if($jabatan == "Gudang" || $jabatan == "Pemilik"){
+                        echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a> - <a href=halamanprint.php?cmd=".$rowPenjualan->id.">Print</a></td>";
+                        
                       }
                       else{
-                        echo "<td><a href=halamanprint.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
+                        echo "<td><a href=konfirmasikirimpenjualanfinal.php?cmd=".$rowPenjualan->id.">".$rowPenjualan->status_kirim."</a></td>";
                       }
                       
                     }
