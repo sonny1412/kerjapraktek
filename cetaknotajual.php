@@ -15,16 +15,22 @@
     $kontak = $rowNota->telepon;
   }
 
-  //$nama_barang = 'oli top one';
-  $jumlah = 15;
-
   ?>
   <h1>CV. Cipta Jujur Kreasi</h1>
   <h2> Surat Jalan </h2>
   <div id="header">
   <div id="tuan_toko">
-  NOTA No. &nbsp; <?php echo $noNota ?><br>
-  tanggal: &nbsp; <?php echo $tanggal ?> <br>
+    <table>
+      <tr>
+        <td id="labelheadernota"> NOTA No. </td>
+        <td> <?php echo $noNota ?> </td>
+      </tr>
+      <tr>
+        <td id="labelheadernota"> tanggal: </td>
+        <td> <?php echo $tanggal ?> </td>
+      </tr>
+    </table>
+
   </div>
   <div id="nomor_nota">
   KEPADA <br>
@@ -34,7 +40,7 @@
   </div>
   </div>
   <div id="body_nota">
-   <table border="1">
+   <table border="1" id="tabelbarang">
       <tr>
           <th> Nama Produk </th>
           <th> Kuantitas </th>

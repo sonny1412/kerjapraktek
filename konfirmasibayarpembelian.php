@@ -73,18 +73,27 @@
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $id = $row->id;
+              $idkaryawan = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">    
-              <!-- Menu Sign Out-->
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p style="margin-top: 20%">
+                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
+                  <small>CV Cipta Jujur Kreasi</small>
+                </p>
+              </li>
+              
+              <!-- Menu Footer-->
               <li class="user-footer">
+                
                 <div class="pull-right">
-                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
                 </div>
               </li>
             </ul>

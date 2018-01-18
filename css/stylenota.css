@@ -15,13 +15,18 @@ p {
   float: right;
 }
 
+#labelheadernota {
+  text-align: right;
+}
+
 #nomor_nota {
   float: left;
 }
 
-table {
+#tabelbarang {
   margin: auto;
   width: 100%;
+  border-collapse: collapse;
 }
 
 #tanda_terima {
