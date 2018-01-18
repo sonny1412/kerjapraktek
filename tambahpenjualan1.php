@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bahan | Tambah Bahan</title>
+  <title>Penjualan | Tambah Penjualan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -66,22 +66,31 @@
             $idkaryawan = $_SESSION["logkaryawan"];
             $result = Karyawan($idkaryawan);
             $usernameKaryawan;
-            $id;
+            $idKarywan;
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $id = $row->id;
+              $idkaryawan = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">    
-              <!-- Menu Sign Out-->
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <p style="margin-top: 20%">
+                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
+                  <small>CV Cipta Jujur Kreasi</small>
+                </p>
+              </li>
+              
+              <!-- Menu Footer-->
               <li class="user-footer">
+                
                 <div class="pull-right">
-                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
                 </div>
               </li>
             </ul>
@@ -175,7 +184,7 @@
           </li>";
         }
         if($jabatan == "Pembelian" || $jabatan == "Pemilik"){
-          echo "<li class='active treeview'>
+          echo "<li class=treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Pembelian</span>
             <span class=pull-right-container>
@@ -185,13 +194,13 @@
           <ul class=treeview-menu>
             <li><a href=informasisuplier.php><i class='fa fa-circle-o'></i> Informasi Supplier</a></li>
             <li><a href=tambahsupplier.php><i class='fa fa-circle-o'></i> Tambah Supplier</a></li>
-            <li class=active><a href=tambahpembelian.php><i class='fa fa-circle-o'></i> Tambah Pembelian</a></li>
+            <li><a href=tambahpembelian.php><i class='fa fa-circle-o'></i> Tambah Pembelian</a></li>
             <li><a href=statuspembelian.php><i class='fa fa-circle-o'></i> Status Pembelian</a></li>
           </ul>
           </li>";
         }
         if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
-          echo "<li class=treeview>
+          echo "<li class=active treeview>
           <a href=#>
             <i class='fa fa-dashboard'></i> <span>Penjualan</span>
             <span class='pull-right-container'>
@@ -203,7 +212,7 @@
         {
           echo "<li><a href=informasicustomer.php><i class='fa fa-circle-o'></i> Informasi Customer</a></li>
             <li><a href=tambahcustomer.php><i class='fa fa-circle-o'></i> Tambah Customer</a></li>
-            <li><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
+            <li class=active><a href=tambahpenjualan.php><i class='fa fa-circle-o'></i> Tambah Penjualan</a></li>";
         }
         if($jabatan == "Penjualan" || $jabatan == "Pemilik" || $jabatan == "Gudang"){
           echo "<li><a href=statuspenjualan.php><i class='fa fa-circle-o'></i> Status Penjualan</a></li>";
@@ -230,7 +239,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tambah Pembelian
+        Tambah Penjualan
       </h1>
     </section>  
     <!-- Main content -->
@@ -249,10 +258,10 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Nomor Nota</label>
                       <div class="col-sm-9">
-                      <?php 
+                        <?php 
                         $nomorBaru;
                         $date = date("ymd");
-                        while($rowNomorNota=mysqli_fetch_object($resultCekNomorNotaBeli))
+                        while($rowNomorNota=mysqli_fetch_object($resultCekNomorNota))
                           $nomorNota = $rowNomorNota->jumlah+1;
                         if($nomorNota<100){
                           $nomorBaru = "0".$nomorNota;
@@ -271,13 +280,13 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Supplier</label>
+                      <label class="col-sm-3 control-label">Customer</label>
                       <div class="col-sm-9">
-                        <select name="supplier" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Supplier]</option>
+                        <select name="customer" class="form-control">
+                          <option value="" disabled selected style="display: none;">[Pilih Customer]</option>
                           <?php 
-                            while($rowSupplier = mysqli_fetch_object($resultSupplier)){
-                              echo "<option value='".$rowSupplier->id."'>".$rowSupplier->nama."</option>";
+                            while($rowCustomer = mysqli_fetch_object($resultCustomer)){
+                              echo "<option value='".$rowCustomer->id."'>".$rowCustomer->nama."</option>";
                             }
 
                           ?>
@@ -308,18 +317,17 @@
                     </div>               
                   </div>
                 </div>
-              </div>              
+              </div>              <!-- /.box-body -->
             </div>
             </fieldset>
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- input bahan -->
           <div class="box">
             <!-- /.box-header -->
             <div class="box-body">
               <fieldset>
-              <legend>Masukan Data Barang Pembelian</legend>
+              <legend>Masukan Data Barang Penjualan</legend>
               <div class="form-horizontal">
               <div class="panel-body">
                 <div class="col-sm-6 col-md-6">
@@ -329,9 +337,9 @@
                       <label class="col-sm-3 control-label">Barang</label>
                       <div class="col-sm-9">
                         <select name="nama-barang[]" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Barang]</option>
+                          <option value="lol" selected style="display: none;">[Pilih Barang]</option>
                           <?php 
-                            while($rowBarang = mysqli_fetch_object($resultB)){
+                            while($rowBarang = mysqli_fetch_object($resultBarang)){
                               echo "<option value='".$rowBarang->id."'>".$rowBarang->nama."</option>";
                             }
                           ?>                   
@@ -351,92 +359,17 @@
                         <button style="float: right;" id="remove" name="remove" class="btn btn-primary">Hapus Barang</button>
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                  <div id="divButton">
-                    <div class="col-sm-12" style="margin-bottom: 5%">
-                      <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
-                    </div>
                   </div>
-                </div> <!-- sampai di sini -->
-              </div>              
-            </div>
-            </fieldset>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <fieldset>
-              <legend>Masukan Data Barang Baru Pembelian</legend>
-              <div class="form-horizontal">
-              <div class="panel-body">
-                <div class="col-sm-6 col-md-6">
-                  <div id="form_block_baru">
-                  <div id="formBarangBaru"> 
-                    <div class="form-group" id="divIdBarang">
-                      <label class="col-sm-3 control-label">Id Barang</label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="id-barangBaru[]" class="form-control" placeholder="Id Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divNamaBarang">
-                      <label class="col-sm-3 control-label">Nama Barang</label>
-                      <div class="col-sm-9">
-                        <input type="text" min="0" name="nama-barangBaru[]" class="form-control" placeholder="Nama Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divJumlahBarang">
-                      <label class="col-sm-3 control-label">Jumlah Barang</label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="jumlah-barangBaru[]" class="form-control" placeholder="Jumlah Barang"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divSatuanBarang">
-                      <label class="col-sm-3 control-label">Satuan</label>
-                      <div class="col-sm-9">
-                        <input type="text" name="satuan-barangBaru[]" class="form-control" placeholder="Satuan"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divPanjangBarang">
-                      <label class="col-sm-3 control-label">Keterangan</label>
-                      <div class="col-sm-9">
-                        <input type="text" value=" " name="panjang-barangBaru[]" class="form-control" placeholder="Kategori"/>
-                      </div>
-                    </div>
-                    <div class="form-group" id="divKategoriBarang">
-                      <label class="col-sm-3 control-label">Kategori Barang</label>
-                      <div class="col-sm-9">
-                        <select name="kategori-barangBaru[]" class="form-control">
-                          <option value="" disabled selected style="display: none;">[Pilih Kategori]</option>
-                          <?php 
-                            while($rowKategori = mysqli_fetch_object($resultKategori)){
-                              echo "<option value='".$rowKategori->id."'>".$rowKategori->nama."</option>";
-                            }
-                          ?>                   
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group" id="divHargaBaru" style="margin-right: 1%">
-                      <label class="col-sm-3 control-label">Harga Barang Baru</label>
-                      <div class="col-sm-9">
-                        <input type="number" min="0" name="harga-barangBaru[]" class="form-control" placeholder="Harga Barang Baru"><br>
-                        <button style="float: right;" id="removeBaru" name="removeBaru" class="btn btn-primary">Hapus Barang Baru</button>
-                      </div>
-                    </div>
                   </div>
-                </div>
 
                   <div id="divButton">
                     <div class="col-sm-12">
-                      <button style="float: right;" id="nextBaru" class="btn btn-primary">Tambah Barang Baru</button>
+                      <button style="float: right;" id="next" class="btn btn-primary">Tambah Barang</button>
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>              <!-- /.box-body -->
             </div>
             </fieldset>
             </div>
@@ -455,6 +388,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -490,111 +424,68 @@
 <!-- page script -->
 <!-- script untuk search -->
 <script>
-  var htmlBarang = $('#formBarang:eq(0)')[0].outerHTML;
-  var htmlBarangBaru = $('#formBarangBaru:eq(0)')[0].outerHTML;
+  var htmlNama = $('#formBarang:eq(0)')[0].outerHTML;
   $("#next").click(function() {
-    $('#form_block').append(htmlBarang);
-  });
-  $("#nextBaru").click(function() {
-    $('#form_block_baru').append(htmlBarangBaru);
+    alert("lol");
+    $('#form_block').append(htmlNama);
   });
   $("#form_block").on('click', '#remove', function(){
-        $(this).closest('#formBarang').remove();
+    $(this).closest('#formBarang').remove();
   })
-  $("#form_block_baru").on('click', '#removeBaru', function(){
-        $(this).closest('#formBarangBaru').remove();
-  })
-
   $("#submit").click(function(){
     
     var noNota;
     var tanggal;
-    var idSupplier;
+    var idCustomer;
     var jenisBayar;
     var tanggalJatuhTempo;
-    var karyawan = <?php echo $id?>; 
+    var karyawan = <?php echo $id ?>; 
     var nama = [];
-    var satuan = [];
     var jumlah = [];
     var harga= [];
-    var idBaru= [];
-    var namaBaru= [];
-    var jumlahBaru = [];
-    var panjangBaru = [];
-    var kategoriBaru = [];
-    var hargaBaru = [];
     var total = 0;
     var cek=0;
-    var cekBaru = 0;
     var cekada=0;
     var statusKirim;
 
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
     $('input[name="tanggalNota"]').each( function(){ tanggal = $(this).val(); });
-    $('select[name="supplier"]').each( function(){ idSupplier = $(this).val(); });
+    $('select[name="customer"]').each( function(){ idCustomer = $(this).val(); });
     $('select[name="statusKirim"]').each( function(){ statusKirim = $(this).val(); });
     $('select[name="jenisBayar"]').each( function(){ jenisBayar = $(this).val(); });
     $('input[name="tanggalJatuhTempo"]').each( function(){ tanggalJatuhTempo = $(this).val(); }); 
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
     $('input[name="jumlah-barang[]"]').each( function(){ jumlah.push($(this).val()); });
-    $('input[name="satuan-barangBaru[]"]').each( function(){ satuan.push($(this).val()); });
     $('input[name="harga-barang[]"]').each( function(){ harga.push($(this).val()); });
-    $('input[name="id-barangBaru[]"]').each( function(){ idBaru.push($(this).val()); });
-    $('input[name="nama-barangBaru[]"]').each( function(){ namaBaru.push($(this).val()); });
-    $('input[name="jumlah-barangBaru[]"]').each( function(){ jumlahBaru.push($(this).val()); });
-    $('input[name="panjang-barangBaru[]"]').each( function(){ panjangBaru.push($(this).val()); }); 
-    $('select[name="kategori-barangBaru[]"]').each( function(){ kategoriBaru.push($(this).val()); });
-    $('input[name="harga-barangBaru[]"]').each( function(){ hargaBaru.push($(this).val()); });
 
     for(i = 0; i < jumlah.length ; i++){
       if(nama[i] && jumlah[i] && harga[i]){
         total += harga[i] * jumlah[i];
         cekada++;
       }
-      else{
-        cekada = cekada;
-      }
     }
-    for(i = 0; i< idBaru.length ; i++){
-      if(idBaru[i] && namaBaru[i] && jumlahBaru[i] && satuan[i] && panjangBaru[i] && kategoriBaru[i] && hargaBaru[i]){
-        total += jumlahBaru[i] * hargaBaru[i];
-        cekada++;
-      }
-      else{
-        cekada = cekada;
-      }
-    }
-
-    if(idSupplier && statusKirim &&jenisBayar){
-      if(cekada > 0){
+    if(idCustomer && jenisBayar && statusKirim){
+      if(cekada>0){
         $.ajax({
         type: "POST",
-        url: "manage.php?act=insertpembelian",
-        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim+'&karyawan=' + karyawan,
+        url: "manage.php?act=insertpenjualan",
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idCustomer=' + idCustomer+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim+'&karyawan=' + karyawan,
         success: function(result) {
           for( i = 0 ;i < nama.length ; i++){
             $.ajax({
               type: "POST",
-              url: "manage.php?act=insertpembelianbarang",
+              url: "manage.php?act=insertpenjualanbarang",
               data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
               success: function(result) {
+
               }
             });
           }
-          for( i = 0 ;i < idBaru.length ; i++){
-            $.ajax({
-              type: "POST",
-              url: "manage.php?act=insertpembelianbarangBaru",
-              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&satuan='+satuan[i] +'&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru[i]+ '&harga='+hargaBaru[i],
-              success: function(result) {
-              }
-            });
-          } 
-          window.location = "statuspembelian.php";  
+          window.location = "statuspenjualan.php";    
         }});
       }
       else{
-        alert("Tolong cek isi semua data Barang diatas");
+        alert("Tolong Isi data Barang dengan benar");
       }
     }
     else{

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Penjualan | Tambah Penjualan</title>
+  <title>Bahan | Tambah Bahan</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -66,31 +66,22 @@
             $idkaryawan = $_SESSION["logkaryawan"];
             $result = Karyawan($idkaryawan);
             $usernameKaryawan;
-            $idKarywan;
+            $id;
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $id = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="hidden-xs"> <?php echo $usernameKaryawan ?> </span>
             </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <p style="margin-top: 20%">
-                  <?php echo $usernameKaryawan ?> - <?php echo $jabatan ?>
-                  <small>CV Cipta Jujur Kreasi</small>
-                </p>
-              </li>
-              
-              <!-- Menu Footer-->
+            <ul class="dropdown-menu">    
+              <!-- Menu Sign Out-->
               <li class="user-footer">
-                
                 <div class="pull-right">
-                  <a href="proses.php?act=logout"><i class="glyphicon glyphicon-log-out"></i>Sign out</a>
+                  <a href="proses.php?act=logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -258,7 +249,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Nomor Nota</label>
                       <div class="col-sm-9">
-                        <?php 
+                      <?php 
                         $nomorBaru;
                         $date = date("ymd");
                         while($rowNomorNota=mysqli_fetch_object($resultCekNomorNota))
