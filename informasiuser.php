@@ -17,6 +17,14 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+      <!-- datatables -->
+  <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -151,12 +159,6 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -173,7 +175,7 @@
                       $rowKaryawan = mysqli_fetch_object($resultKaryawan);
                       echo "<tr>";
                       echo "<td>".$rowKaryawan->nama."</td><td>".$row->username."</td><td>"
-                              ."<a href=editkaryawan.php?var=".$row->id.">edit</a>";
+                              ."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$row->Karyawan_id.">edit</a></td>";
 
                       echo "</tr>";
                        } 
@@ -238,17 +240,15 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- edit table modal -->
- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- page script -->
 <script>
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
+      'lengthChange': true,
+      'pageLength'  : 10,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false

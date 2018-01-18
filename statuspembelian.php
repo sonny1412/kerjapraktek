@@ -17,6 +17,14 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+      <!-- datatables -->
+  <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -242,12 +250,6 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -351,33 +353,14 @@
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
+      'lengthChange': true,
+      'pageLength'  : 10,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
     })
   })
-</script>
-<!-- script untuk search -->
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("example2");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
 </script>
 <!-- script untuk edit -->
 <script type="text/javascript">
