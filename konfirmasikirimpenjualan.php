@@ -308,7 +308,6 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="button" id="Kirim" name="Kirim" class="btn btn-info pull-right">Insert</button>
-                <a href="halamanprint.php" class="btn btn-info pull-right" style="margin-right: 2%" target="blank"> Cetak Nota </a>
 
               </div>
               <!-- /.box-footer -->

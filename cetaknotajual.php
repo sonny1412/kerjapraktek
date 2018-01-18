@@ -2,12 +2,20 @@
 <link rel="stylesheet" href="css/stylenota.css">
  <body>
   <?php 
-  $noNota = '160414033';
-  $tanggal = '21 desember';
-  $nama_perusahaan = 'FSK_Bersaudara';
-  $alamat = 'Kusuma Bangsa';
-  $kontak = '082243883642';
-  $nama_barang = 'oli top one';
+  require 'db.php';
+  require 'sql.php';
+  $noNota = $_GET['cmd'];
+  $resultTampilBarang = KofirmasiPengirimanPenjualan($noNota);
+  $resultTampilCustomer = NotaPenjualan($noNota);
+
+  if($rowNota = mysqli_fetch_object($resultTampilCustomer)) {
+    $nama_perusahaan = $rowNota->nama;
+    $tanggal = $rowNota->tanggal;
+    $alamat = $rowNota->alamat;
+    $kontak = $rowNota->telepon;
+  }
+
+  //$nama_barang = 'oli top one';
   $jumlah = 15;
 
   ?>
@@ -16,7 +24,7 @@
   <div id="header">
   <div id="tuan_toko">
   NOTA No. &nbsp; <?php echo $noNota ?><br>
-  tanggal: &nbsp; <?php echo $tanggal?> <br>
+  tanggal: &nbsp; <?php echo $tanggal ?> <br>
   </div>
   <div id="nomor_nota">
   KEPADA <br>
@@ -33,12 +41,16 @@
           <th> Satuan </th>
           <th> Keterangan </th>
       </tr>
-      <tr>
-          <td> Selimut Merah </td>
-          <td> 750 </td>
-          <td> PCS </td>
-          <td> kainnya janga dirobek </td>
-      </tr>
+        <?php 
+          while ($rowTampilBarang = mysqli_fetch_object($resultTampilBarang)) {
+            echo "<tr>";
+                    echo "<td>". $rowTampilBarang->nama . " </td>";
+                    echo "<td>". $rowTampilBarang->qty. " </td>";
+                    echo "<td> PCS </td>";
+                    echo "<td>". $rowTampilBarang->keterangan . "</td>";
+            echo "</tr>";
+          }
+        ?>
   </table>
   <br>
   <br>
