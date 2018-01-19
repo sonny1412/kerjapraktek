@@ -10,7 +10,7 @@ include 'cetaknotajual.php';
 $output = ob_get_clean();
 $dompdf->loadHtml($output);
 
-$dompdf->setPaper([0, 0, 425.197, 680.315], 'landscape');
+$dompdf->setPaper([0, 0, $tinggiNota, 680.315], 'landscape');
 
 $dompdf->render();
 

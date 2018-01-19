@@ -7,6 +7,9 @@
   $noNota = $_GET['cmd'];
   $resultTampilBarang = KofirmasiPengirimanPenjualan($noNota);
   $resultTampilCustomer = NotaPenjualan($noNota);
+  $tinggiNota = 396.85;
+  $jumlahBarang = 0;
+  $tinggiBarang = 14.1732;
 
   if($rowNota = mysqli_fetch_object($resultTampilCustomer)) {
     $nama_perusahaan = $rowNota->nama;
@@ -55,7 +58,9 @@
                     echo "<td> PCS </td>";
                     echo "<td>". $rowTampilBarang->keterangan . "</td>";
             echo "</tr>";
+            $jumlahBarang+=1.0;
           }
+          $tinggiNota+=$jumlahBarang*$tinggiBarang;
         ?>
   </table>
   <br>
@@ -70,7 +75,7 @@
   (...............)
   </div>
   <div id="hormat_kami">
-  Pengirim Barang
+  <?php var_dump($tinggiNota); ?>
   <br>
   <br>
   <br>
