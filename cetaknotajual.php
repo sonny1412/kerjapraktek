@@ -1,6 +1,7 @@
 <html>
 <link rel="stylesheet" href="css/stylenota.css">
  <body>
+  <div id="wrapper">
   <?php 
   require 'db.php';
   require 'sql.php';
@@ -75,13 +76,13 @@
   (...............)
   </div>
   <div id="hormat_kami">
-  <?php var_dump($tinggiNota); ?>
+  Pengirim Barang
   <br>
   <br>
   <br>
   (...............)
   </div>
   </div>
-  
+  </div>
  </body>
 </html>

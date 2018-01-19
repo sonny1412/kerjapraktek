@@ -44,3 +44,8 @@ p {
 #body_nota {
   clear: both;
 }
+
+#wrapper {
+  margin-right: 10%;
+  margin-left: 10%
+}
