@@ -78,7 +78,7 @@
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $idkaryawan = $row->idKaryawan;
               $jabatan = $row->jabatan;
             }
             ?>
@@ -263,21 +263,19 @@
                 <thead>
                 <tr>
                   <th>Nama Barang</th>
-                  <th>Jenis</th>
-                  <th>Kuantitas</th>
-                  <th>Ukuran</th>
+                  <th>Jumlah</th>
+                  <th>Keterangan</th>
                   <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                while($rowBarang = mysqli_fetch_object($resultBarang)) {
+                while($rowBarang = mysqli_fetch_object($resultB)) {
                     echo "<tr>";
-                    echo "<td>".$rowBarang->nama."</td>
-                    <td>".Kategori($rowBarang->Kategori_id)."</td>
-                    <td>".$rowBarang->quantity." ".$rowBarang->satuan."</td>
+                    echo "<td>".$rowBarang->idBarang."-".$rowBarang->namaBarang."</td>
+                    <td>".$rowBarang->kuantitas." ".$rowBarang->satuan."</td>
                     <td>".$rowBarang->keterangan."</td>
-                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowBarang->id.">edit</a></td>";
+                    <td>"."<a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowBarang->idBarang.">edit</a></td>";
                     echo "</tr>";
                      } ?>
                 </tbody>
