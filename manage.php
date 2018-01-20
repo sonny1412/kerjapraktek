@@ -141,12 +141,12 @@ switch ($act) {
 
 	case "insertbarang";
 	require 'db.php';
-	$kode = $_POST["kode"];
 	$nama = $_POST["nama"];
 	$kuantitas = $_POST["kuantitas"];
-	$keterangan = $_POST["keterangan"];
-	$satuan = $_POST["satuan"];
-	$sql = "INSERT INTO `barang`(`idBarang`,`namaBarang`,`kuantitas`,`satuan`,`keterangan`) VALUES('".$kode."','".$nama."','".$kuantitas."','".$satuan."','".$keterangan."')";
+	$lbr = $_POST["lbr"];
+	$idKategori = $_POST["idKategori"];
+	$pjg = $_POST["pjg"];
+	$sql = "INSERT INTO `barang`(`nama`,`quantity`,`keterangan`,`satuan`,`Kategori_id`) VALUES('".$nama."','".$kuantitas."','".$pjg."','pcs',".$idKategori.")";
 	$result = mysqli_query($link,$sql);
 	if($result){
 		header("location: informasibarang.php");

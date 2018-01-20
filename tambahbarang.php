@@ -72,7 +72,7 @@
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->idKaryawan;
+              $idkaryawan = $row->id;
               $jabatan = $row->jabatan;
             }
             ?>
@@ -256,12 +256,6 @@
               <form class="form-horizontal" action="manage.php?act=insertbarang" method="POST">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputNamaBarang" class="col-sm-2 control-label">Kode Barang</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="kode" class="form-control" required>
-                  </div>
-                </div>
-                <div class="form-group">
                   <label for="inputNamaBarang" class="col-sm-2 control-label">Nama</label>
 
                   <div class="col-sm-10">
@@ -276,17 +270,42 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPanjangBarang" class="col-sm-2 control-label">Satuan</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" name="satuan" class="form-control required">
-                  </div>
-                </div>
-                <div class="form-group">
                   <label for="inputPanjangBarang" class="col-sm-2 control-label">Keterangan</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="keterangan" class="form-control required">
+                    <input type="text" name="pjg" class="form-control required">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputKategoriBarang" class="col-sm-2 control-label">Kategori</label>
+
+                  <div class="col-sm-10">
+                    <select name="idKategori" class="selectpicker form-control" data-live-search="true">
+                    <?php while($rowKategoriBarang=mysqli_fetch_object($resultKategoriBarang)){
+                        echo "<option value='".$rowKategoriBarang->id."'>".$rowKategoriBarang->nama."</option>";
+                        }?>
+                    </select>
+                  </div>
+                </div>
+                
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">Insert</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+
+            </fieldset>
+            <fieldset>
+              <legend style="text-align: center;">Masukan Kategori Barang Baru</legend>
+              <form class="form-horizontal" action="manage.php?act=insertkategori" method="POST">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputNamaBahan" class="col-sm-2 control-label">Nama Kategori</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="namakategori" class="form-control" required>
+                    <input type="hidden" name="jenis" value="Barang Jadi">
                   </div>
                 </div>
               </div>
@@ -298,6 +317,7 @@
             </form>
 
             </fieldset>
+            
             <!-- /.box-body -->
           </div>
       </div>
