@@ -6,12 +6,6 @@
     if(!$resultB){
        die("SQL Error :".$sqlB);
     }
-    
-    $sqlBarang = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Barang Jadi')";
-    $resultBarang = mysqli_query($link,$sqlBarang);
-    if(!$resultBarang){
-       die("SQL Error :".$sqlBarang);
-    }
 
     $sqlKaryawan = "select * from karyawan";     
     $resultKaryawan = mysqli_query($link, $sqlKaryawan);
@@ -31,49 +25,13 @@
         die("SQL Error: ".$sqlCustomer);
     }
 
-    $sqlKategoriBahan = "select * from Kategori WHERE jenis = 'Bahan Produksi'";
-    $resultKategoriBahan = mysqli_query($link,$sqlKategoriBahan);
-    if(!$resultKategoriBahan){
-       die("SQL Error :".$sqlKategoriBahan);
-    }
-
-    $sqlKategoriBarang = "select * from Kategori WHERE jenis = 'Barang Jadi'";
-    $resultKategoriBarang = mysqli_query($link,$sqlKategoriBarang);
-    if(!$resultKategoriBarang){
-       die("SQL Error :".$sqlKategoriBarang);
-    }
-
-    $sqlKategori = "select * from Kategori";
-    $resultKategori = mysqli_query($link,$sqlKategori);
-    if(!$resultKategori){
-       die("SQL Error :".$sqlKategori);
-    }
-
-    $sqlProduksiBahan = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Bahan Produksi'";
-    $resultProduksiBahan = mysqli_query($link,$sqlProduksiBahan);
-    if(!$resultProduksiBahan){
-       die("SQL Error :".$sqlProduksiBahan);
-    }
-
-    $sqlProduksiBarang = "SELECT b.id,b.nama,b.keterangan,b.quantity,k.jenis FROM barang b,kategori k WHERE b.Kategori_id = k.id and k.jenis = 'Barang Jadi'";
-    $resultProduksiBarang = mysqli_query($link,$sqlProduksiBarang);
-    if(!$resultProduksiBarang){
-       die("SQL Error :".$sqlProduksiBarang);
-    }
-
-    $sqlProduksiKategori = "select * from Kategori where jenis='Barang Jadi';";
-    $resultProduksiKategori = mysqli_query($link,$sqlProduksiKategori);
-    if(!$resultProduksiKategori){
-       die("SQL Error :".$sqlProduksiKategori);
-    }
-
     $sqlInformasiProduksi = "SELECT *,date(tanggal) as date FROM `produksi` order by tanggal DESC";
     $resultInformasiProduksi = mysqli_query($link,$sqlInformasiProduksi);
     if(!$resultInformasiProduksi){
        die("SQL Error :".$sqlInformasiProduksi);
     }
 
-    $sqlUser = "select * from karyawan where jabatan = 'Penjualan' or jabatan = 'Pembelian' or jabatan ='Gudang' having id not in(select Karyawan_id from user)";  
+    /*$sqlUser = "select * from karyawan where jabatan = 'Penjualan' or jabatan = 'Pembelian' or jabatan ='Gudang' having id not in(select Karyawan_id from user)";  
     $resultUser = mysqli_query($link,$sqlUser);
     if(!$resultUser){
        die("SQL Error :".$sqlUser);
@@ -96,6 +54,7 @@
 
     $cekNomorNotaBeli = "SELECT COUNT(*) as jumlah FROM pembelian WHERE tanggal = '".date("Y-m-d")."'";
     $resultCekNomorNotaBeli = mysqli_query($link, $cekNomorNotaBeli);
+    */
 
     //Function
     function Kategori($kid){
@@ -169,7 +128,7 @@
     }
     Function Karyawan($pid){
         require 'db.php';
-        $sqlKaryawan = "SELECT k.nama, k.jabatan, k.id FROM user u, karyawan k WHERE u.Karyawan_id = k.id and u.username = '".$pid."'";
+        $sqlKaryawan = "SELECT k.nama, k.jabatan, k.idKaryawan FROM user u, karyawan k WHERE u.Karyawan_idKaryawan = k.idKaryawan and u.username = '".$pid."'";
         $resultKaryawan = mysqli_query($link, $sqlKaryawan);
         return $resultKaryawan;
     }
