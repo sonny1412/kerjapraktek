@@ -297,7 +297,17 @@
                         </select>
                       </div>
                     </div>
-                    <div id="caraBayar"></div>               
+                    <div id="caraBayar"></div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Status Kirim</label>
+                      <div class="col-sm-9">
+                        <select id="statusKirim" name="statusKirim" class="form-control" onchange="copystatusKirim();" required>
+                          <option value="" disabled selected style="display: none;">[Pilih Status Kirim]</option>
+                          <option value="T">Diterima Langsung</option>
+                          <option value="K">Dikirim</option>
+                        </select>
+                      </div>
+                    </div>               
                   </div>
                 </div>
               </div>              
@@ -526,6 +536,7 @@
     $('input[name="noNota"]').each( function(){ noNota = $(this).val(); });
     $('input[name="tanggalNota"]').each( function(){ tanggal = $(this).val(); });
     $('select[name="supplier"]').each( function(){ idSupplier = $(this).val(); });
+    $('select[name="statusKirim"]').each( function(){ statusKirim = $(this).val(); });
     $('select[name="jenisBayar"]').each( function(){ jenisBayar = $(this).val(); });
     $('input[name="tanggalJatuhTempo"]').each( function(){ tanggalJatuhTempo = $(this).val(); }); 
     $('select[name="nama-barang[]"]').each( function(){ nama.push($(this).val()); });
@@ -558,18 +569,18 @@
       }
     }
 
-    if(idSupplier &&jenisBayar){
+    if(idSupplier && statusKirim &&jenisBayar){
       if(cekada > 0){
         $.ajax({
         type: "POST",
         url: "manage.php?act=insertpembelian",
-        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&karyawan=' + karyawan,
+        data: 'noNota=' + noNota+ '&tanggal=' + tanggal+ '&idSupplier=' + idSupplier+ '&jatuhTempo=' + tanggalJatuhTempo +'&jenisBayar=' +jenisBayar +'&total='+total+'&statusKirim=' + statusKirim+'&karyawan=' + karyawan,
         success: function(result) {
           for( i = 0 ;i < nama.length ; i++){
             $.ajax({
               type: "POST",
               url: "manage.php?act=insertpembelianbarang",
-              data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i],
+              data: 'noNota=' + noNota+ '&barang_id=' + nama[i]+ '&qty=' + jumlah[i]+ '&harga=' + harga[i] +'&statusKirim=' + statusKirim,
               success: function(result) {
               }
             });
@@ -578,7 +589,7 @@
             $.ajax({
               type: "POST",
               url: "manage.php?act=insertpembelianbarangBaru",
-              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&satuan='+satuan[i] +'&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota +'&idBarang='+idBaru[i]+ '&harga='+hargaBaru[i],
+              data: 'nama=' + namaBaru[i]+ '&kuantitas=' + jumlahBaru[i]+ '&satuan='+satuan[i] +'&idKategori=' + kategoriBaru[i]+ '&pjg=' + panjangBaru[i]+ '&noNota='+noNota+ '&statusKirim=' +statusKirim +'&idBarang='+idBaru[i]+ '&harga='+hargaBaru[i],
               success: function(result) {
               }
             });
