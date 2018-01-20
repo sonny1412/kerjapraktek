@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect("127.0.0.1", "root", "", "kerjapraktek");
+$link = mysqli_connect("127.0.0.1", "root", "", "tajuk");
 if(mysqli_connect_errno()) {
     //echo "Connect error".mysqli_connect_error();
     //exit();

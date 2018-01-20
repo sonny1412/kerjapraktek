@@ -271,7 +271,7 @@
                     $resultBarang = PenjualanBarang($rowPenjualan->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
                       if($jabatan == "Gudang"){
-                        echo $rowBarang->nama." x ".$rowBarang->qty." Buah";
+                        echo $rowBarang->id."-".$rowBarang->nama." x ".$rowBarang->qty." Buah";
                       }
                       else{
                         echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";

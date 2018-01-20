@@ -6,13 +6,7 @@
     if(!$resultB){
        die("SQL Error :".$sqlB);
     }
-
-    $sqlBahan = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Bahan Produksi')";
-    $resultBahan = mysqli_query($link,$sqlBahan);
-    if(!$resultBahan){
-       die("SQL Error :".$sqlBahan);
-    }
-
+    
     $sqlBarang = "SELECT * FROM `barang` where Kategori_id IN(select id from `kategori` where jenis = 'Barang Jadi')";
     $resultBarang = mysqli_query($link,$sqlBarang);
     if(!$resultBarang){
@@ -125,13 +119,13 @@
     }
     function PembelianBarang($pid){
         require 'db.php';
-        $sqlPembelianBarang = "SELECT b.nama, pb.qty,pb.harga FROM pembelian_barang pb, barang b WHERE pb.pembelian_id = ".$pid." and pb.Barang_id = b.id";
+        $sqlPembelianBarang = "SELECT b.id,b.nama, pb.qty,pb.harga FROM pembelian_barang pb, barang b WHERE pb.pembelian_id = ".$pid." and pb.Barang_id = b.id";
         $resultPembelianBarang = mysqli_query($link,$sqlPembelianBarang);
         return $resultPembelianBarang;
     }
     function PenjualanBarang($pid){
         require 'db.php';
-        $sqlPenjualanBarang = "SELECT b.nama, pb.qty,pb.harga FROM penjualan_barang pb, barang b WHERE pb.penjualan_id = ".$pid." and pb.Barang_id = b.id";
+        $sqlPenjualanBarang = "SELECT b.id,b.nama, pb.qty,pb.harga FROM penjualan_barang pb, barang b WHERE pb.penjualan_id = ".$pid." and pb.Barang_id = b.id";
         $resultPenjualanBarang = mysqli_query($link,$sqlPenjualanBarang);
         return $resultPenjualanBarang;
     }

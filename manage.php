@@ -344,24 +344,12 @@ switch ($act) {
 	$karyawan = $_POST["karyawan"];
 	$jenisBayar = $_POST["jenisBayar"];
 	$jatuhTempo = $_POST["jatuhTempo"];
-	$statusKirim = $_POST["statusKirim"];
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
-		if($statusKirim == "K"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
-		}
-		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
-		}
-		
+		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0');";		
 	}
 	if($jenisBayar == "T"){
-		if($statusKirim == "K"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Proses');";
-		}
-		else if($statusKirim == "T"){
-			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Sampai');";
-		}		
+		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."');";		
 	}
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -389,15 +377,14 @@ switch ($act) {
 	$sql = "INSERT INTO `pembelian_barang` (`id`, `Pembelian_id`, `Barang_id`, `qty`, `harga`) VALUES (NULL, '".$noNota."', '".$barang_id."', '".$qty."', '".$harga."');";
 	$result = mysqli_query($link,$sql);
 	if($result){
-		if($statusKirim == "T"){
-			$sqlKurang = "UPDATE `barang` SET quantity = quantity + ".$qty." WHERE id = '".$barang_id."'";
-			$resultKurang = mysqli_query($link,$sqlKurang);
-			if($resultKurang){
-			}
-			else{
-				echo "gagal";
-			}
+		$sqlKurang = "UPDATE `barang` SET quantity = quantity + ".$qty." WHERE id = '".$barang_id."'";
+		$resultKurang = mysqli_query($link,$sqlKurang);
+		if($resultKurang){
 		}
+		else{
+			echo "gagal";
+		}
+		
 	}
 	else{
 		echo "gagal";
