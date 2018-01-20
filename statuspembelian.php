@@ -257,8 +257,7 @@
                   <th>Tanggal</th>
                   <th>Supplier</th>
                   <th>Daftar Barang</th>
-                  <th>Status Pembayaran</th>
-                  <th>Status Pengiriman</th>          
+                  <th>Status Pembayaran</th>         
                 </tr>
                 </thead>
                 <tbody>
@@ -271,7 +270,7 @@
                     echo "<td>";
                     $resultBarang = PembelianBarang($rowPembelian->id);
                     while($rowBarang = mysqli_fetch_object($resultBarang)){
-                      echo $rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
+                      echo $rowBarang->id."-".$rowBarang->nama." = ".$rowBarang->qty." x Rp".$rowBarang->harga.",00 = Rp".$rowBarang->qty*$rowBarang->harga.",00";
                       echo "</br>";
                     }
                     echo "</td>";
@@ -283,12 +282,6 @@
                     }
                     else{
                       echo "<td><a href='#myModal' class='btn btn-default btn-small' id='custId' data-toggle='modal' data-id=".$rowPembelian->id.">Belum Lunas</a></td>";
-                    }
-                    if($rowPembelian->status_kirim == "Proses"){
-                      echo "<td><a href=konfirmasikirimpembelian.php?cmd=".$rowPembelian->id.">".$rowPembelian->status_kirim."</a></td>";
-                    }
-                    else{
-                      echo "<td>".$rowPembelian->status_kirim."</td>";
                     }
                     
                     echo "</tr>";
