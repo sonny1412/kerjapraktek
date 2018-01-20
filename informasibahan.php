@@ -79,7 +79,7 @@
             $jabatan;
             if ($row = mysqli_fetch_object($result)) {
               $usernameKaryawan = $row->nama;
-              $idkaryawan = $row->id;
+              $idkaryawan = $row->idKaryawan;
               $jabatan = $row->jabatan;
             }
             ?>
