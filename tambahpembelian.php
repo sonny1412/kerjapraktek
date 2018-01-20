@@ -8,8 +8,6 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Bootstrap select -->
-  <link rel="stylesheet" href="dist/css/bootstrap-select.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -330,11 +328,11 @@
                     <div class="form-group" id="divBarang">
                       <label class="col-sm-3 control-label">Barang</label>
                       <div class="col-sm-9">
-                        <select name="nama-barang[]" class="selectpicker form-control" data-live-search="true">
+                        <select name="nama-barang[]" class="form-control">
                           <option value="" disabled selected style="display: none;">[Pilih Barang]</option>
                           <?php 
                             while($rowBarang = mysqli_fetch_object($resultB)){
-                              echo "<option value='".$rowBarang->id."'>".$rowBarang->id." - " . $rowBarang->nama . " </option>";
+                              echo "<option value='".$rowBarang->id."'>".$rowBarang->nama."</option>";
                             }
                           ?>                   
                         </select>
@@ -478,8 +476,6 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Bootstrap select -->
-<script src="dist/js/bootstrap-select.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

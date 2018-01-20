@@ -344,12 +344,24 @@ switch ($act) {
 	$karyawan = $_POST["karyawan"];
 	$jenisBayar = $_POST["jenisBayar"];
 	$jatuhTempo = $_POST["jatuhTempo"];
+	$statusKirim = $_POST["statusKirim"];
 	$total = $_POST["total"];
 	if($jenisBayar == "K"){
-		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0');";
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$jatuhTempo."', '0', 'Sampai');";
+		}
+		
 	}
 	if($jenisBayar == "T"){
-		$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."');";	
+		if($statusKirim == "K"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Proses');";
+		}
+		else if($statusKirim == "T"){
+			$sql = "INSERT INTO `pembelian` (`id`, `Supplier_id`, `Karyawan_id`, `tanggal`, `jatuh_tempo`, `saldo`, `status_kirim`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$tanggal."', '".$tanggal."', '".$total."', 'Sampai');";
+		}		
 	}
 	$result = mysqli_query($link,$sql);
 	if($result){
@@ -361,34 +373,6 @@ switch ($act) {
 			}
 		}
 	}
-	else{
-		echo "gagal";
-	}
-	break;
-
-	case "insertPOpembelian":
-	require 'db.php';
-	$sql;
-	$noPO = $_POST["noPO"];
-	$supplier= $_POST["idSupplier"];
-	$karyawan = $_POST["karyawan"];
-	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `pembelianPO` (`id`, `Supplier_id`, `Karyawan_id`, `keterangan`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$keterangan."');";
-
-	else{
-		echo "gagal";
-	}
-	break;
-
-	case "insertPOpembelian":
-	require 'db.php';
-	$sql;
-	$noPO = $_POST["noPO"];
-	$supplier= $_POST["idSupplier"];
-	$karyawan = $_POST["karyawan"];
-	$keterangan = $_POST["keterangan"];
-	$sql = "INSERT INTO `pembelianPO` (`id`, `Supplier_id`, `Karyawan_id`, `keterangan`) VALUES ('".$noNota."', '".$supplier."', '".$karyawan."', '".$keterangan."');";
-
 	else{
 		echo "gagal";
 	}

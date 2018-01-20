@@ -164,7 +164,7 @@
                 <tr>
                   <th>Nama Karyawan</th>
                   <th>Username</th>
-                  <th>HAPUS</th>
+                  <th>HAPUS/EDIT</th>
                 </tr>
                 </thead>
                 <tbody>
